@@ -1,0 +1,72 @@
+<div class="div-table">
+    <div style="display: flex; flex-direction: row; width: 100%">
+        <div style="width: 50%" class="div-table-filtro" *ngIf="configTable.placeholder">
+            <mat-form-field appearance="standard">
+                <mat-label>{{configTable.placeholder}}</mat-label>
+                <input matInput (keyup)="applyFilter($event)" #input>
+                <span matSuffix><mat-icon>search</mat-icon></span>
+            </mat-form-field>
+        </div>
+        <div class="button-row" *ngIf="configTable.btnnovo && userData.constante_virtual != 'OPERADOR'">
+            <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                <button mat-raised-button color="primary" (click)="addOutput('novo', '')">
+                    <div style="display: flex; align-items: center;">
+                        <span class="span-nome">{{configTable.btnnovo}}</span>
+                        <mat-icon class="add-icon">add</mat-icon>
+                    </div>
+                </button>
+                <div class="campo-check-status" style="margin-top: 20px">
+                    <mat-slide-toggle color="primary" (change)="onChangeToggle($event)" *ngIf="bo_status" checked>Ativo</mat-slide-toggle>
+                    <mat-slide-toggle color="primary" (change)="onChangeToggle($event)" *ngIf="!bo_status">Inativo</mat-slide-toggle>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div style="width: 100%; overflow-x: auto;">
+        <table style="overflow: hidden;" mat-table [dataSource]="dataSource" [class]="confTable.class" [id]="confTable.id">
+
+            <ng-container *ngFor="let column of confColumns; let i = index" matColumnDef="{{column.field}}">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number" [ngClass]="column.class" [innerHTML]="column.label"></th>
+                <td mat-cell *matCellDef="let element">
+                    <div *ngIf="column.field == 'acao'" style="padding-left: 10px;">
+                        <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item *ngFor="let botao of column.botao" (click)="addOutput(botao.callback, element)">
+                                <mat-icon *ngIf="botao.icon">{{botao.icon}}</mat-icon>
+                                <span [innerHTML]="botao.label"></span>
+                            </button>
+                        </mat-menu>
+                    </div>
+
+                    <div *ngIf="column.field != 'acao' && column.field != 'bo_status' && column.field != 'bo_ativo'">
+                        <span *ngIf="column.link" class="td-link" (click)="addOutput(column.callback, element)"><a [innerHTML]="element[column.field]"></a></span>
+                        <span *ngIf="!column.link" [innerHTML]="element[column.field]"></span>
+                    </div>
+                    <div *ngIf="column.field == 'bo_status'">
+                        <span *ngIf="element[column.field]=='Ativo'" class="td-status-ativo">{{element[column.field]}}</span>
+                        <span *ngIf="element[column.field]=='Inativo'" class="td-status-inativo">{{element[column.field]}}</span>
+                    </div>
+                    <div *ngIf="column.field == 'bo_ativo'">
+                        <span *ngIf="element[column.field]=='Ativo'" class="td-status-ativo">{{element[column.field]}}</span>
+                        <span *ngIf="element[column.field]=='Inativo'" class="td-status-inativo">{{element[column.field]}}</span>
+                    </div>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columns"></tr>
+            <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="20" style="color: #ff0000; font-weight: bold; font-size: 12px !important; padding-left: 16px" [innerHTML]="msgSemRegistro"></td>
+            </tr>
+        </table>
+        <mat-paginator [length]="(configTable.page.length > 0 ? configTable.page.length : paginador.length)"
+                       (page)="handlePageEvent($event)"
+                       [pageSize]="(configTable.page.pageSize > 0 ? configTable.page.pageSize : paginador.pageSize)"
+                       [pageIndex]="currentPage"
+                       [pageSizeOptions]="paginador.pageSizeOptions"
+                       showFirstLastButtons
+                       aria-label="Selecionar página">
+        </mat-paginator>
+    </div>
+</div>

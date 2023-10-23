@@ -1,0 +1,127 @@
+<div class="div-content">
+    <app-header menuSelected="{{menuTexto}}"></app-header>
+    <div  class="card-principal">
+        <div style="display: flex; flex-direction: row; width: 100%; height: 100%;">
+            <div class="div-divider-right" style="width: 30%;">
+                <div style="display: flex; flex-direction: row;">
+                    <div class="div-step-icon" style="background-color: #1FA8E4 !important;">
+                        <div class="div-step-icon-content">
+                            <span aria-hidden="true">1</span>
+                        </div>
+                    </div>
+                    <div class="div-informacoes" style="color: #1FA8E4 !important;" (click)="linkCadastro('cadastro-tarefa')">Dados da tarefa</div>
+                </div>
+                <div class="div-mat-stepper-vertical-line">
+                    <div style="border-left: 3px solid #1FA8E4;"></div>
+                </div>
+                <div style="display: flex; flex-direction: row;">
+                    <div class="div-step-icon" style="background-color: #1FA8E4 !important;">
+                        <div class="div-step-icon-content">
+                            <span aria-hidden="true">2</span>
+                        </div>
+                    </div>
+                    <div class="div-informacoes" style="color: #1FA8E4 !important;" *ngIf="id" (click)="linkCadastro('cadastro-json-tarefa')">Cadastro de JSON</div>
+                </div>
+                <div class="div-mat-stepper-vertical-line" *ngIf="model.bo_agendada">
+                    <div style="border-left: 3px solid #1FA8E4;"></div>
+                </div>
+                <div style="display: flex; flex-direction: row;" *ngIf="model.bo_agendada">
+                    <div class="div-step-icon" style="background-color: #1FA8E4 !important;">
+                        <div class="div-step-icon-content">
+                            <span aria-hidden="true">3</span>
+                        </div>
+                    </div>
+                    <div class="div-informacoes" style="color: #1FA8E4 !important;" *ngIf="id" (click)="linkCadastro('agendamento-tarefa')">Agendamento</div>
+                </div>
+                <div class="div-mat-stepper-vertical-line">
+                    <div style="border-left: 3px solid #1FA8E4;"></div>
+                </div>
+                <div style="display: flex; flex-direction: row;">
+                    <div class="div-step-icon">
+                        <div class="div-step-icon-content">
+                            <span aria-hidden="true" *ngIf="model.bo_agendada">4</span>
+                            <span aria-hidden="true" *ngIf="!model.bo_agendada">3</span>
+                        </div>
+                    </div>
+                    <div class="div-informacoes" (click)="linkCadastro('config-email-tarefa')">Configuração de e-mail</div>
+                </div>
+            </div>
+            <div class="form-content">
+                <div class="div-cabecalho-cadastro">
+                    <div class="cabecalho-titulo">
+                        <div class="titulo-menu" style="width: 70% !important;">Configuração de e-mail</div>
+                    </div>
+                    <div style="padding-top: 20px">
+                        <mat-tab-group (selectedTabChange)="tabChanged($event)">
+                            <mat-tab label="Iniciar tarefa">
+                                <form [formGroup]="formularioInicia" #formDir="ngForm">
+                                    <div style="padding-top: 10px">
+                                        <p><mat-label>Assunto do e-mail</mat-label></p>
+                                        <mat-form-field class="input-full-width" appearance="fill">
+                                            <mat-label>Assunto do e-mail</mat-label>
+                                            <input matInput [(ngModel)]="model.tx_assunto_inicia" class="form-control" value="" required formControlName="tx_assunto_inicia" name="tx_assunto_inicia">
+                                        </mat-form-field>
+                                        <div *ngIf="tx_assunto_inicia.invalid && formDir.submitted" class="validation-error">
+                                            <p *ngIf="tx_assunto_inicia.hasError('required')">Assunto do é <strong>obrigatório</strong></p>
+                                        </div>
+                                    </div>
+                                    <p><mat-label>Corpo do e-mail</mat-label></p>
+                                    <div class="editor">
+                                        <ngx-editor-menu [editor]="editorInicia" [toolbar]="toolbar"> </ngx-editor-menu>
+                                        <ngx-editor
+                                            [editor]="editorInicia"
+                                            [ngModel]="model.tx_corpo_email_inicia"
+                                            [disabled]="false"
+                                            [placeholder]="'Digite aqui...'"
+                                            formControlName="tx_corpo_email_inicia"
+                                        ></ngx-editor>
+                                    </div>
+                                    <div *ngIf="tx_corpo_email_inicia.invalid && formDir.submitted" class="validation-error" style="margin-top: 5px;">
+                                        <p>Corpo do e-mail é <strong>obrigatório</strong></p>
+                                    </div>
+                                </form>
+                            </mat-tab>
+                            <mat-tab label="Finalizar tarefa">
+                                <form [formGroup]="formularioFinaliza" #formDir="ngForm">
+                                    <div style="padding-top: 10px">
+                                        <p><mat-label>Assunto do e-mail</mat-label></p>
+                                        <mat-form-field class="input-full-width" appearance="fill">
+                                            <mat-label>Assunto do e-mail</mat-label>
+                                            <input matInput [(ngModel)]="model.tx_assunto_finaliza" class="form-control" value="" required formControlName="tx_assunto_finaliza" name="tx_assunto_finaliza">
+                                        </mat-form-field>
+                                        <div *ngIf="tx_assunto_finaliza.invalid && formDir.submitted" class="validation-error">
+                                            <p *ngIf="tx_assunto_finaliza.hasError('required')">Assunto do é <strong>obrigatório</strong></p>
+                                        </div>
+                                    </div>
+                                    <p><mat-label>Corpo do e-mail</mat-label></p>
+                                    <div class="editor">
+                                        <ngx-editor-menu [editor]="editorFinaliza" [toolbar]="toolbar"> </ngx-editor-menu>
+                                        <ngx-editor
+                                            [editor]="editorFinaliza"
+                                            [ngModel]="model.tx_corpo_email_finaliza"
+                                            [disabled]="false"
+                                            [placeholder]="'Digite aqui...'"
+                                            formControlName="tx_corpo_email_finaliza"
+                                        ></ngx-editor>
+                                    </div>
+                                    <div *ngIf="tx_corpo_email_finaliza.invalid && formDir.submitted" class="validation-error" style="margin-top: 5px;">
+                                        <p>Corpo do e-mail é <strong>obrigatório</strong></p>
+                                    </div>
+                                </form>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                    <div class="btn-cadastro-footer">
+                        <button mat-stroked-button color="primary" class="btn-cadastro-fill" style="margin-right: 10px" (click)="voltar()">
+                            Cancelar<mat-icon>arrow_back</mat-icon>
+                        </button>
+
+                        <button mat-button class="btn-cadastro-full" (click)="onSubmit()">
+                            Finalizar <mat-icon>save</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

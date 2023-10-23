@@ -1,0 +1,38 @@
+@import '../../../../styles.scss';
+
+#div-principal-header {
+    font-family: 'Work Sans', 'Roboto', "Helvetica Neue", 'sans-serif' !important;
+
+    ul li {
+        list-style: none;
+    }
+
+    mat-toolbar {
+        background-color: #FFFFFF;
+        height: 80px;
+
+        span {
+            font-size: 30px;
+            font-weight: bold;
+            letter-spacing: 1px !important;
+        }
+
+        //box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
+    }
+
+    .mat-toolbar-row, .mat-toolbar-single-row {
+        height: 80px;
+    }
+}
+
+.header-cabecalho{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    justify-content: center;
+    width: 100%;
+
+    @media (max-width: 850px), (orientation: portrait) {
+        padding-left: 40px;
+    }
+}

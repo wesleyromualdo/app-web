@@ -1,0 +1,77 @@
+<div class="div-content">
+    <app-header menuSelected="Meu Perfil"></app-header>
+
+    <form [formGroup]="formulario" #formDir="ngForm">
+        <div  class="card-principal">
+            <div style="display: flex; flex-direction: row; width: 100%; height: 100%;">
+                <div class="div-divider-right img-avatar">
+                    <div class="div-avatar" *ngIf="!showCropper">
+                        <img [src]="croppedImage" [style.border]="croppedImage ? '1px solid black' : 'none'" />
+                    </div>
+                    <div class="div-avatar" *ngIf="showCropper">
+                        <ng-container [class.display-none]="!selectedPhotoBase64">
+                            <image-cropper [imageBase64]="selectedPhotoBase64"
+                                           [maintainAspectRatio]="true"
+                                           [aspectRatio]="1 / 1"
+                                           [resizeToWidth]="128"
+                                           (imageCropped)="imageCropped($event)"
+                                           (loadImageFailed)="loadImageFailed()"
+                                           (imageCropped)="imageCropped($event)"
+                                           (imageLoaded)="imageLoaded()"
+                                           class="!max-h-full w-full"
+                                           format="png">
+                            </image-cropper>
+                        </ng-container>
+                    </div>
+                    <div class="editar-imagem">
+                        <button mat-button class="btn-cadastro-full" style="font-size: 14px;" (click)="tirarFoto()">
+                            <mat-icon style="font-size: 20px;">add_a_photo</mat-icon> <span>{{labelButton}}</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-content">
+                    <div class="div-cabecalho-cadastro" style="padding-left: 20px">
+                        <div style="display: flex; flex-direction: row">
+                            <div class="titulo-menu" style="width: 70% !important;">Meus dados</div>
+                            <div class="titulo-menu campo-check-status" (click)="trocarSenha()">
+                                <a style="cursor: pointer">Trocar senha</a><mat-icon style="font-size: 20px; padding-left: 2px">lock</mat-icon>
+                            </div>
+                        </div>
+                        <div>
+                            <p><mat-label>CPF</mat-label></p>
+                            <mat-form-field class="input-full-width" appearance="fill">
+                                <input matInput placeholder="Digite o CPF" mask="000.000.000-00" maxlength="14" [(ngModel)]="model.nu_cpf" class="form-control" value="" required formControlName="nu_cpf" name="nu_cpf">
+                            </mat-form-field>
+                            <div *ngIf="nu_cpf.invalid && formDir.submitted" class="validation-error">
+                                <p *ngIf="nu_cpf.hasError('required')">O CPF é <strong>obrigatório</strong></p>
+                            </div>
+
+                            <p><mat-label>Nome</mat-label></p>
+                            <mat-form-field class="input-full-width" appearance="fill">
+                                <input matInput placeholder="Escreva o nome do menu" [(ngModel)]="model.tx_nome" class="form-control" value="" required formControlName="tx_nome" name="tx_nome">
+                            </mat-form-field>
+                            <div *ngIf="tx_nome.invalid && formDir.submitted" class="validation-error">
+                                <p *ngIf="tx_nome.hasError('required')">O nome é <strong>obrigatório</strong></p>
+                            </div>
+
+                            <p><mat-label>E-mail</mat-label></p>
+                            <mat-form-field class="input-full-width" appearance="fill">
+                                <input matInput placeholder="Escreva o icone do módulo" [(ngModel)]="model.tx_email" class="form-control" value="" formControlName="tx_email" name="tx_email">
+                            </mat-form-field>
+                            <div *ngIf="tx_email.invalid && formDir.submitted" class="validation-error">
+                                <p *ngIf="tx_email.hasError('required')">O e-mail é <strong>obrigatório</strong></p>
+                                <p *ngIf="tx_email.hasError('email')">O e-mail é <strong>inválido</strong></p>
+                            </div>
+                        </div>
+
+                        <div class="btn-cadastro-footer">
+                            <button mat-button class="btn-cadastro-full" (click)="onSubmit()">
+                                Salvar <mat-icon>save</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

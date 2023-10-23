@@ -1,0 +1,41 @@
+<div class="div-content">
+    <app-header menuSelected="Histórico da Tarefa"></app-header>
+
+    <div  class="card-principal">
+        <div class="div-content">
+            <div style="display: flex; flex-direction: column; width: 100%; padding: 10px">
+                <p style="font-weight: bold">Dados da tarefa</p>
+                <p>{{tarefa?.tx_nome}}</p>
+            </div>
+            <div class="modal-cabecalho">
+                <div style="width: 45%">
+                    <p style="font-weight: bold">Nome do executor</p>
+                    <p>{{tarefa?.automacao.tx_nome}}</p>
+                </div>
+                <div style="width: 25%">
+                    <p style="font-weight: bold">Criado em</p>
+                    <p>{{tarefa?.dt_inclusao}}</p>
+                </div>
+                <div style="width: 20%">
+                    <p style="font-weight: bold">Tempo em execução</p>
+                    <p>{{tempoExecucaoTotal}}</p>
+                </div>
+                <div style="width: 10%">
+                    <p style="font-weight: bold">Status</p>
+                    <p class="td-status-ativo">{{tarefa?.bo_status_formatado}}</p>
+                </div>
+            </div>
+            <mat-divider style="padding-top: 10px; padding-bottom: 10px"></mat-divider>
+
+            <div style="width: 100%">
+                <app-datatable *ngIf="loading" [configTable]="configTable" [dados]="dataList" (outputDados)="executaRetorno($event)"></app-datatable>
+            </div>
+
+            <div style="display: flex; justify-content: center">
+                <button mat-stroked-button color="primary" class="btn-cadastro-fill" style="margin-right: 10px" (click)="voltar()">
+                    <mat-icon style="font-size: 20px;">arrow_back</mat-icon>Voltar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

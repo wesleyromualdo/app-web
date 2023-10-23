@@ -1,0 +1,89 @@
+<div class="div-content">
+    <app-header menuSelected="{{menuTexto}}"></app-header>
+
+    <form [formGroup]="formulario" #formDir="ngForm">
+        <div  class="card-principal">
+            <div style="display: flex; flex-direction: row; width: 100%; height: 100%;">
+                <div class="div-divider-right" style="width: 30%;">
+                    <div style="display: flex; flex-direction: row;">
+                        <div class="div-step-icon">
+                            <div class="div-step-icon-content">
+                                <span aria-hidden="true">1</span>
+                            </div>
+                        </div>
+                        <div class="div-informacoes">Dados do módulo</div>
+                    </div>
+                    <!--<div class="div-mat-stepper-vertical-line">
+                        <div style="border-left: 3px solid #B4BABD;"></div>
+                    </div>
+                    <div style="display: flex; flex-direction: row;">
+                        <div class="div-step-icon-default">
+                            <div class="div-step-icon-content">
+                                <span aria-hidden="true">2</span>
+                            </div>
+                        </div>
+                        <div class="div-informacoes-default">Acesso aos módulos</div>
+                    </div>-->
+                </div>
+                <div class="form-content">
+                    <div class="div-cabecalho-cadastro">
+                        <div style="display: flex; flex-direction: row">
+                            <div class="titulo-menu" style="width: 70% !important;">Dados do módulo</div>
+                            <div class="titulo-menu campo-check-status">
+                                <mat-slide-toggle color="primary" (change)="onChangeToggle($event)" *ngIf="isChecked" checked>{{tx_ativo}}</mat-slide-toggle>
+                                <mat-slide-toggle color="primary" (change)="onChangeToggle($event)" *ngIf="!isChecked">{{tx_ativo}}</mat-slide-toggle>
+                            </div>
+                        </div>
+                        <div>
+                            <p><mat-label>Código</mat-label></p>
+                            <mat-form-field class="input-full-width" appearance="fill">
+                                <input matInput placeholder="0000" [(ngModel)]="model.nu_codigo" class="form-control" value="" required formControlName="nu_codigo" name="nu_codigo">
+                            </mat-form-field>
+                            <div *ngIf="nu_codigo.invalid && formDir.submitted" class="validation-error">
+                                <p *ngIf="nu_codigo.hasError('required')">O código é <strong>obrigatório</strong></p>
+                            </div>
+
+                            <p><mat-label>Nome</mat-label></p>
+                            <mat-form-field class="input-full-width" appearance="fill">
+                                <input matInput placeholder="Escreva o nome do menu" [(ngModel)]="model.tx_nome" class="form-control" value="" required formControlName="tx_nome" name="tx_nome">
+                            </mat-form-field>
+                            <div *ngIf="tx_nome.invalid && formDir.submitted" class="validation-error">
+                                <p *ngIf="tx_nome.hasError('required')">O nome é <strong>obrigatório</strong></p>
+                            </div>
+
+                            <p><mat-label>Ordem</mat-label></p>
+                            <mat-form-field class="input-full-width" appearance="fill">
+                                <input matInput placeholder="Escreva a ordem" [(ngModel)]="model.nu_ordem" class="form-control" value="" required formControlName="nu_ordem" name="nu_ordem">
+                            </mat-form-field>
+                            <div *ngIf="nu_ordem.invalid && formDir.submitted" class="validation-error">
+                                <p *ngIf="nu_ordem.hasError('required')">A ordem é <strong>obrigatório</strong></p>
+                            </div>
+
+                            <p><mat-label>Icone</mat-label></p>
+                            <mat-form-field class="input-full-width" appearance="fill">
+                                <input matInput placeholder="Escreva o icone do módulo" [(ngModel)]="model.tx_icon" class="form-control" value="" formControlName="tx_icon" name="tx_icon">
+                            </mat-form-field>
+
+                            <p><mat-label>Link</mat-label></p>
+                            <mat-form-field class="input-full-width" appearance="fill">
+                                <input matInput placeholder="Escreva a ordem" [(ngModel)]="model.tx_link" class="form-control" value="" required formControlName="tx_link" name="tx_link">
+                            </mat-form-field>
+                            <div *ngIf="tx_link.invalid && formDir.submitted" class="validation-error">
+                                <p *ngIf="tx_link.hasError('required')">O link é <strong>obrigatório</strong></p>
+                            </div>
+                        </div>
+                        <div class="btn-cadastro-footer">
+                            <button mat-stroked-button color="primary" class="btn-cadastro-fill" style="margin-right: 10px" (click)="voltar()">
+                                Cancelar<mat-icon>arrow_back</mat-icon>
+                            </button>
+
+                            <button mat-button class="btn-cadastro-full" (click)="onSubmit()">
+                                Finalizar <mat-icon>save</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

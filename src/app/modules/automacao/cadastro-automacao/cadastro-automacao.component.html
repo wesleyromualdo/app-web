@@ -1,0 +1,75 @@
+<div class="div-content">
+    <app-header menuSelected="{{menuTexto}}"></app-header>
+
+    <form [formGroup]="formulario" #formDir="ngForm">
+        <div  class="card-principal">
+            <div style="display: flex; flex-direction: row; width: 100%; height: 100%;">
+                <div class="div-divider-right" style="width: 30%;">
+                    <div style="display: flex; flex-direction: row;">
+                        <div class="div-step-icon">
+                            <div class="div-step-icon-content">
+                                <span aria-hidden="true">1</span>
+                            </div>
+                        </div>
+                        <div class="div-informacoes">Dados do executor</div>
+                    </div>
+                    <!--<div class="div-mat-stepper-vertical-line">
+                        <div style="border-left: 3px solid #B4BABD;"></div>
+                    </div>-->
+                </div>
+                <div class="form-content">
+                    <div class="div-cabecalho-cadastro">
+                        <div style="display: flex; flex-direction: row">
+                            <div class="titulo-menu" style="width: 70% !important;">Dados do executor</div>
+                            <div class="titulo-menu campo-check-status">
+                                <mat-slide-toggle color="primary" (change)="onChangeToggle($event)" *ngIf="isChecked" checked>{{tx_ativo}}</mat-slide-toggle>
+                                <mat-slide-toggle color="primary" (change)="onChangeToggle($event)" *ngIf="!isChecked">{{tx_ativo}}</mat-slide-toggle>
+                            </div>
+                        </div>
+                        <div>
+
+                            <p><mat-label>Nome do executor</mat-label></p>
+                            <mat-form-field class="input-full-width" appearance="fill">
+                                <input matInput placeholder="Escreva o nome do executor" [(ngModel)]="model.tx_nome" class="form-control" value="" required formControlName="tx_nome" name="tx_nome">
+                            </mat-form-field>
+                            <div *ngIf="tx_nome.invalid && formDir.submitted" class="validation-error">
+                                <p *ngIf="tx_nome.hasError('required')">O nome é <strong>obrigatório</strong></p>
+                            </div>
+
+                            <p><mat-label>Descrição</mat-label></p>
+                            <mat-form-field class="input-full-width" appearance="fill">
+                                <textarea matInput placeholder="Escreva descrição" [(ngModel)]="model.tx_descricao" value="" formControlName="tx_descricao" name="tx_descricao"></textarea>
+                            </mat-form-field>
+
+                            <p><mat-label>Qtd de tarefas</mat-label></p>
+                            <mat-form-field class="input-full-width" appearance="fill">
+                                <input matInput placeholder="" [(ngModel)]="model.nu_qtd_tarefa" value="" (keypress)="numberOnly($event)" formControlName="nu_qtd_tarefa" name="nu_qtd_tarefa">
+                            </mat-form-field>
+
+                            <p><mat-label>Qtd de Download</mat-label></p>
+                            <mat-form-field class="input-full-width" appearance="fill">
+                                <input matInput placeholder="" [(ngModel)]="model.nu_qtd_download" value="" (keypress)="numberOnly($event)" formControlName="nu_qtd_download" name="nu_qtd_download">
+                            </mat-form-field>
+
+                            <p><mat-label>Json</mat-label></p>
+                            <div class="app-ace-editor" #editor style="width: 100%;height: 250px; overflow: auto;"></div>
+                            <div *ngIf="!validaJson" class="validation-error" style="margin-top: unset !important;">
+                                <p>O formatado do JSON é inválido.</p>
+                            </div>
+
+                        </div>
+                        <div class="btn-cadastro-footer">
+                            <button mat-stroked-button color="primary" class="btn-cadastro-fill" style="margin-right: 10px" (click)="voltar()">
+                                Cancelar<mat-icon>arrow_back</mat-icon>
+                            </button>
+
+                            <button mat-button class="btn-cadastro-full" (click)="onSubmit()">
+                                Salvar <mat-icon>save</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

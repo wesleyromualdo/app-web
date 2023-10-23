@@ -1,0 +1,92 @@
+<div class="div-content">
+    <app-header menuSelected="{{menuTexto}}"></app-header>
+
+    <form [formGroup]="formulario" #formDir="ngForm">
+        <div  class="card-principal">
+            <div style="display: flex; flex-direction: row; width: 100%; height: 100%;">
+                <div class="div-divider-right" style="width: 30%;">
+                    <div style="display: flex; flex-direction: row;">
+                        <div class="div-step-icon" style="background-color: #1FA8E4 !important;">
+                            <div class="div-step-icon-content">
+                                <span aria-hidden="true">1</span>
+                            </div>
+                        </div>
+                        <div class="div-informacoes" style="color: #1FA8E4 !important;" (click)="linkCadastro('cadastro-usuario')">Dados do usuário</div>
+                    </div>
+                    <div class="div-mat-stepper-vertical-line">
+                        <div style="border-left: 3px solid #1FA8E4;"></div>
+                    </div>
+                    <div style="display: flex; flex-direction: row;">
+                        <div class="div-step-icon">
+                            <div class="div-step-icon-content">
+                                <span aria-hidden="true">2</span>
+                            </div>
+                        </div>
+                        <div class="div-informacoes" (click)="linkCadastro('dados-acesso')">Dados de acesso</div>
+                    </div>
+                    <div class="div-mat-stepper-vertical-line">
+                        <div style="border-left: 3px solid #B4BABD;"></div>
+                    </div>
+                    <div style="display: flex; flex-direction: row;">
+                        <div class="div-step-icon-default">
+                            <div class="div-step-icon-content">
+                                <span aria-hidden="true">3</span>
+                            </div>
+                        </div>
+                        <div class="div-informacoes-default"  (click)="linkCadastro('senha-acesso')">Senha de acesso</div>
+                    </div>
+                </div>
+                <div class="form-content">
+                    <div class="div-cabecalho-cadastro">
+                        <div style="display: flex; flex-direction: row">
+                            <div class="titulo-menu">Dados de acesso</div>
+                        </div>
+                        <div style="padding-top: 20px">
+                            <div class="titulo-menu" style="width: 70% !important; padding-bottom: 10px;">Perfil</div>
+                            <div class="grid-container">
+                                <mat-checkbox class="modulo-checkbox" *ngFor="let perfil of perfils" (change)="selectionPerfil.toggle(perfil)"
+                                              [checked]="selectionPerfil.isSelected(perfil)"
+                                              id="perfil_{{perfil.id}}">{{perfil.tx_nome}}</mat-checkbox>
+                            </div>
+                            <div *ngIf="nenhumRegistroPerfil" class="validation-error" style="margin-top: 8px">
+                                <p>{{nenhumRegistroPerfil}}</p>
+                            </div>
+                            <div *ngIf="formDir.submitted" class="validation-error" style="margin-top: 8px">
+                                <p *ngIf="this.selectionPerfil.selected.length == 0">Selecione um <strong>Perfil</strong></p>
+                            </div>
+                        </div>
+                        <div style="padding-top: 20px">
+                            <div class="titulo-menu" style="width: 70% !important; padding-bottom: 10px;">Executores</div>
+                            <mat-checkbox class="modulo-checkbox" id="todas" (change)="onChangeEventTodos($event)">Selecione Todos</mat-checkbox>
+                            <br><br>
+                            <div class="grid-container">
+                                <mat-checkbox class="modulo-checkbox" *ngFor="let automacao of automacoes" (change)="selectionAutomacao.toggle(automacao)"
+                                              [checked]="selectionAutomacao.isSelected(automacao)"
+                                              id="automacao_{{automacao.id}}">{{automacao.id}} - {{automacao.tx_nome}}</mat-checkbox>
+                            </div>
+                            <div *ngIf="nenhumRegistro" class="validation-error" style="margin-top: 8px">
+                                <p>{{nenhumRegistro}}</p>
+                            </div>
+                            <!--<div *ngIf="formDir.submitted" class="validation-error" style="margin-top: 8px">
+                                <p *ngIf="this.selectionAutomacao.selected.length == 0">Selecione um <strong>Módulo</strong></p>
+                            </div>-->
+                        </div>
+                        <div class="btn-cadastro-footer">
+                            <button mat-stroked-button color="primary" class="btn-cadastro-fill" style="margin-right: 10px" (click)="voltar()">
+                                Voltar<mat-icon>arrow_back</mat-icon>
+                            </button>
+
+                            <button mat-button class="btn-cadastro-full" style="margin-right: 10px" (click)="onSubmit()">
+                                Salvar <mat-icon>save</mat-icon>
+                            </button>
+
+                            <button mat-stroked-button color="primary" class="btn-cadastro-fill" (click)="proximo()">
+                                Próximo <mat-icon>arrow_forward</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

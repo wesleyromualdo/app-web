@@ -1,0 +1,198 @@
+<div class="div-content">
+    <app-header menuSelected="Cadastro de JSON"></app-header>
+    <form [formGroup]="formulario" #formDir="ngForm">
+    <div  class="card-principal">
+        <div style="display: flex; flex-direction: row; width: 100%; height: 100%;">
+            <div class="div-divider-right" style="width: 30%;">
+                <div style="display: flex; flex-direction: row;">
+                    <div class="div-step-icon" style="background-color: #1FA8E4 !important;">
+                        <div class="div-step-icon-content">
+                            <span aria-hidden="true">1</span>
+                        </div>
+                    </div>
+                    <div class="div-informacoes" style="color: #1FA8E4 !important;" (click)="linkCadastro('cadastro-tarefa')">Dados da tarefa</div>
+                </div>
+                <div class="div-mat-stepper-vertical-line">
+                    <div style="border-left: 3px solid #1FA8E4;"></div>
+                </div>
+                <div style="display: flex; flex-direction: row;">
+                    <div class="div-step-icon" style="background-color: #1FA8E4 !important;">
+                        <div class="div-step-icon-content">
+                            <span aria-hidden="true">2</span>
+                        </div>
+                    </div>
+                    <div class="div-informacoes" style="color: #1FA8E4 !important;" *ngIf="id" (click)="linkCadastro('cadastro-json-tarefa')">Cadastro de JSON</div>
+                </div>
+                <div class="div-mat-stepper-vertical-line">
+                    <div style="border-left: 3px solid #1FA8E4;"></div>
+                </div>
+                <div style="display: flex; flex-direction: row;">
+                    <div class="div-step-icon">
+                        <div class="div-step-icon-content">
+                            <span aria-hidden="true">3</span>
+                        </div>
+                    </div>
+                    <div class="div-informacoes" *ngIf="id" (click)="linkCadastro('agendamento-tarefa')">Agendamento</div>
+                </div>
+                <div class="div-mat-stepper-vertical-line" *ngIf="model.bo_email">
+                    <div style="border-left: 3px solid #B4BABD;"></div>
+                </div>
+                <div style="display: flex; flex-direction: row;" *ngIf="model.bo_email">
+                    <div class="div-step-icon-default">
+                        <div class="div-step-icon-content">
+                            <span aria-hidden="true">4</span>
+                        </div>
+                    </div>
+                    <div class="div-informacoes-default" *ngIf="id" (click)="linkCadastro('config-email-tarefa')">Configuração de e-mail</div>
+                </div>
+            </div>
+            <div class="form-content">
+                <div class="div-cabecalho-cadastro">
+
+                    <div class="cabecalho-titulo">
+                        <div class="titulo-menu" style="width: 70% !important;">Agendamento</div>
+                    </div>
+                    <div class="cronograma" style="padding-top: 20px" *ngIf="model.bo_agendada == true || model.bo_agendada == 'true'">
+                        <p><mat-label><b>Cronograma de agendamento</b></mat-label></p>
+                        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" (change)="radioChange($event)">
+                            <mat-radio-button class="example-radio-button" value="diario" [checked]="jsonCronograma.cronograma == 'diario' || jsonCronograma.cronograma==''">Diário</mat-radio-button>
+                            <mat-radio-button class="example-radio-button" value="semanal" [checked]="jsonCronograma.cronograma == 'semanal'">Semanal</mat-radio-button>
+                            <mat-radio-button class="example-radio-button" value="mensal" [checked]="jsonCronograma.cronograma == 'mensal'">Mensal</mat-radio-button>
+                        </mat-radio-group>
+
+                        <div *ngIf="jsonCronograma.cronograma == 'diario' || jsonCronograma.cronograma==''">
+                            <mat-checkbox class="modulo-checkbox" (change)="checkedEventRepetir($event)" style="padding-top: 10px;"
+                                          [checked]="selectionRepetir">Repetir diariamente</mat-checkbox>
+
+                            <mat-checkbox class="modulo-checkbox" (change)="checkedEventHora($event)" style="padding-top: 10px; padding-left: 10px"
+                                          [checked]="selectionHoraemhora">Repetir de hora em hora</mat-checkbox>
+
+                            <div style="display: flex; flex-direction: row" *ngIf="!selectionHoraemhora">
+                                <mat-form-field appearance="fill" style="padding-top: 10px; width: 30%">
+                                    <mat-label>Informe o Horário:</mat-label>
+                                    <input matInput [(ngModel)]="horario" [dropSpecialCharacters]="false" mask="00:00" maxlength="5" class="form-control" value="" formControlName="horario">
+                                </mat-form-field>
+                                <div class="btn-cadastro-footer" style="padding-left: 10px !important; padding-top: 10px !important;">
+                                    <button mat-button class="btn-cadastro-full" style="height: 60px !important; width: 80px !important;" (click)="adicionarHorario()"><mat-icon style="padding-left: unset">add_circle</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                            <div *ngIf="formDir.submitted || horarioValid.invalido || horarioValid.existe" class="validation-error">
+                                <p *ngIf="horarioValid.invalido">O horário está <strong>inválido.</strong></p>
+                                <p *ngIf="horarioValid.existe">O horário já foi informado.</p>
+                                <p *ngIf="horarioValid.isnull">Adicione o horário.</p>
+                            </div>
+                            <div style="display: flex; flex-direction: column;" *ngIf="horarios.length > 0">
+                                <mat-label>Agendamentos:</mat-label>
+                                <div>
+                                    <mat-checkbox class="checkbox-horario" *ngFor="let hora of horarios" (change)="checkedEventHorarios(hora)"
+                                                  [checked]="selectionHorario.isSelected(hora)">{{hora}}</mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="jsonCronograma.cronograma == 'semanal'">
+                            <div>
+                                <mat-checkbox class="modulo-checkbox" (change)="checkedEventRepetir($event)" style="padding-top: 10px;"
+                                              [checked]="selectionRepetir">Repetir</mat-checkbox>
+                            </div>
+                            <div style="padding-top: 10px; display: flex; flex-direction: column">
+                                <mat-label>Dias da semana:</mat-label>
+                                <div>
+                                    <mat-form-field appearance="fill" class="input-medium-width">
+                                        <mat-select  [(value)]="diaDaSemana" (selectionChange)="onDiaSemanaChange($event)">
+                                            <mat-option *ngFor="let source of comboDiaSemana" [value]="source.id">
+                                                {{source.value}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div style="display: flex; flex-direction: row" *ngIf="!selectionHoraemhora">
+                                <mat-form-field appearance="fill" style="padding-top: 10px; width: 30%">
+                                    <mat-label>Informe o Horário:</mat-label>
+                                    <input matInput [(ngModel)]="horario" [dropSpecialCharacters]="false" mask="00:00" maxlength="5" class="form-control" value="" formControlName="horario">
+                                </mat-form-field>
+                                <div class="btn-cadastro-footer" style="padding-left: 10px !important; padding-top: 10px !important;">
+                                    <button mat-button class="btn-cadastro-full" style="height: 60px !important; width: 80px !important;" (click)="adicionarHorario()"><mat-icon style="padding-left: unset">add_circle</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                            <div *ngIf="formDir.submitted || horarioValid.invalido || horarioValid.existe" class="validation-error">
+                                <p *ngIf="horarioValid.invalido">O horário está <strong>inválido.</strong></p>
+                                <p *ngIf="horarioValid.existe">O horário já foi informado.</p>
+                                <p *ngIf="horarioValid.isnull">Adicione o horário.</p>
+                            </div>
+                            <div style="display: flex; flex-direction: column;" *ngIf="jsonCronograma.agenda.length > 0">
+                                <mat-label>Agendamento:</mat-label>
+                                <div *ngFor="let dados of jsonCronograma.agenda">
+                                    <mat-label><b>{{dados.semana}}:</b></mat-label><br>
+                                    <mat-checkbox class="checkbox-horario-semana" *ngFor="let hora of dados.hora" (change)="checkedEventHorariosSemana(dados.semana, hora)"
+                                                  [checked]="selectionHorario.isSelected(dados.semana+''+hora)">{{hora}}</mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="jsonCronograma.cronograma == 'mensal'">
+                            <div style="padding-bottom: 10px;">
+                                <mat-checkbox class="modulo-checkbox" (change)="checkedEventRepetir($event)" style="padding-top: 10px;"
+                                              [checked]="selectionRepetir">Repetir</mat-checkbox>
+                            </div>
+                            <mat-label>Data:</mat-label>
+                            <div>
+                                <mat-form-field appearance="fill">
+                                    <input matInput [matDatepicker]="picker" formControlName="dataMensal" (dateChange)="addEventDate('change', $event)">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker [dateClass]="dateClass" #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div *ngIf="formDir.submitted || dataMensalValid.invalido || dataMensalValid.existe" class="validation-error">
+                                <p *ngIf="dataMensalValid.invalido">A data está <strong>inválida (MM/DD/YYYY).</strong></p>
+                                <p *ngIf="dataMensalValid.existe">A data já foi informada.</p>
+                            </div>
+
+                            <div style="display: flex; flex-direction: row" *ngIf="!selectionHoraemhora">
+                                <mat-form-field appearance="fill" style="padding-top: 10px; width: 30%">
+                                    <mat-label>Informe o Horário:</mat-label>
+                                    <input matInput [(ngModel)]="horario" [dropSpecialCharacters]="false" mask="00:00" maxlength="5" class="form-control" value="" formControlName="horario">
+                                </mat-form-field>
+                                <div class="btn-cadastro-footer" style="padding-left: 10px !important; padding-top: 10px !important;">
+                                    <button mat-button class="btn-cadastro-full" style="height: 60px !important; width: 80px !important;" (click)="adicionarHorario()"><mat-icon style="padding-left: unset">add_circle</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                            <div *ngIf="formDir.submitted || horarioValid.invalido || horarioValid.existe || horarioValid.isnull" class="validation-error">
+                                <p *ngIf="horarioValid.invalido">O horário está <strong>inválido.</strong></p>
+                                <p *ngIf="horarioValid.existe">O horário já foi informado.</p>
+                                <p *ngIf="horarioValid.isnull">Adicione o horário.</p>
+                            </div>
+                            <div style="display: flex; flex-direction: column;" *ngIf="jsonCronograma.agenda.length > 0">
+                                <mat-label>Agendamento:</mat-label>
+                                <div *ngFor="let dados of jsonCronograma.agenda">
+                                    <mat-label><b>{{dados.mensal}}:</b></mat-label><br>
+                                    <mat-checkbox class="checkbox-horario-semana" *ngFor="let hora of dados.hora" (change)="checkedEventHorariosMensal(dados.mensal, hora)"
+                                                  [checked]="selectionHorario.isSelected(dados.mensal+''+hora)">{{hora}}</mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="btn-cadastro-footer">
+                        <button mat-stroked-button color="primary" class="btn-cadastro-fill" style="margin-right: 10px">
+                            Cancelar<mat-icon>arrow_back</mat-icon>
+                        </button>
+
+                        <button mat-button class="btn-cadastro-full" (click)="onSubmit()">
+                            Salvar <mat-icon>save</mat-icon>
+                        </button>
+
+                        <button mat-stroked-button color="primary" *ngIf="model.bo_email" class="btn-cadastro-fill" style="margin-left: 10px" (click)="proximo()">
+                            Próximo<mat-icon>arrow_forward</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>

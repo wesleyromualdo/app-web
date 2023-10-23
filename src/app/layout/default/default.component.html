@@ -1,0 +1,70 @@
+<!--<mat-toolbar class="mat-elevation-z8">
+    <button
+        mat-icon-button
+        *ngIf="sidenav.mode === 'over'"
+        (click)="sidenav.toggle()"
+    >
+        <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+        <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+    </button>
+    Responsive side navigation
+</mat-toolbar>
+
+<mat-sidenav-container>
+    <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+        <div class="div-logo">
+            <span> Ministério da <br>Agricultura, Pecuária e Abastecimento </span>
+        </div>
+        <div class="profile-card">
+            <div class="header"><img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Soufiane FADIL"></div>
+            <div class="dados-user">
+                <h2>Anastacia Escobar Zarco</h2>
+                <h4>Getor</h4>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <mat-drawer-container>
+            <mat-drawer>
+                <app-sidebar></app-sidebar>
+            </mat-drawer>
+        </mat-drawer-container>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="content mat-elevation-z8">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
+ng serve --port 8080 --host 0.0.0.0
+-->
+
+<mat-sidenav-container>
+    <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+        <mat-toolbar>
+            <div class="titulo-cliente">
+                <!--<div style="font-weight: normal;">Ministério da</div>
+                <div style="">Agricultura, Pecuária</div>
+                <div>e Abastecimento</div>-->
+                <div class="titulo-sigla">CEO</div>
+                <div class="titulo-descricao">CENTRO DE EXCELÊNCIA</div>
+                <div class="titulo-descricao">OPERACIONAL</div>
+            </div>
+        </mat-toolbar>
+        <mat-drawer-container>
+            <app-sidebar></app-sidebar>
+        </mat-drawer-container>
+    </mat-sidenav>
+    <mat-sidenav-content class="mat-sidenav-content-alter">
+        <mat-drawer-container>
+            <mat-drawer-content>
+                <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()" style="position: absolute; top: 20px;">
+                    <mat-icon *ngIf="!sidenav.opened" style="font-size: 30px"> menu </mat-icon>
+                    <mat-icon *ngIf="sidenav.opened" style="font-size: 30px"> close </mat-icon>
+                </button>
+                <router-outlet></router-outlet>
+            </mat-drawer-content>
+        </mat-drawer-container>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+

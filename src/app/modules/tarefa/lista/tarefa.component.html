@@ -1,0 +1,16 @@
+<div class="div-content">
+    <app-header menuSelected="Tarefas"></app-header>
+
+    <mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)" [selectedIndex]="abaIndex">
+        <mat-tab label="Em execução">
+            <app-tarefas-execucao *ngIf="abaIndex == 0"></app-tarefas-execucao>
+        </mat-tab>
+        <mat-tab label="Finalizadas">
+            <app-tarefas-finalizadas *ngIf="abaIndex == 1" [bo_agendada]="false"></app-tarefas-finalizadas>
+        </mat-tab>
+        <mat-tab label="Agendadas">
+            <app-tarefas-finalizadas *ngIf="abaIndex == 2" [bo_agendada]="true"></app-tarefas-finalizadas>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+

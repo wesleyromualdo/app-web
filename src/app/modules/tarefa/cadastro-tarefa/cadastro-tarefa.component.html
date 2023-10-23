@@ -1,0 +1,137 @@
+<div class="div-content">
+    <app-header menuSelected="{{menuTexto}}"></app-header>
+
+    <form [formGroup]="formulario" #formDir="ngForm">
+        <div  class="card-principal">
+            <div style="display: flex; flex-direction: row; width: 100%; height: 100%;">
+                <div class="div-divider-right" style="width: 30%;">
+                    <div style="display: flex; flex-direction: row;">
+                        <div class="div-step-icon">
+                            <div class="div-step-icon-content">
+                                <span aria-hidden="true">1</span>
+                            </div>
+                        </div>
+                        <div class="div-informacoes" (click)="linkCadastro('cadastro-tarefa')">Dados da tarefa</div>
+                    </div>
+                    <div class="div-mat-stepper-vertical-line" *ngIf="id">
+                        <div style="border-left: 3px solid #B4BABD;"></div>
+                    </div>
+                    <div style="display: flex; flex-direction: row;" *ngIf="id">
+                        <div class="div-step-icon-default">
+                            <div class="div-step-icon-content">
+                                <span aria-hidden="true">2</span>
+                            </div>
+                        </div>
+                        <div class="div-informacoes-default" *ngIf="id" (click)="linkCadastro('cadastro-json-tarefa')">Cadastro de JSON</div>
+                    </div>
+                    <div class="div-mat-stepper-vertical-line" *ngIf="boAgendado">
+                        <div style="border-left: 3px solid #B4BABD;"></div>
+                    </div>
+                    <div style="display: flex; flex-direction: row;" *ngIf="boAgendado">
+                        <div class="div-step-icon-default">
+                            <div class="div-step-icon-content">
+                                <span aria-hidden="true">3</span>
+                            </div>
+                        </div>
+                        <div class="div-informacoes-default" *ngIf="id" (click)="linkCadastro('agendamento-tarefa')">Agendamento</div>
+                    </div>
+                    <div class="div-mat-stepper-vertical-line" *ngIf="boEnviaEmail">
+                        <div style="border-left: 3px solid #B4BABD;"></div>
+                    </div>
+                    <div style="display: flex; flex-direction: row;" *ngIf="boEnviaEmail">
+                        <div class="div-step-icon-default">
+                            <div class="div-step-icon-content">
+                                <span aria-hidden="true" *ngIf="boAgendado">4</span>
+                                <span aria-hidden="true" *ngIf="!boAgendado">3</span>
+                            </div>
+                        </div>
+                        <div class="div-informacoes-default" *ngIf="id" (click)="linkCadastro('config-email-tarefa')">Configuração de e-mail</div>
+                        <div class="div-informacoes-default" *ngIf="!id">Configuração de e-mail</div>
+                    </div>
+                </div>
+                <div class="form-content">
+                    <div class="div-cabecalho-cadastro">
+                        <div class="cabecalho-titulo">
+                            <div class="titulo-menu" style="width: 70% !important; display: flex">Dados da Tarefa <button *ngIf="userData.superuser && id" mat-menu-item (click)="startTarefa()" style="display: flex; width: unset; height: auto;"><mat-icon style="color: #49BC44;">play_circle_outline</mat-icon></button></div>
+                            <div class="titulo-menu campo-check-status">
+                                <mat-slide-toggle color="primary" (change)="onChangeToggle($event)" *ngIf="isChecked" checked>{{tx_ativo}}</mat-slide-toggle>
+                                <mat-slide-toggle color="primary" (change)="onChangeToggle($event)" *ngIf="!isChecked">{{tx_ativo}}</mat-slide-toggle>
+                            </div>
+                        </div>
+                        <div style="padding-top: 20px">
+                            <p><mat-label>Nome:</mat-label></p>
+                            <mat-form-field class="input-full-width" appearance="fill">
+                                <mat-label>Escreva o nome do menu</mat-label>
+                                <input matInput [(ngModel)]="model.tx_nome" class="form-control" value="" required formControlName="tx_nome" name="tx_nome">
+                            </mat-form-field>
+                            <div *ngIf="tx_nome.invalid && formDir.submitted" class="validation-error">
+                                <p *ngIf="tx_nome.hasError('required')">O nome é <strong>obrigatório</strong></p>
+                            </div>
+                        </div>
+                        <div>
+                            <p><mat-label>Script: </mat-label></p>
+                            <input type="file" (change)="selectFile($event)" class="form-control" accept=".py, .zip" id="file_file_name" value="teste" *ngIf="userData.superuser">
+                            <div *ngIf="nome_script != ''" style="display: flex; align-items: center; padding: 10px;"><mat-icon>attach_file</mat-icon><b>{{nome_script}}</b></div>
+                            <!--<div *ngIf="nome_script == '' && formDir.submitted" class="validation-error" style="padding-top: 20px; margin-bottom: -30px">
+                                <p>O anexo do script é <strong>obrigatório</strong></p>
+                            </div>-->
+                        </div>
+                        <div style="padding-top: 20px">
+                            <p><mat-label>Enviar e-mail:</mat-label></p>
+                            <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="model.bo_email" formControlName="bo_email" class="lista-vinculos" (change)="radioButtonGroupChange($event)">
+                                <div *ngFor="let option of options">
+                                    <mat-radio-button [value]="option.id" style="padding-right: 10px;">
+                                        {{option.nome}}
+                                    </mat-radio-button>
+                                </div>
+                            </mat-radio-group>
+                        </div>
+                        <div style="padding-top: 20px">
+                            <p><mat-label>Agendamento:</mat-label></p>
+                            <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="model.bo_agendada" (change)="radioChangeAgendada($event)" formControlName="bo_agendada">
+                                <mat-radio-button class="example-radio-button" value="true" [checked]="model.bo_agendada == true">Sim</mat-radio-button>
+                                <mat-radio-button class="example-radio-button" value="false" [checked]="model.bo_agendada == false">Não</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <div style="padding-top: 20px">
+                            <p><mat-label>Prioridade:</mat-label></p>
+                            <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="model.nu_prioridade" (change)="radioChangePrioridade($event)" formControlName="nu_prioridade">
+                                <mat-radio-button class="example-radio-button" value="1" [checked]="model.nu_prioridade == '1'">Baixa</mat-radio-button>
+                                <mat-radio-button class="example-radio-button" value="2" [checked]="model.nu_prioridade == '2'">Média</mat-radio-button>
+                                <mat-radio-button class="example-radio-button" value="3" [checked]="model.nu_prioridade == '3'">Alta</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <div style="padding-top: 20px">
+                            <div class="titulo-menu" style="width: 70% !important; padding-bottom: 10px;">Lista de Executor(es)</div>
+                            <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="model.automacao_id" (change)="radioChangeAutomacao($event)" formControlName="automacao_id" class="lista-vinculos">
+                                <div *ngFor="let automacao of automacoes" class="grid-container-lista">
+                                    <mat-radio-button class="example-radio-button" [value]="automacao.id" [disabled]="automacao.nu_qtd_tarefa <= automacao.qtd_tarefas">
+                                        {{automacao.tx_nome}} ({{automacao.qtd_tarefas}} de {{automacao.nu_qtd_tarefa}})
+                                    </mat-radio-button>
+                                </div>
+                            </mat-radio-group>
+                            <div *ngIf="nenhumRegistro" class="validation-error" style="margin-top: 8px">
+                                <p>{{nenhumRegistro}}</p>
+                            </div>
+                            <div *ngIf="automacao_id && formDir.submitted" class="validation-error" style="margin-top: 8px">
+                                <p *ngIf="automacao_id.hasError('required')">Selecione um <strong>executor</strong></p>
+                            </div>
+                        </div>
+                        <div class="btn-cadastro-footer">
+                            <button mat-stroked-button color="primary" class="btn-cadastro-fill" style="margin-right: 10px" (click)="voltar()">
+                                Cancelar<mat-icon>arrow_back</mat-icon>
+                            </button>
+
+                            <button mat-button class="btn-cadastro-full" (click)="onSubmit()">
+                                Salvar <mat-icon>save</mat-icon>
+                            </button>
+                            <button mat-stroked-button color="primary" class="btn-cadastro-fill" style="margin-left: 10px" (click)="proximo()">
+                                Próximo<mat-icon>arrow_forward</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

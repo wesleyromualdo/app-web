@@ -1,0 +1,69 @@
+@import '../../../../styles';
+
+.titulo-menu{
+    color: #056691 !important;
+    font-weight: bold !important;
+    padding-bottom: 30px;
+}
+
+.example-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+}
+
+.example-margin {
+    margin: 0 10px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+image-cropper{
+    padding: unset !important;
+}
+
+.div-avatar{
+    height: 150px;
+    border: 1px solid #B4BABD;
+    border-radius: 10%;
+    padding: 5px;
+    max-height: max-content;
+    img{
+        min-width: 100%;
+        margin-top: 10px;
+    }
+}
+
+.img-avatar{
+    display: flex;
+    width: 30%;
+    align-items: center;
+    justify-content: center;
+}
+
+.editar-imagem{
+    padding-top: 10px;
+    a{
+        cursor: pointer;
+    }
+}
+
+@media (max-width: 850px), (orientation: portrait) {
+    .grid-container {
+        display: grid !important;
+        grid-template-columns: auto auto !important;
+    }
+
+    .editar-imagem{
+        span{
+            display: none;
+        }
+        button{
+            width: 25px;
+        }
+    }
+}

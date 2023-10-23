@@ -1,0 +1,80 @@
+<div class="div-content">
+    <app-header menuSelected="Cadastro de JSON"></app-header>
+    <div  class="card-principal">
+        <div style="display: flex; flex-direction: row; width: 100%; height: 100%;">
+            <div class="div-divider-right" style="width: 30%;">
+                <div style="display: flex; flex-direction: row;">
+                    <div class="div-step-icon" style="background-color: #1FA8E4 !important;">
+                        <div class="div-step-icon-content">
+                            <span aria-hidden="true">1</span>
+                        </div>
+                    </div>
+                    <div class="div-informacoes" style="color: #1FA8E4 !important;" (click)="linkCadastro('cadastro-tarefa')">Dados da tarefa</div>
+                </div>
+                <div class="div-mat-stepper-vertical-line">
+                    <div style="border-left: 3px solid #1FA8E4;"></div>
+                </div>
+                <div style="display: flex; flex-direction: row;">
+                    <div class="div-step-icon">
+                        <div class="div-step-icon-content">
+                            <span aria-hidden="true">2</span>
+                        </div>
+                    </div>
+                    <div class="div-informacoes" *ngIf="id" (click)="linkCadastro('cadastro-json-tarefa')">Cadastro de JSON</div>
+                </div>
+                <div class="div-mat-stepper-vertical-line" *ngIf="model.bo_agendada">
+                    <div style="border-left: 3px solid #B4BABD;"></div>
+                </div>
+                <div style="display: flex; flex-direction: row;" *ngIf="model.bo_agendada">
+                    <div class="div-step-icon-default">
+                        <div class="div-step-icon-content">
+                            <span aria-hidden="true">3</span>
+                        </div>
+                    </div>
+                    <div class="div-informacoes-default" *ngIf="id" (click)="linkCadastro('agendamento-tarefa')">Agendamento</div>
+                </div>
+                <div class="div-mat-stepper-vertical-line" *ngIf="model.bo_email">
+                    <div style="border-left: 3px solid #B4BABD;"></div>
+                </div>
+                <div style="display: flex; flex-direction: row;" *ngIf="model.bo_email">
+                    <div class="div-step-icon-default">
+                        <div class="div-step-icon-content">
+                            <span aria-hidden="true" *ngIf="model.bo_agendada">4</span>
+                            <span aria-hidden="true" *ngIf="!model.bo_agendada">3</span>
+                        </div>
+                    </div>
+                    <div class="div-informacoes-default" (click)="linkCadastro('config-email-tarefa')">Configuração de e-mail</div>
+                </div>
+            </div>
+            <div class="form-content">
+                <div class="div-cabecalho-cadastro">
+
+                    <div class="cabecalho-titulo">
+                        <div class="titulo-menu" style="width: 70% !important;">Cadastro de JSON</div>
+                    </div>
+                    <div style="padding-top: 20px">
+                        <p><mat-label>Json</mat-label></p>
+                        <div class="app-ace-editor" #editor style="width: 100%;height: 500px; overflow: auto;"></div>
+                        <div *ngIf="!validaJson" class="validation-error" style="margin-top: unset !important;">
+                            <p>O formatado do JSON é inválido.</p>
+                        </div>
+                    </div>
+
+                    <div class="btn-cadastro-footer">
+                        <button mat-stroked-button color="primary" class="btn-cadastro-fill" style="margin-right: 10px" (click)="voltar()">
+                            Cancelar<mat-icon>arrow_back</mat-icon>
+                        </button>
+
+                        <button mat-button class="btn-cadastro-full" (click)="onSubmit()">
+                            Salvar <mat-icon>save</mat-icon>
+                        </button>
+
+                        <button mat-stroked-button color="primary" *ngIf="model.bo_agendada || model.bo_email" class="btn-cadastro-fill" style="margin-left: 10px" (click)="proximo()">
+                            Próximo<mat-icon>arrow_forward</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

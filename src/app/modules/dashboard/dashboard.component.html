@@ -1,0 +1,47 @@
+<app-header menuSelected="Dashboard"></app-header>
+<div class="div-content" *ngIf="mostraChart">
+    <app-widget-chart-area [tempoTotal]="tempoTotal" (outputDados)="pegaDadosAutomacao($event)"></app-widget-chart-area>
+    <br>
+    <mat-divider ></mat-divider>
+    <br>
+    <div class="bloco-dados-tarefa">
+        <div class="card-principal-lista">
+            <mat-tab-group>
+                <mat-tab label="Em execução">
+                    <app-tarefas-execucao [habilitaFiltros]="false" [visualizacao]="false"></app-tarefas-execucao>
+                </mat-tab>
+                <mat-tab label="Finalizadas">
+                    <app-tarefas-finalizadas [habilitaFiltros]="false" [visualizacao]="false"></app-tarefas-finalizadas>
+                </mat-tab>
+                <mat-tab label="Agendadas">
+                    <app-tarefas-finalizadas [habilitaFiltros]="false" [bo_agendada]="true" [visualizacao]="false"></app-tarefas-finalizadas>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+        <div class="card-principal card-principal-1">
+            <div class="bloco-header"><h1>Automações atuais</h1></div>
+            <div>
+                <div class="bloco-principal">
+                    <div class="bloco-dados">
+                        <div><h1>{{dadosAutomacao?.ativas}}</h1></div>
+                        <div><h3>Cadastradas</h3></div>
+                    </div>
+                    <div class="bloco-dados">
+                        <div><h1>{{dadosAutomacao?.execucao}}</h1></div>
+                        <div><h3>Execução</h3></div>
+                    </div>
+                </div>
+                <div class="bloco-principal">
+                    <div class="bloco-dados">
+                        <div><h1>{{dadosAutomacao?.inativas}}</h1></div>
+                        <div><h3>Inativas</h3></div>
+                    </div>
+                    <div class="bloco-dados">
+                        <div><h1>{{dadosAutomacao?.finalizada}}</h1></div>
+                        <div><h3>Finalizadas</h3></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

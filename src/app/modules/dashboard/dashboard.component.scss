@@ -1,0 +1,100 @@
+@import '../../../styles.scss';
+
+.bloco-header{
+    padding: 10px;
+    font-weight: bold;
+    border-bottom: 1px solid #056691;
+    margin-bottom: 15px;
+
+    h1{
+        margin: unset !important;
+        font-family: 'Work Sans';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 150%;
+        letter-spacing: 0.25px;
+        color: #141A1D;
+        min-width: max-content;
+    }
+}
+.bloco-principal{
+    display: flex;
+    flex-direction: row;
+    padding-top: 5px;
+    width: 100%
+}
+
+.bloco-dados{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding-right: 10px;
+    h1{
+        font-family: 'Work Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 26px;
+        line-height: 150%;
+        letter-spacing: 0.18px;
+        color: #394E58;
+        margin: unset;
+    }
+    h3{
+        font-family: 'Work Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 150%;
+        letter-spacing: 0.25px;
+        color: #141A1D;
+    }
+    div{
+        width: 50%;
+        min-width: max-content;
+    }
+}
+
+.card-principal-lista{
+    width: 80%;
+    background-color: #FFFFFF;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    font-size: 16px;
+    color: #394E58;
+    font-family: 'Work Sans', 'Roboto', "Helvetica Neue", 'sans-serif' !important;
+}
+.card-principal-1{
+    width: 25%;
+    padding: 10px;
+    height: max-content;
+    margin-left: 5px;
+}
+
+.bloco-dados-tarefa{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+@media (max-width: 850px), (orientation: portrait) {
+    .bloco-dados-tarefa{
+        display: flex;
+        flex-direction: column;
+        padding: unset !important;
+    }
+
+    .card-principal-lista{
+        width: 100% !important;
+    }
+    .card-principal {
+        padding: unset !important;
+    }
+    .card-principal-1{
+        width: 100%;
+        margin: unset !important;
+        padding: unset !important;
+        margin-top: 20px !important;
+    }
+}

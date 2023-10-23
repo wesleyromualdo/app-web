@@ -1,0 +1,11 @@
+@import '../../../../styles';
+
+.modal-cabecalho{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    div{
+        //width: 25%;
+        padding: 10px;
+    }
+}

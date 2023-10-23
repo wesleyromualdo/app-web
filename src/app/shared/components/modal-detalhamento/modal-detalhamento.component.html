@@ -1,0 +1,32 @@
+<mat-dialog-content>
+    <div class="div-content">
+        <div style="display: flex; flex-direction: column; width: 100%;">
+            <div style="display: flex; flex-direction: row; width: 100%">
+                <div style="width: 100%">
+                    <p style="font-weight: bold">{{data?.informacao.label}}</p>
+                    <p>{{data?.informacao.value}}</p>
+                </div>
+            </div>
+            <mat-divider style="padding-top: 10px; padding-bottom: 10px"></mat-divider>
+            <div style="display: flex; flex-direction: row; width: 100%; flex-wrap: wrap">
+                <div *ngFor="let conteudo of data.conteudo"  [style.width]="conteudo.width ? conteudo.width : '33%'">
+                    <p style="font-weight: bold">{{conteudo.label}}</p>
+                    <div class="{{conteudo.class}}">
+                        <ngx-json-viewer *ngIf="conteudo.type == 'json'" [json]="conteudo.value" [depth]="3"></ngx-json-viewer>
+                        <p *ngIf="conteudo.type != 'json'">{{conteudo.value}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="dataList?.length > 0">
+            <mat-divider style="padding-top: 10px; padding-bottom: 10px"></mat-divider>
+            <div style="height: 360px; overflow: auto" id="div-scroll">
+                <app-datatable *ngIf="loading" [configTable]="configTable" [dados]="dataList" (outputDados)="executaRetorno($event)"></app-datatable>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-divider style="padding-top: 10px;"></mat-divider>
+<mat-dialog-actions align="end" style="margin-top: -10px; display: flex; align-items: center; justify-content: flex-end">
+    <button mat-stroked-button mat-dialog-close>Fechar</button>
+</mat-dialog-actions>

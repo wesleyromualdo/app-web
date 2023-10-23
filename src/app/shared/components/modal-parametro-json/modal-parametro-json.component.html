@@ -1,0 +1,47 @@
+<mat-dialog-content>
+    <div class="div-content">
+        <div style="display: flex; flex-direction: column; width: 100%;">
+            <div style="display: flex; flex-direction: row; width: 100%">
+                <div style="width: 100%">
+                    <p style="font-weight: bold">Dados da tarefa</p>
+                    <p>{{data?.tx_nome}}</p>
+                </div>
+            </div>
+            <mat-divider style="padding-top: 10px; padding-bottom: 10px"></mat-divider>
+            <div style="display: flex; flex-direction: row; width: 100%; flex-wrap: wrap">
+                <div style="width: 50%">
+                    <p style="font-weight: bold">Nome do executor</p>
+                    <p>{{data?.automacao}}</p>
+                </div>
+                <div style="width: 30%">
+                    <p style="font-weight: bold">Agendada para</p>
+                    <p>{{data?.dt_inclusao}}</p>
+                </div>
+                <div style="width: 20%">
+                    <p style="font-weight: bold">Status</p>
+                    <p class="td-status-ativo">{{data?.bo_status_formatado}}</p>
+                </div>
+            </div>
+            <mat-divider style="padding-top: 10px; padding-bottom: 10px"></mat-divider>
+            <div>
+                <mat-label><p style="font-weight: bold">Json</p></mat-label>
+                <!--<mat-form-field class="input-full-width" appearance="fill">
+                    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="3" placeholder="Escreva json de configuração"
+                        [(ngModel)]="data.tx_json" name="tx_json" [innerHTML]="data.tx_json"></textarea>
+                </mat-form-field>-->
+
+                <div class="app-ace-editor" #editor style="width: 100%;height: 250px; overflow: auto;"></div>
+
+                <div *ngIf="!validaJson" class="validation-error" style="margin-top: unset !important;">
+                    <p>O formatado do JSON é inválido.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-divider style="padding-top: 10px;"></mat-divider>
+<mat-dialog-actions align="end" style="margin-top: -10px; display: flex; align-items: center; justify-content: flex-end">
+    <button mat-stroked-button  class="btn-iniciartarefa" (click)="iniciarTarefa()">
+        Iniciar tarefa <mat-icon style="font-size: 20px;">play_circle_outline</mat-icon>
+    </button>
+</mat-dialog-actions>

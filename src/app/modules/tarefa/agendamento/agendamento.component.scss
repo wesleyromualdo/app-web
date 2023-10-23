@@ -1,0 +1,25 @@
+@import '../../../../styles';
+
+.checkbox-horario{
+    padding-right: 10px;
+    padding-bottom: 5px;
+}
+.checkbox-horario-semana{
+    padding-left: 10px;
+    padding-bottom: 5px;
+}
+
+.cronograma{
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    background: #f5f5dc;
+    //#eeeeee
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.checkbox-semana{
+    padding-right: 15px;
+}
+

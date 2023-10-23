@@ -1,0 +1,52 @@
+<div *ngIf="loading" style="width: 100%">
+    <div class="card-principal">
+        <div style="display: flex; flex-direction: row;">
+            <div class="div-tarefas"><span class="titulo-menu">Tarefas realizadas</span></div>
+            <div style="display: flex; justify-content: flex-end; min-width: 65%; align-items: center;" class="div-filtros">
+                <mat-form-field appearance="fill">
+                    <!--<mat-label>Series</mat-label>-->
+                    <mat-select [(value)]="valueDias" (selectionChange)="onDiasChange($event)">
+                        <mat-option *ngFor="let source of comboDias" [value]="source.value">
+                            {{source.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <!--<mat-label>Series</mat-label>-->
+                    <mat-select [(value)]="valueAutomacao" (selectionChange)="onAutomacaoChange($event)">
+                        <mat-option *ngFor="let source of comboAutomacao" [value]="source.value">
+                            {{source.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <!--<div class="button-row">
+                    <button mat-raised-button color="primary">Filtrar
+                        <mat-icon>filter_list</mat-icon>
+                    </button>
+                </div>-->
+            </div>
+        </div>
+        <div style="display: flex; flex-direction: row; width: 100%; padding-top: 20px">
+            <div style="width: 75%;" *ngIf="loading">
+                <highcharts-chart
+                    [Highcharts]="Highcharts"
+                    [options]="chartOptions"
+                    style="width: 100%; height: 400px; display: block;">
+                </highcharts-chart>
+            </div>
+            <div style="width: 25%; padding: 10px;">
+                <h1 class="titulo-menu">Execução das Automações</h1>
+                <div class="h-numero">
+                    {{tempoTotal?.dias}}<div>d</div>{{tempoTotal?.horas}}<div>h</div>{{tempoTotal?.minutos}}<div>m</div>
+                </div>
+                <span class="label-execucao">Tempo de execução</span>
+                <div style="padding-top: 20px">
+                    <div class="h-numero">
+                        0<div>d</div>0<div>h</div>0<div>m</div>
+                    </div>
+                    <span class="label-execucao">Tempo Equiv. humano</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

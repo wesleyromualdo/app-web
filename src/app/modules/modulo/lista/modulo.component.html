@@ -1,0 +1,5 @@
+<div class="div-content">
+    <app-header menuSelected="Cadastro de Módulo"></app-header>
+
+    <app-datatable *ngIf="loading" [configTable]="configTable" [dados]="dataList" [bo_status]="bo_status" (outputDados)="executaRetorno($event)"></app-datatable>
+</div>

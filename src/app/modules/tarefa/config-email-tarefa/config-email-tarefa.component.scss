@@ -1,0 +1,50 @@
+@import '../../../../styles';
+
+
+::ng-deep.mat-tab-body-content {
+    height: 100%;
+    overflow: unset !important;
+}
+
+::ng-deep.mat-tab-body.mat-tab-body {
+    overflow: unset !important;
+}
+
+.editor{
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+
+    ::ng-deep.NgxEditor__Content {
+        min-width:100% !important;
+        height: 200px !important;
+    }
+
+    ::ng-deep.NgxEditor__MenuBar {
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    ::ng-deep.NgxEditor {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border: none;
+        height: 200px !important;
+    }
+
+    .CodeMirror {
+        border: 1px solid #eee;
+        height: auto;
+        margin-bottom: 0.7rem;
+
+        pre {
+            white-space: pre !important;
+        }
+    }
+}
+
+.titulo-menu{
+    color: #056691 !important;
+    font-weight: bold !important;
+    padding-bottom: 30px;
+}

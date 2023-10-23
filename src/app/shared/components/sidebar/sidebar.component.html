@@ -1,0 +1,58 @@
+<div class="div-content div-principal-sidebar">
+    <mat-nav-list>
+        <div class="profile-card">
+            <div class="header"><img [src]="imagemUser"/></div>
+            <div class="dados-user">
+                <h2>{{nomeUsuario}}</h2>
+                <h4>{{perfilUsuario}}</h4>
+                <h5 class="filtro-setor">
+                    <mat-form-field appearance="outline">
+                        <!--<mat-label>Series</mat-label>-->
+                        <mat-select [(value)]="setor_id" (selectionChange)="onSelectSetor($event.value)">
+                            <mat-option *ngFor="let source of comboSetorUsuario" [value]="source.id">
+                                {{source.tx_sigla}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </h5>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+
+        <a mat-list-item *ngFor="let modulo of moduloUsuario" routerLink="{{modulo.tx_link}}" [ngClass]="{menu_selected: clickedItem === modulo.tx_link}" (click)="onClick(modulo.tx_link)">
+            <mat-icon>{{modulo.tx_icon}}</mat-icon>{{modulo.tx_nome}}</a>
+
+        <!--<a mat-list-item routerLink="/dashboard" [ngClass]="{menu_selected: clickedItem === '/dashboard'}" (click)="onClick('/dashboard')">
+            <mat-icon>dashboard</mat-icon>Dashboard</a>
+
+        <a mat-list-item routerLink="/tarefa" [ngClass]="{menu_selected: clickedItem === '/tarefa'}" (click)="onClick('/tarefa')">
+            <mat-icon>assignment</mat-icon>Tarefa</a>
+
+        <a mat-list-item  routerLink="/automacao" [ngClass]="{menu_selected: clickedItem === '/automacao'}" (click)="onClick('/automacao')">
+            <mat-icon>settings</mat-icon>Gestão de executor</a>
+
+        <a mat-list-item routerLink="/usuario" [ngClass]="{menu_selected: clickedItem === '/usuario'}" (click)="onClick('/usuario')">
+            <mat-icon>group</mat-icon>Gestão de usuário</a>
+
+        <mat-divider></mat-divider>
+
+        <a mat-list-item routerLink="/modulo" [ngClass]="{menu_selected: clickedItem === '/modulo'}" (click)="onClick('/modulo')">
+            <mat-icon>view_module</mat-icon>Cadastro de Módulo</a>
+
+        <a mat-list-item routerLink="/perfil" [ngClass]="{menu_selected: clickedItem === '/perfil'}" (click)="onClick('/perfil')">
+            <mat-icon>assignment_ind</mat-icon>Cadastro de Perfil</a>
+
+        <a mat-list-item routerLink="/setor" [ngClass]="{menu_selected: clickedItem === '/setor'}" (click)="onClick('/setor')">
+            <mat-icon>supervised_user_circle</mat-icon>Cadastro de Setor</a>-->
+
+        <a mat-list-item routerLink="/meuperfil" [ngClass]="{menu_selected: clickedItem === '/meuperfil'}" (click)="onClick('/meuperfil')">
+            <mat-icon>person</mat-icon>Meu perfil</a>
+
+        <mat-divider></mat-divider>
+
+        <a mat-list-item routerLink="/login" (click)="sair()" [ngClass]="{menu_selected: clickedItem === '/login'}" (click)="onClick('/login')">
+            <mat-icon>exit_to_app</mat-icon>Sair</a>
+
+        <mat-divider></mat-divider>
+    </mat-nav-list>
+</div>

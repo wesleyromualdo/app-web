@@ -1,0 +1,23 @@
+.div-avatar{
+    width: 60%;
+    border: 1px solid #B4BABD;
+    border-radius: 10%;
+    img{
+        width: 100%;
+    }
+}
+
+.img-avatar{
+    display: flex;
+    width: 30%;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+}
+
+.editar-imagem{
+    position: absolute;
+    a{
+        cursor: pointer;
+    }
+}

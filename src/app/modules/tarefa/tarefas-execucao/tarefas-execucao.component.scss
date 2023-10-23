@@ -1,0 +1,66 @@
+@import '../../../../styles';
+
+:host {
+    .div-table .mat-table {
+        width: 100%;
+    }
+
+    .div-table .mat-form-field {
+        width: 400px;
+    }
+
+    .td-tempo {
+        color: #1FA8E4;
+        font-family: 'Work Sans';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 150%;
+        letter-spacing: 0.5px;
+    }
+
+    table th {
+        padding-left: 5px;
+        padding-right: 5px;
+        font-family: 'Work Sans';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 150%;
+        color: #394E58;
+    }
+
+    table td {
+        padding-left: 5px;
+        padding-right: 5px;
+        font-family: 'Work Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 150%;
+        color: #394E58;
+    }
+
+    ::ng-deep.mat-tab-label .mat-tab-label-content {
+        font-weight: bold;
+        font-size: 16px;
+        letter-spacing: 2px;
+    }
+
+    ::ng-deep .mat-tab-label-active {
+        background-color: #056691;
+        border-radius: 10px 10px 0px 0px;
+        color: #FFFFFF;
+    }
+}
+
+.add-icon{
+    /*padding-left: 15px;*/
+    font-size: 20px;
+}
+
+@media (max-width: 850px), (orientation: portrait) {
+    .div-table .mat-form-field {
+        width: unset !important;
+    }
+}

@@ -1,0 +1,25 @@
+<mat-dialog-content>
+    <div class="div-content">
+        <div class="div-divider-right img-avatar">
+            <div class="div-avatar">
+                <ng-container [class.display-none]="!selectedPhotoBase64">
+                    <image-cropper [imageBase64]="selectedPhotoBase64"
+                                   [maintainAspectRatio]="true"
+                                   [aspectRatio]="1 / 1"
+                                   [resizeToWidth]="128"
+                                   (imageCropped)="imageCropped($event)"
+                                   (loadImageFailed)="loadImageFailed()"
+                                   (imageCropped)="imageCropped($event)"
+                                   (imageLoaded)="imageLoaded()"
+                                   class="!max-h-full w-full"
+                                   format="png">
+                    </image-cropper>
+                </ng-container>
+                <img [src]="croppedImage" [style.border]="croppedImage ? '1px solid black' : 'none'" />
+                <!--<img [src]="selectedPhotoBase64">-->
+            </div>
+            <div class="editar-imagem"><a (click)="tirarFoto()">Editar imagem</a></div>
+        </div>
+    </div>
+    <button mat-button mat-dialog-close="true" style="background: #DE4B40; color: #ffffff; width: 50%; height: 50px;" cdkFocusInitial>Fechar</button>
+</mat-dialog-content>

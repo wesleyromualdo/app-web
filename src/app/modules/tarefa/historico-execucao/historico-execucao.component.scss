@@ -1,0 +1,77 @@
+@import '../../../../styles';
+
+:host {
+    .div-table .mat-table {
+        width: 100%;
+    }
+
+    .div-table .mat-form-field {
+        width: 400px;
+    }
+
+    .td-tempo {
+        color: #1FA8E4;
+    }
+
+    table th {
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    ::ng-deep.mat-tab-label .mat-tab-label-content {
+        font-weight: bold;
+        font-size: 16px;
+        letter-spacing: 2px;
+    }
+
+    ::ng-deep .mat-tab-label-active {
+        background-color: #056691;
+        border-radius: 10px 10px 0px 0px;
+        color: #FFFFFF;
+    }
+}
+
+.td-status-success{
+    color: #198754;
+    font-weight: bold;
+}
+
+.td-status-warning{
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.td-status-info{
+    color: #0dcaf0;
+    font-weight: bold;
+}
+
+.td-status-error{
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.modal-cabecalho{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    div{
+        width: 33%;
+        padding: 10px;
+    }
+}
+
+.caixa-atualizacao{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 50%;
+    position: absolute;
+    right: 20px;
+}
+
+@media (max-width: 850px), (orientation: portrait) {
+    .div-table .mat-form-field {
+        width: unset !important;
+    }
+}

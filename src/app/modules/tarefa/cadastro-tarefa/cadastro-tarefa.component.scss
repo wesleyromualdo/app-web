@@ -1,0 +1,21 @@
+@import '../../../../styles';
+
+.example-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+}
+
+.example-margin {
+    margin: 0 10px;
+}
+
+/*::ng-deep.mat-form-field-appearance-fill .mat-form-field-flex {
+    border-radius: 4px 4px 0 0;
+    padding: unset !important;
+}
+
+::ng-deep.mat-form-field-appearance-fill .mat-form-field-infix {
+    padding: unset !important;
+}*/

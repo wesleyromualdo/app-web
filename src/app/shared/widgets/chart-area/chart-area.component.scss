@@ -1,0 +1,82 @@
+@import '../../../../styles.scss';
+
+.div-tarefas{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    min-width: 35%;
+}
+
+.label-execucao{
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 150%;
+    letter-spacing: 0.25px;
+    color: #141A1D;
+}
+
+.h-numero{
+    display: flex;
+    flex-direction: row;
+
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 150%;
+    letter-spacing: 0.18px;
+    color: #056691;
+    max-width: 100%;
+
+    div{
+        display: flex;
+        align-items: flex-end;
+        font-family: 'Work Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        color: #056691;
+        padding-top: 4px;
+        padding-right: 10px
+    }
+}
+
+.button-row{
+    padding: 10px;
+    button{
+        height: 45px;
+        width: 150px;
+    }
+}
+
+::ng-deep.div-filtros .mat-form-field{
+    margin-left: 20px !important;
+    height: 50px !important;
+    width: 300px;
+}
+
+::ng-deep.div-filtros .mat-form-field-flex{
+    height: 50px !important;
+    border-radius: 4px !important;
+}
+
+::ng-deep.div-filtros .mat-form-field-infix{
+    top: 5px !important;
+    padding: unset !important;
+}
+
+
+::ng-deep.div-filtros .mat-form-field-appearance-fill .mat-select-arrow-wrapper {
+    transform: translateY(0%) !important;
+}
+
+::ng-deep.div-filtros .mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: #FFFFFF;
+}
+
+::ng-deep.div-filtros .mat-select-value {
+    color: #70767F !important;
+    font-size: 16px !important;
+}

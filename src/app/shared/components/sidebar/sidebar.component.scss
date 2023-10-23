@@ -1,0 +1,71 @@
+@import '../../../../styles.scss';
+
+.div-principal-sidebar {
+    .mat-icon {
+        vertical-align: middle;
+        margin-right: 20px;
+    }
+    .profile-card {
+        text-align: left;
+        padding: 0 10px 10px 10px;
+        display: flex;
+        flex-direction: row;
+        /*justify-content: center;*/
+        align-items: center;
+        img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+    }
+    .dados-user {
+        padding-left: 10px;
+        h2 {
+            padding: unset;
+            margin: unset;
+            font-size: 18px;
+            color: #141A1D;
+        }
+        h4 {
+            padding: unset;
+            margin: unset;
+            font-size: 16px;
+        }
+    }
+    .mat-list-item {
+        font-style: normal;
+        font-weight: 500;
+        align-items: center;
+    }
+}
+
+.mat-nav-list .mat-list-item:focus,
+.mat-action-list .mat-list-item:focus,
+.mat-list-option:focus {
+    background: #056691 !important;
+    color: #FFFFFF !important;
+}
+
+.menu_selected {
+    background-color: #056691;
+    color: #FFFFFF;
+
+    &:hover{
+        background-color: #056691;
+    }
+}
+
+.filtro-setor {
+    ::ng-deep.mat-form-field {
+        height: 30px;
+    }
+
+    ::ng-deep.mat-form-field-flex {
+        height: 30px;
+    }
+
+    ::ng-deep.mat-form-field-infix {
+        border: 0px solid;
+    }
+}

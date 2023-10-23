@@ -1,0 +1,39 @@
+<div class="div-content">
+    <app-header menuSelected="Dado Negocial"></app-header>
+
+    <div  class="card-principal">
+        <div class="modal-cabecalho">
+            <div style="width: 50%">
+                <p style="font-weight: bold">Nome da tarefa</p>
+                <p>{{tarefa?.tx_nome}}</p>
+            </div>
+            <div style="width: 50%">
+                <p style="font-weight: bold">Nome do executor</p>
+                <p>{{tarefa?.automacao.tx_nome}}</p>
+            </div>
+        </div>
+        <div class="modal-cabecalho">
+            <div>
+                <p style="font-weight: bold">Iniciada em</p>
+                <p>{{tarefa_historico?.dt_inicio_formatada}}</p>
+            </div>
+            <div>
+                <p style="font-weight: bold">Terminada em</p>
+                <p>{{dt_fim_formatada}}</p>
+            </div>
+            <div>
+                <p style="font-weight: bold">Tempo</p>
+                <p>{{tarefa_historico?.tempo}}</p>
+            </div>
+        </div>
+        <mat-divider style="padding-top: 10px; padding-bottom: 10px"></mat-divider>
+
+        <app-datatable *ngIf="loading" [configTable]="configTable" [dados]="dataList"></app-datatable>
+
+        <div style="display: flex; justify-content: center">
+            <button mat-stroked-button color="primary" class="btn-cadastro-fill" style="margin-right: 10px" (click)="voltar()">
+                <mat-icon style="font-size: 20px;"></mat-icon>Voltar
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+@import '../../../../styles';
+
+table.mat-table {
+    width: 100%;
+}
+
+.btn-iniciartarefa{
+    background: #1FA8E4;
+    border-radius: 8px;
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0.3px;
+    color: #FFFFFF;
+}
+
+.app-ace-editor {
+    border: 2px solid #f8f9fa;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
