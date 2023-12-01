@@ -1,0 +1,30 @@
+name: 'Uploads Assets to S3'
+description: 'Uploads assets to s3.'
+inputs:
+  s3_url:
+    description: 'AWS S3 BUCKET'
+    required: true
+  src_dir:
+    description: ''
+    required: true
+  aws_iam_role:
+    description: ''
+    required: true
+  aws_region:
+    default: us-east-1
+    description: ''
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-region: us-east-1
+        role-to-assume: ${{ inputs.aws_iam_role }}
+
+    - name: Sync S3 Assets
+      shell: bash
+      run: |
+        aws s3 sync --delete ${{ inputs.src_dir }} ${{ inputs.s3_url }}
