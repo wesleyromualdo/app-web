@@ -1,5 +1,5 @@
 ### STAGE 1: Build ###
-FROM node:16.15.1 AS build
+FROM node:16.20.2-slim AS build
 
 WORKDIR /app
 
@@ -12,5 +12,5 @@ RUN npm run build
 
 EXPOSE 3000
 
-CMD [ "npm start" ]
+CMD [ "npm", "start" ]
 

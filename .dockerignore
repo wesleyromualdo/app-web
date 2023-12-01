@@ -1,0 +1,5 @@
+node-modules/
+.github/
+.git/
+.angular/
+dist/
