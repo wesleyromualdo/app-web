@@ -15,3 +15,4 @@ render-ecs-task-definition:
 
 pull-ecs-env-merger:
     oras pull {{pipeline_repo_url}}:ecs-env-merger_latest
+    
