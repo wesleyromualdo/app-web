@@ -46,7 +46,7 @@ jobs:
       - run: set -u
       - run: npm install
       - run: cp ${{ env.ENV_FILE }} .env
-      - run: npm run build -- --prod
+      - run: npm run build --prod
       - run: npm ci --production
       
       - uses: actions/cache/save@v3
