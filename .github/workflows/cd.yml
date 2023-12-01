@@ -52,7 +52,7 @@ jobs:
       - uses: actions/cache/save@v3
         with:
           key: ${{ format('{0}-assets', github.sha) }}
-          path: './dist/'
+          path: 'dist/'
 
       - uses: actions/cache/save@v3
         with:
