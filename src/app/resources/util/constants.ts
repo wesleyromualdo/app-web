@@ -3,7 +3,8 @@
 import {environment} from "../../../environments/environment";
 //'http://127.0.0.1:8000'
 //export const URL = (environment.url ? environment.url : 'http://127.0.0.1:8000') ;
-export const URL = 'http://127.0.0.1:8000';
+//export const URL = 'http://127.0.0.1:8000';
+export const URL = 'https://plataforma-api.automaxia.com.br';
 
 export const USER_DATA = '_user_data_botsolve';
 export const TOKEN_AUTH = '_tokenAuthorization_botsolve';
