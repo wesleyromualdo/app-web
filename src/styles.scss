@@ -42,15 +42,19 @@ body {
     }
 
     ::ng-deep .mat-tab-label-active {
-        background-color: #056691;
+        background-color: #FDB827;
         border-radius: 10px 10px 0px 0px;
         color: #FFFFFF;
         font-family: 'Work Sans', 'Roboto', "Helvetica Neue", 'sans-serif' !important;
     }
 
+    ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+        background-color: #FDB827;
+    }
+
     .mat-stepper-vertical, .mat-stepper-horizontal {
         font-family: 'Work Sans', 'Roboto', "Helvetica Neue", 'sans-serif' !important;
-        color: #394E58;
+        color: #F2DCB0;
         font-size: 18px;
     }
 
@@ -77,9 +81,9 @@ body {
 
 .mat-tab-label {
     opacity: unset !important;
-    border-top: 1px solid #1FA8E4;
-    border-left: 1px solid #1FA8E4;
-    border-right: 1px solid #1FA8E4;
+    border-top: 1px solid #FDB827;
+    border-left: 1px solid #FDB827;
+    border-right: 1px solid #FDB827;
     border-radius: 10px 10px 0px 0px !important;
 
     border-color: rgba(0,0,0,.04);
@@ -92,7 +96,7 @@ body {
     align-items: center;
     height: 45px;
     width: 150px;
-    background-color: #1FA8E4;
+    background-color: #FDB827;
 }
 
 /*.mat-form-field {
@@ -137,7 +141,7 @@ body {
 }
 
 .btn-cadastro-full{
-    background: #1FA8E4;
+    background: #FDB827;
     width: 170px;
     height: 40px;
     color: #FFFFFF;
@@ -150,12 +154,12 @@ body {
     height: 40px;
     font-weight: normal;
     font-size: 20px;
-    color: #1FA8E4;
-    border: 3px solid #1FA8E4;
+    color: #FDB827;
+    border: 3px solid #FDB827;
 }
 
 .div-step-icon{
-    background-color: #056691;
+    background-color: #FDB827;
     color: #fff;
     border-radius: 50%;
     height: 35px;
@@ -201,7 +205,7 @@ body {
     align-items: center;
     height: 35px;
     font-size: 20px;
-    color: #056691;
+    color: #F4D083;
     font-weight: bold;
     cursor: pointer;
 }
@@ -395,12 +399,13 @@ textarea.mat-input-element {
     }
     .titulo-descricao{
         font-weight: normal;
-        font-size: 15px;
+        font-size: 12px;
+        margin-top: -10px;
     }
 }
 
 ::ng-deep .td-status-ativo{
-    color: #1FA8E4 !important;
+    color: #1FA8E4!important;
     font-weight: bold;
 }
 
@@ -429,7 +434,7 @@ textarea.mat-input-element {
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #1FA8E4 !important;
+        background-color: #FDB827!important;
         width: 200px;
         height: 44px;
     }

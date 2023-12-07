@@ -43,16 +43,16 @@
 .mat-nav-list .mat-list-item:focus,
 .mat-action-list .mat-list-item:focus,
 .mat-list-option:focus {
-    background: #056691 !important;
+    background: #FDB827 !important;
     color: #FFFFFF !important;
 }
 
 .menu_selected {
-    background-color: #056691;
+    background-color: #FDB827;
     color: #FFFFFF;
 
     &:hover{
-        background-color: #056691;
+        background-color: #FDB827;
     }
 }
 
