@@ -14,7 +14,7 @@ export class CofreSenhaComponent implements OnInit {
 
     public formulario: any;
     hide = true;
-    setor_id:any
+    cliente_id:any
     token:any
 
     constructor(private router: Router,
@@ -26,17 +26,17 @@ export class CofreSenhaComponent implements OnInit {
     ngOnInit(){
 
         this.route.queryParams.subscribe(params => {
-            this.setor_id = params['setor_id'];
+            this.cliente_id = params['cliente_id'];
             this.token = params['token'];
         });
         this.formulario = new FormGroup({
-            setor_id: new FormControl(this.setor_id, []),
+            cliente_id: new FormControl(this.cliente_id, []),
             token: new FormControl(this.token, []),
             tx_nome: new FormControl('', [Validators.required]),
             tx_usuario: new FormControl('', [Validators.required]),
             tx_senha: new FormControl('', [Validators.required])
         });
-        this.formulario.value.setor_id = this.setor_id;
+        this.formulario.value.cliente_id = this.cliente_id;
         this.formulario.value.tx_senha = '';
         this.formulario.value.tx_senha_confirma = '';
     }

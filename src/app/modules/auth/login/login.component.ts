@@ -64,15 +64,15 @@ export class LoginComponent implements OnInit {
             //console.log('data: ', data);
             this.loginService.resetAuthorizationToken(data.access_token);
 
-            let setor = '';
-            const retorno = await this.pegarSetor(data.usuario.nu_cpf);
+            let cliente = '';
+            const retorno = await this.pegarCliente(data.usuario.nu_cpf);
             console.log(retorno);
-            data.usuario.setor = '';
-            data.usuario.setor_id = 0;
+            data.usuario.cliente = '';
+            data.usuario.cliente_id = 0;
             if( retorno && retorno.length > 0){
-                data.usuario.setor = retorno[0].tx_sigla;
-                data.usuario.setor_id = retorno[0].id;
-                data.usuario.nu_executor = retorno[0].nu_executor;
+                data.usuario.cliente = retorno[0].tx_sigla;
+                data.usuario.cliente_id = retorno[0].id;
+                data.usuario.nu_worker = retorno[0].nu_worker;
             }
             const perfils = await this.pegarPerfil(data.usuario.nu_cpf);
 
@@ -124,8 +124,8 @@ export class LoginComponent implements OnInit {
         })
     }
 
-    async pegarSetor( nu_cpf: any){
-        const retorno = await this.usuarioService.getSetorByCPF(nu_cpf);
+    async pegarCliente( nu_cpf: any){
+        const retorno = await this.usuarioService.getClienteByCPF(nu_cpf);
         return retorno;
     }
 

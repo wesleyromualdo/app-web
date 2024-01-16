@@ -26,7 +26,7 @@ export class CadastroPerfilComponent implements OnInit {
     indeterminate = false;
     menuTexto = 'Novo Perfil';
     selection = new SelectionModel<any>(true, []);
-    usuarioSetorId: any;
+    usuarioClienteId: any;
 
     public formulario: any = new FormGroup({
         id: new FormControl('', []),
@@ -57,17 +57,17 @@ export class CadastroPerfilComponent implements OnInit {
         });
 
         const userData = this.loginService.getUserData();
-        this.usuarioSetorId = userData.setor_id;
+        this.usuarioClienteId = userData.cliente_id;
 
         this.modulos = await this.moduloService.pesquisar();
 
         if( this.codigo ){
             this.menuTexto = 'Editar Perfil';
-            this.getSetorById();
+            this.getClienteById();
         }
     }
 
-    async getSetorById(){
+    async getClienteById(){
         let retorno = await this.perfilService.getById(this.codigo);
 
         if( retorno.menu && retorno.menu.length > 0 ){
@@ -120,7 +120,7 @@ export class CadastroPerfilComponent implements OnInit {
     async onSubmit(){
         let menu: any = [];
         this.selection.selected.forEach(item => {
-            menu.push({id: item.id, setor_id: this.usuarioSetorId})
+            menu.push({id: item.id, cliente_id: this.usuarioClienteId})
         });
         this.formulario.value['menu'] = menu;
 

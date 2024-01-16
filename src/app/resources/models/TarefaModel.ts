@@ -48,7 +48,7 @@ export class Tarefa {
 
 export class StartTarefa {
     tarefa_id: any;
-    setor_id: any;
+    cliente_id: any;
     automacao_id: any;
     nu_cpf: any;
     tx_json: any;
@@ -57,7 +57,7 @@ export class StartTarefa {
     constructor(data?): any{
         if(data){
             this.tarefa_id =  data.tarefa_id;
-            this.setor_id =  data.setor_id;
+            this.cliente_id =  data.cliente_id;
             this.automacao_id =  data.automacao_id;
             this.nu_cpf = data.nu_cpf;
             this.tx_json = data.tx_json;

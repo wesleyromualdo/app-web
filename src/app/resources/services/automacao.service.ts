@@ -10,9 +10,9 @@ export class AutomacaoService {
 
     constructor(private http: RequestService) { }
 
-    async pesquisar(setor_id:any='', tx_nome:any='', bo_status:any='', nu_cpf:any='', pagina: number = 0, tamanho_pagina: number = 0){
+    async pesquisar(cliente_id:any='', tx_nome:any='', bo_status:any='', nu_cpf:any='', pagina: number = 0, tamanho_pagina: number = 0){
 
-        let url = `${URL}/automacao?setor_id=${setor_id}&tx_nome=${tx_nome}&bo_status=${bo_status}&nu_cpf=${nu_cpf}&pagina=${pagina}&tamanho_pagina=${tamanho_pagina}`;
+        let url = `${URL}/automacao?cliente_id=${cliente_id}&tx_nome=${tx_nome}&bo_status=${bo_status}&nu_cpf=${nu_cpf}&pagina=${pagina}&tamanho_pagina=${tamanho_pagina}`;
 
         return this.http.get(url, false).then(result => {
             return result;
@@ -31,9 +31,9 @@ export class AutomacaoService {
         });
     }
 
-    async pesquisarExecutor(automacao_id:any='', setor_id:any='', pagina: number = 0, tamanho_pagina: number = 0){
+    async pesquisarWorker(automacao_id:any='', cliente_id:any='', pagina: number = 0, tamanho_pagina: number = 0){
 
-        let url = `${URL}/executor?automacao_id=${automacao_id}&setor_id=${setor_id}&pagina=${pagina}&tamanho_pagina=${tamanho_pagina}`;
+        let url = `${URL}/worker?automacao_id=${automacao_id}&cliente_id=${cliente_id}&pagina=${pagina}&tamanho_pagina=${tamanho_pagina}`;
 
         return this.http.get(url).then(result => {
             return result;
@@ -43,7 +43,7 @@ export class AutomacaoService {
     }
 
     download(automacao_id: any = '', filename='', snackBar:any, spinner: any){
-        let url = `${URL}/download/executor/${automacao_id}`;
+        let url = `${URL}/download/worker/${automacao_id}`;
 
         // @ts-ignore
         spinner.show();
@@ -74,8 +74,8 @@ export class AutomacaoService {
         });
     }
 
-    async gravarExecutor(model: Automacao){
-        let url = `${URL}/automacao/executor/`;
+    async gravarWorker(model: Automacao){
+        let url = `${URL}/automacao/worker/`;
 
         return this.http.post(url, model).then(result => {
             return result;
@@ -104,8 +104,8 @@ export class AutomacaoService {
         });
     }
 
-    async getAutomacaoBySetor(id: number){
-        let url = `${URL}/automacao/setor/${id}`;
+    async getAutomacaoByCliente(id: number){
+        let url = `${URL}/automacao/cliente/${id}`;
 
         return this.http.get(url, false).then(result => {
             return result;
@@ -124,8 +124,8 @@ export class AutomacaoService {
         });
     }
 
-    async stop_executor(id: number){
-        let url = `${URL}/executor/stop/${id}`;
+    async stop_worker(id: number){
+        let url = `${URL}/worker/stop/${id}`;
 
         return this.http.put(url).then(result => {
             return result;

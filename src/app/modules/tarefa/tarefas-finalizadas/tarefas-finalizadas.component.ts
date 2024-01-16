@@ -92,7 +92,7 @@ export class TarefasFinalizadasComponent implements OnInit {
 
         await this.pesquisar();
 
-        let automacao = await this.usuarioService.getAutomacaoByCPF( this.cpfLogado, this.userData.setor_id );
+        let automacao = await this.usuarioService.getAutomacaoByCPF( this.cpfLogado, this.userData.cliente_id );
 
         if( automacao.length > 0 ){
             this.comboAutomacao.push({value: '', viewValue: 'Todas automações'})
@@ -139,7 +139,7 @@ export class TarefasFinalizadasComponent implements OnInit {
     async pesquisar(automacao_id: any = ''){
         this.spinner.show();
 
-        this.retornoTarefa = await this.http.pesquisar(false, this.cpfLogado, '', this.bo_status, automacao_id, this.userData.setor_id, this.bo_agendada);
+        this.retornoTarefa = await this.http.pesquisar(false, this.cpfLogado, '', this.bo_status, automacao_id, this.userData.cliente_id, this.bo_agendada);
         //let historicoUsuario = await this.http.getHistoricoTarefaByUsuario(this.cpfLogado, this.bo_agendada);
         //console.log(historicoUsuario);
 

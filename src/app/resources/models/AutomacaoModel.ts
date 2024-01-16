@@ -1,6 +1,6 @@
 export class Automacao {
     id: any;
-    setor_id: any;
+    cliente_id: any;
     tx_nome: any;
     tx_descricao: any;
     tx_json: any;
@@ -13,7 +13,7 @@ export class Automacao {
     constructor(data?): any{
         if(data){
             this.id = data.id;
-            this.setor_id = data.setor_id;
+            this.cliente_id = data.cliente_id;
             this.tx_nome = data.tx_nome;
             this.tx_descricao = data.tx_descricao;
             this.tx_json = data.tx_json;

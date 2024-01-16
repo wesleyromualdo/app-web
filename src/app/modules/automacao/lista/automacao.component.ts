@@ -33,8 +33,8 @@ export class AutomacaoComponent implements OnInit {
             id:'table-automacao',
             class:''
         },
-        btnnovo: 'Adicionar executor',
-        placeholder: 'Busque pelo nº de ID ou nome do executor',
+        btnnovo: 'Adicionar worker',
+        placeholder: 'Busque pelo nº de ID ou nome do worker',
         columns:[
             {label:'Ação', field:'acao', class:'',botao:[
                     {label:'Detalhamento', icon:'remove_red_eye', callback:'detalhe'},
@@ -79,7 +79,7 @@ export class AutomacaoComponent implements OnInit {
                 });
             }
         });
-        /*if( this.dataList.length >= this.userData.nu_executor && !this.userData.superuser  ){
+        /*if( this.dataList.length >= this.userData.nu_worker && !this.userData.superuser  ){
             this.configTable.btnnovo = '';
         }*/
     }
@@ -87,7 +87,7 @@ export class AutomacaoComponent implements OnInit {
     async pesquisar(){
         this.loading = false;
         this.spinner.show();
-        this.dataList = await this.http.pesquisar(this.userData.setor_id,'',this.bo_status, this.userData.nu_cpf,0,0);
+        this.dataList = await this.http.pesquisar(this.userData.cliente_id,'',this.bo_status, this.userData.nu_cpf,0,0);
 
         if( this.dataList.status == 0 ) {
             this.dataList = [];
@@ -107,9 +107,9 @@ export class AutomacaoComponent implements OnInit {
             });
         }
 
-        console.log(this.userData.nu_executor, this.dataList.length);
+        console.log(this.userData.nu_worker, this.dataList.length);
 
-        if( this.userData.nu_executor <= this.dataList.length ){
+        if( this.userData.nu_worker <= this.dataList.length ){
             this.boAdicionar = false;
         }
         this.spinner.hide();
@@ -154,7 +154,7 @@ export class AutomacaoComponent implements OnInit {
     }
 
     novo(){
-        this.router.navigate(['cadastro-executor']);
+        this.router.navigate(['cadastro-worker']);
     }
 
     async detalhamento(element: any){
@@ -172,7 +172,7 @@ export class AutomacaoComponent implements OnInit {
         const tipos = ( validaJson.status == 0 ? '': 'json');
 
         element.dt_inclusao_formatada = moment(element.dt_inclusao).format('DD/MM/YYYY, [às] HH:mm:ss');
-        const dadosLista = await this.getDownloadExecutor(element.id);
+        const dadosLista = await this.getDownloadWorker(element.id);
 
         //const dt_inicio = moment(element.dt_inicio);
         //const dt_fim = moment(element.dt_fim);
@@ -197,7 +197,7 @@ export class AutomacaoComponent implements OnInit {
                 console.log('duration', duration);
                 const milliseconds = duration._milliseconds;*/
                 /*if (milliseconds > 120000){
-                    this.http.stop_executor(item.id);
+                    this.http.stop_worker(item.id);
                     item.bo_ativo = false;
                 }*/
                 //tempo = Util.diferencaEntreDatas(item.dt_alive, moment());
@@ -208,7 +208,7 @@ export class AutomacaoComponent implements OnInit {
             });
         }
         const configuracao = {
-            informacao: {label: 'Dados do executor', value:element.tx_nome},
+            informacao: {label: 'Dados do worker', value:element.tx_nome},
             conteudo:[
                 {label:'Criado em', value: element.dt_inclusao_formatada},
                 {label:'Tempo em execução', value: element.tempo_execucao},
@@ -243,7 +243,7 @@ export class AutomacaoComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(async result => {
             if( result ){
-                let retorno = await this.http.stop_executor(result.stop);
+                let retorno = await this.http.stop_worker(result.stop);
 
                 if( retorno.status == 1 ){
                     this.snackBar.open(retorno.message, '', {
@@ -257,8 +257,8 @@ export class AutomacaoComponent implements OnInit {
         this.spinner.hide();
     }
 
-    async getDownloadExecutor(automacao_id: any){
-        let dataList = await this.http.pesquisarExecutor(automacao_id, this.userData.setor_id);
+    async getDownloadWorker(automacao_id: any){
+        let dataList = await this.http.pesquisarWorker(automacao_id, this.userData.cliente_id);
         return dataList;
     }
 
@@ -293,7 +293,7 @@ export class AutomacaoComponent implements OnInit {
 
         const dialogRef = this.dialog.open(ModalExcluirComponent, {
             width: '500px',
-            data: {texto: 'executor'}
+            data: {texto: 'worker'}
         });
 
         dialogRef.afterClosed().subscribe(async result => {

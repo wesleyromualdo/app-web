@@ -35,7 +35,7 @@ export class CadastroModuloComponent implements OnInit {
 
         if( this.id ){
             this.menuTexto = 'Editar Módulo'
-            this.getSetorById();
+            this.getClienteById();
         }
 
         this.formulario = new FormGroup({
@@ -49,7 +49,7 @@ export class CadastroModuloComponent implements OnInit {
         });
     }
 
-    async getSetorById(){
+    async getClienteById(){
         let retorno = await this.moduloService.getById(this.id);
 
         this.model = retorno;

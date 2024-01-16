@@ -80,7 +80,7 @@ export class TarefasExecucaoComponent implements OnInit, OnDestroy {
 
         await this.pesquisar();
 
-        let automacao = await this.usuarioService.getAutomacaoByCPF( this.cpfLogado, this.userData.setor_id );
+        let automacao = await this.usuarioService.getAutomacaoByCPF( this.cpfLogado, this.userData.cliente_id );
 
         if( automacao.length > 0 ){
             this.comboAutomacao.push({value: '', viewValue: 'Todas automações'})
@@ -121,7 +121,7 @@ export class TarefasExecucaoComponent implements OnInit, OnDestroy {
     async pesquisar(automacao_id: any = ''){
         this.spinner.show();
 
-        let retorno = await this.http.pesquisar(true, this.cpfLogado, '',true, automacao_id, this.userData.setor_id);
+        let retorno = await this.http.pesquisar(true, this.cpfLogado, '',true, automacao_id, this.userData.cliente_id);
 
         //let historicoUsuario = await this.http.getHistoricoTarefaByUsuario(this.cpfLogado, false);
         //console.log('historicoUsuario', historicoUsuario);
@@ -150,7 +150,7 @@ export class TarefasExecucaoComponent implements OnInit, OnDestroy {
                         //console.log('historico[0].dt_inicio', historico[0].dt_inicio);
                         //console.log('tempoSemLogs', tempoSemLogs, parseInt(tempoSemLogs.split(':')[1]));
                         if( parseInt(tempoSemLogs.split(':')[1]) > 2 ){
-                            this.stopTarefa(item, 'Execução finalizada automaticamente. Não opteve resposta do executor.')
+                            this.stopTarefa(item, 'Execução finalizada automaticamente. Não opteve resposta do worker.')
                         }
                     } else {
                         //console.log(moment().format(), logs[0].dt_inclusao);
@@ -158,7 +158,7 @@ export class TarefasExecucaoComponent implements OnInit, OnDestroy {
 
                         //console.log('tempoSemLogs', parseInt(tempoSemLogs.split(':')[1]));
                         if( parseInt(tempoSemLogs.split(':')[1]) > 2 ){
-                            this.stopTarefa(item, 'Execução finalizada automaticamente. Não opteve resposta do executor.')
+                            this.stopTarefa(item, 'Execução finalizada automaticamente. Não opteve resposta do worker.')
                         }
                     }*/
                     //console.log('logs', logs);

@@ -11,7 +11,7 @@
                                 <span aria-hidden="true">1</span>
                             </div>
                         </div>
-                        <div class="div-informacoes">Dados do executor</div>
+                        <div class="div-informacoes">Dados do worker</div>
                     </div>
                     <!--<div class="div-mat-stepper-vertical-line">
                         <div style="border-left: 3px solid #B4BABD;"></div>
@@ -20,7 +20,7 @@
                 <div class="form-content">
                     <div class="div-cabecalho-cadastro">
                         <div style="display: flex; flex-direction: row">
-                            <div class="titulo-menu" style="width: 70% !important;">Dados do executor</div>
+                            <div class="titulo-menu" style="width: 70% !important;">Dados do worker</div>
                             <div class="titulo-menu campo-check-status">
                                 <mat-slide-toggle color="primary" (change)="onChangeToggle($event)" *ngIf="isChecked" checked>{{tx_ativo}}</mat-slide-toggle>
                                 <mat-slide-toggle color="primary" (change)="onChangeToggle($event)" *ngIf="!isChecked">{{tx_ativo}}</mat-slide-toggle>
@@ -28,9 +28,9 @@
                         </div>
                         <div>
 
-                            <p><mat-label>Nome do executor</mat-label></p>
+                            <p><mat-label>Nome do worker</mat-label></p>
                             <mat-form-field class="input-full-width" appearance="fill">
-                                <input matInput placeholder="Escreva o nome do executor" [(ngModel)]="model.tx_nome" class="form-control" value="" required formControlName="tx_nome" name="tx_nome">
+                                <input matInput placeholder="Escreva o nome do worker" [(ngModel)]="model.tx_nome" class="form-control" value="" required formControlName="tx_nome" name="tx_nome">
                             </mat-form-field>
                             <div *ngIf="tx_nome.invalid && formDir.submitted" class="validation-error">
                                 <p *ngIf="tx_nome.hasError('required')">O nome é <strong>obrigatório</strong></p>

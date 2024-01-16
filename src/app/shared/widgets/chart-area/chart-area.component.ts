@@ -80,7 +80,7 @@ export class ChartAreaComponent implements OnInit {
         this.spinner.show();
         this.chartOptions = {};
 
-        const dashTarefa = await this.tarefaServices.getDadosTarefaDashboard(this.userData.setor_id, automacao_id, periodo, this.userData.nu_cpf);
+        const dashTarefa = await this.tarefaServices.getDadosTarefaDashboard(this.userData.cliente_id, automacao_id, periodo, this.userData.nu_cpf);
         //console.log('dashTarefa', dashTarefa);
 
         let categoria: any = [];
@@ -190,7 +190,7 @@ export class ChartAreaComponent implements OnInit {
     }
 
     async carregaComboAutomacao(periodo:any){
-        let automacao = await this.usuarioService.getAutomacaoByCPFDashBoard( this.userData.nu_cpf, this.userData.setor_id, periodo);
+        let automacao = await this.usuarioService.getAutomacaoByCPFDashBoard( this.userData.nu_cpf, this.userData.cliente_id, periodo);
 
         this.comboAutomacao = [];
         if( automacao.length > 0 ){

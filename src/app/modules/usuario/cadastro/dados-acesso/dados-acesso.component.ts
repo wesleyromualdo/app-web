@@ -64,9 +64,9 @@ export class DadosAcessoComponent implements OnInit {
 
         this.formulario = new FormGroup({});
 
-        this.automacoes = await this.automacaoService.getAutomacaoBySetor(this.userData.setor_id);
+        this.automacoes = await this.automacaoService.getAutomacaoByCliente(this.userData.cliente_id);
         if( this.automacoes.status == 0 ){
-            this.nenhumRegistro = 'Não foi encontrado nenhum executor vinculado ao setor!';
+            this.nenhumRegistro = 'Não foi encontrado nenhum worker vinculado ao cliente!';
         }
         this.perfils = await this.perfilService.pesquisar('', true, 0, 0);
         let perfis: any = [];
@@ -157,7 +157,7 @@ export class DadosAcessoComponent implements OnInit {
             let retorno = [];
             let msg = 'Dados de acesso do usuário cadastrado com sucesso!';
             this.formulario.value.nu_cpf = this.nu_cpf_edicao;
-            this.formulario.value.setor_id = this.userData.setor_id;
+            this.formulario.value.cliente_id = this.userData.cliente_id;
             retorno = await this.usuarioService.cadastroDadosAcesso(this.formulario.value);
             //console.log('retorno-acesso ', retorno);
             if (retorno.nu_cpf) {

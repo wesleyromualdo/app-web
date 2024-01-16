@@ -45,7 +45,7 @@ export class HistoricoTarefaComponent implements OnInit {
             {label:'CPF', field:'nu_cpf_formatado', class:'', link:true, callback:'logs'},
             {label:'Iniciada', field:'dt_inicio_formatada', class:''},
             {label:'Finalizada', field:'dt_fim_formatada', class:''},
-            {label:'Executor', field:'executor', class:''},
+            {label:'Worker', field:'worker', class:''},
             {label:'IP MAC', field:'tx_ip_execucao', class:''},
             {label:'Tempo de execução', field:'tempo', class:''},
             {label:'Status', field:'statusdesc', class:'', link:true, callback:'detalhe'}

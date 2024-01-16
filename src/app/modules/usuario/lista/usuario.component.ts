@@ -72,7 +72,7 @@ export class UsuarioComponent implements OnInit {
     async pesquisar(){
         this.spinner.show();
         this.loading = false;
-        this.dataList = await this.http.pesquisar('','',this.userData.setor_id,this.bo_status, 0, 0);
+        this.dataList = await this.http.pesquisar('','',this.userData.cliente_id,this.bo_status, 0, 0);
 
         let registro:any = [];
         if( this.dataList.status == 0 ) {
@@ -129,10 +129,10 @@ export class UsuarioComponent implements OnInit {
 
     detalhamento(element: any){
 
-        let setores:any = [];
-        if( element.setor.length > 0 ) {
-            element.setor.forEach((item: any) => {
-                setores.push(item);
+        let clientees:any = [];
+        if( element.cliente.length > 0 ) {
+            element.cliente.forEach((item: any) => {
+                clientees.push(item);
             });
         }
 
@@ -145,7 +145,7 @@ export class UsuarioComponent implements OnInit {
                 {label:'CPF', value: element.nu_cpf_formatado},
                 {label:'E-mail', value: element.tx_email},
                 {label:'Criado em', value: element.dt_inclusao},
-                {label:'Setor', value: setores.join(', ')},
+                {label:'Cliente', value: clientees.join(', ')},
                 {label:'Status', value: element.bo_status, class: classStatus}
             ],
             datatable: [],

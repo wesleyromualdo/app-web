@@ -3,13 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import {DefaultComponent} from "./default.component";
 import {DashboardComponent} from "../../modules/dashboard/dashboard.component";
 import {TarefaComponent} from "../../modules/tarefa/lista/tarefa.component";
-import {SetorComponent} from "../../modules/setor/lista/setor.component";
+import {ClienteComponent} from "../../modules/cliente/lista/cliente.component";
 import {ModuloComponent} from "../../modules/modulo/lista/modulo.component";
 import {PerfilComponent} from "../../modules/perfil/lista/perfil.component";
 import {UsuarioComponent} from "../../modules/usuario/lista/usuario.component";
 import {AutomacaoComponent} from "../../modules/automacao/lista/automacao.component";
 import {AuthGuard} from "../../modules/auth/auth.guard";
-import {CadastroSetorComponent} from "../../modules/setor/cadastro-setor/cadastro-setor.component";
+import {CadastroClienteComponent} from "../../modules/cliente/cadastro-cliente/cadastro-cliente.component";
 import {CadastroPerfilComponent} from "../../modules/perfil/cadastro/cadastro-perfil.component";
 import {CadastroModuloComponent} from "../../modules/modulo/cadastro/cadastro-modulo.component";
 import {CadastroUsuarioComponent} from "../../modules/usuario/cadastro/informacoes/cadastro-usuario.component";
@@ -25,7 +25,7 @@ import {DadoNegocialComponent} from "../../modules/tarefa/dado-negocial/dado-neg
 import {ConfigEmailTarefaComponent} from "../../modules/tarefa/config-email-tarefa/config-email-tarefa.component";
 import {AgendamentoComponent} from "../../modules/tarefa/agendamento/agendamento.component";
 import {DadosJsonComponent} from "../../modules/tarefa/dados-json/dados-json.component";
-import {CadastroExecutorComponent} from "../../modules/automacao/cadastro-executor/cadastro-executor.component";
+import {CadastroWorkerComponent} from "../../modules/automacao/cadastro-worker/cadastro-worker.component";
 
 const routes: Routes = [
     {path: '', component: DefaultComponent,
@@ -35,8 +35,8 @@ const routes: Routes = [
             {path: 'cadastro-tarefa', component: CadastroTarefaComponent},
             {path: 'automacao', component: AutomacaoComponent},
             {path: 'cadastro-automacao', component: CadastroAutomacaoComponent},
-            {path: 'setor', component: SetorComponent},
-            {path: 'cadastro-setor', component: CadastroSetorComponent},
+            {path: 'cliente', component: ClienteComponent},
+            {path: 'cadastro-cliente', component: CadastroClienteComponent},
             {path: 'modulo', component: ModuloComponent},
             {path: 'cadastro-modulo', component: CadastroModuloComponent},
             {path: 'perfil', component: PerfilComponent},
@@ -53,7 +53,7 @@ const routes: Routes = [
             {path: 'config-email-tarefa', component: ConfigEmailTarefaComponent},
             {path: 'agendamento-tarefa', component: AgendamentoComponent},
             {path: 'cadastro-json-tarefa', component: DadosJsonComponent},
-            {path: 'cadastro-executor', component: CadastroExecutorComponent},
+            {path: 'cadastro-worker', component: CadastroWorkerComponent},
         ],
         canActivate: [AuthGuard]
     },

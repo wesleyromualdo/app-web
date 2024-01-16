@@ -34,7 +34,7 @@ export class PerfilComponent implements OnInit {
     tx_ativo: string = 'Ativo';
     configTable = {
         table:{
-            id:'table-setor',
+            id:'table-cliente',
             class:''
         },
         btnnovo: 'Adicionar Perfil',

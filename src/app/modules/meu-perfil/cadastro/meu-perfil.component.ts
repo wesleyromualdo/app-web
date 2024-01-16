@@ -6,7 +6,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {UsuarioService} from "../../../resources/services/usuario.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {NgxSpinnerService} from "ngx-spinner";
-import {SetorService} from "../../../resources/services/setor.service";
+import {ClienteService} from "../../../resources/services/cliente.service";
 import {LoginService} from "../../../resources/services/login.service";
 // @ts-ignore
 import { Camera, CameraDirection, CameraResultType, CameraSource } from "@capacitor/camera";
@@ -44,7 +44,7 @@ export class MeuPerfilComponent implements OnInit {
     constructor(private usuarioService: UsuarioService,
                 private snackBar: MatSnackBar,
                 private spinner: NgxSpinnerService,
-                private setorPerfil: SetorService,
+                private clientePerfil: ClienteService,
                 private loginService: LoginService,
                 private router: Router,
                 private dialog: MatDialog) { }

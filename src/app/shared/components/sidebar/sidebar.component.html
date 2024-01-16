@@ -5,11 +5,11 @@
             <div class="dados-user">
                 <h2 style="color: #FFFFFF">{{nomeUsuario}}</h2>
                 <h4>{{perfilUsuario}}</h4>
-                <h5 class="filtro-setor">
+                <h5 class="filtro-cliente">
                     <mat-form-field appearance="outline">
                         <!--<mat-label>Series</mat-label>-->
-                        <mat-select [(value)]="setor_id" (selectionChange)="onSelectSetor($event.value)">
-                            <mat-option *ngFor="let source of comboSetorUsuario" [value]="source.id">
+                        <mat-select [(value)]="cliente_id" (selectionChange)="onSelectCliente($event.value)">
+                            <mat-option *ngFor="let source of comboClienteUsuario" [value]="source.id">
                                 {{source.tx_sigla}}
                             </mat-option>
                         </mat-select>
@@ -29,7 +29,7 @@
             <mat-icon>assignment</mat-icon>Tarefa</a>
 
         <a mat-list-item  routerLink="/automacao" [ngClass]="{menu_selected: clickedItem === '/automacao'}" (click)="onClick('/automacao')">
-            <mat-icon>settings</mat-icon>Gestão de executor</a>
+            <mat-icon>settings</mat-icon>Gestão de worker</a>
 
         <a mat-list-item routerLink="/usuario" [ngClass]="{menu_selected: clickedItem === '/usuario'}" (click)="onClick('/usuario')">
             <mat-icon>group</mat-icon>Gestão de usuário</a>
@@ -42,8 +42,8 @@
         <a mat-list-item routerLink="/perfil" [ngClass]="{menu_selected: clickedItem === '/perfil'}" (click)="onClick('/perfil')">
             <mat-icon>assignment_ind</mat-icon>Cadastro de Perfil</a>
 
-        <a mat-list-item routerLink="/setor" [ngClass]="{menu_selected: clickedItem === '/setor'}" (click)="onClick('/setor')">
-            <mat-icon>supervised_user_circle</mat-icon>Cadastro de Setor</a>-->
+        <a mat-list-item routerLink="/cliente" [ngClass]="{menu_selected: clickedItem === '/cliente'}" (click)="onClick('/cliente')">
+            <mat-icon>supervised_user_circle</mat-icon>Cadastro de Cliente</a>-->
 
         <a mat-list-item routerLink="/meuperfil" [ngClass]="{menu_selected: clickedItem === '/meuperfil'}" (click)="onClick('/meuperfil')">
             <mat-icon>person</mat-icon>Meu perfil</a>

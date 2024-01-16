@@ -5,7 +5,7 @@ import {NgxSpinnerService} from "ngx-spinner";
 import {PerfilService} from "../../../resources/services/perfil.service";
 import {UsuarioService} from "../../../resources/services/usuario.service";
 import {ModuloService} from "../../../resources/services/modulo.service";
-import {SetorService} from "../../../resources/services/setor.service";
+import {ClienteService} from "../../../resources/services/cliente.service";
 
 interface ComboDataSource {
     id: string;
@@ -22,19 +22,19 @@ export class SidebarComponent implements OnInit {
     @Output() menuSelect = new EventEmitter<string>();
     nomeUsuario: string = '';
     perfilUsuario: string = '';
-    setorUsuario: string = '';
+    clienteUsuario: string = '';
     clickedItem: any = '/dashboard';
     href: any;
     dadosLocal: any;
-    setor_id: any;
+    cliente_id: any;
     moduloUsuario: any = [];
     nu_cpf_logado: any = '';
-    comboSetorUsuario: ComboDataSource[] = [];
+    comboClienteUsuario: ComboDataSource[] = [];
     imagemUser:any='';
 
     constructor(private router: Router,
                 private loginService: LoginService,
-                private setorServices: SetorService,
+                private clienteServices: ClienteService,
                 private usuarioService: UsuarioService,
                 private spinner: NgxSpinnerService,
                 private moduloService: ModuloService) { }
@@ -43,14 +43,14 @@ export class SidebarComponent implements OnInit {
         this.dadosLocal = this.loginService.getUserData();
 
         this.nomeUsuario = this.dadosLocal.tx_nome;
-        this.setorUsuario = this.dadosLocal.setor;
+        this.clienteUsuario = this.dadosLocal.cliente;
         this.clickedItem = this.router.url;
         this.nu_cpf_logado = this.dadosLocal.nu_cpf;
         this.perfilUsuario = this.dadosLocal.perfil;
 
-        this.setor_id = this.dadosLocal.setor_id;
+        this.cliente_id = this.dadosLocal.cliente_id;
         this.moduloUsuario = await this.moduloService.getMenuByPerfil(this.dadosLocal.perfil_id);
-        this.comboSetorUsuario = await this.usuarioService.getSetorByCPF(this.dadosLocal.nu_cpf);
+        this.comboClienteUsuario = await this.usuarioService.getClienteByCPF(this.dadosLocal.nu_cpf);
         await this.getUsuarioByCpf();
     }
 
@@ -74,14 +74,14 @@ export class SidebarComponent implements OnInit {
         this.clickedItem = item;
     }
 
-    async onSelectSetor(value: any){
-        this.dadosLocal.setor_id = value;
-        const setor = await this.setorServices.getById(value);
-        this.dadosLocal.nu_executor = setor.nu_executor;
-        this.dadosLocal.setor = setor.tx_nome;
+    async onSelectCliente(value: any){
+        this.dadosLocal.cliente_id = value;
+        const cliente = await this.clienteServices.getById(value);
+        this.dadosLocal.nu_worker = cliente.nu_worker;
+        this.dadosLocal.cliente = cliente.tx_nome;
         this.loginService.removeUserData();
         this.loginService.setUserData(this.dadosLocal);
-        await this.setorServices.editarUltimoAcesso({setor_id:value, nu_cpf: this.nu_cpf_logado});
+        await this.clienteServices.editarUltimoAcesso({cliente_id:value, nu_cpf: this.nu_cpf_logado});
         window.location.reload();
     }
 

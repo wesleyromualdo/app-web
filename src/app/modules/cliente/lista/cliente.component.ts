@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {SetorService} from "../../../resources/services/setor.service";
+import {ClienteService} from "../../../resources/services/cliente.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {NgxSpinnerService} from "ngx-spinner";
 import {Router} from "@angular/router";
@@ -8,7 +8,7 @@ import {msgSemRegistro} from "../../../resources/util/constants";
 import {ModalExcluirComponent} from "../../../shared/components/modal-excluir/modal-excluir.component";
 import {ModalDetalhamentoComponent} from "../../../shared/components/modal-detalhamento/modal-detalhamento.component";
 
-export interface ISetor {
+export interface ICliente {
     acao: string;
     id: string;
     tx_sigla: string;
@@ -17,21 +17,21 @@ export interface ISetor {
 }
 
 @Component({
-    selector: 'app-setor',
-    templateUrl: './setor.component.html',
-    styleUrls: ['./setor.component.scss']
+    selector: 'app-cliente',
+    templateUrl: './cliente.component.html',
+    styleUrls: ['./cliente.component.scss']
 })
-export class SetorComponent implements OnInit {
+export class ClienteComponent implements OnInit {
 
     msgSemRegistro = msgSemRegistro;
     dataList: any;
-    interface: ISetor[] = [];
+    interface: ICliente[] = [];
     loading: boolean = false;
     bo_status: boolean = true;
     tx_ativo: string = 'Ativo';
     configTable = {
         table:{
-            id:'table-setor',
+            id:'table-cliente',
             class:''
         },
         btnnovo: 'Adicionar Cliente',
@@ -46,12 +46,12 @@ export class SetorComponent implements OnInit {
             {label:'ID', field:'id', class:''},
             {label:'Sigla', field:'tx_sigla', class:'', link:true, callback:'detalhe'},
             {label:'Nome', field:'tx_nome', class:''},
-            {label:'Nº de Executor', field:'nu_executor', class:''},
+            {label:'Nº de Worker', field:'nu_worker', class:''},
             {label:'Status', field:'bo_status', class:''},
         ]
     };
 
-    constructor(private setorService: SetorService,
+    constructor(private clienteService: ClienteService,
                 private snackBar: MatSnackBar,
                 private spinner: NgxSpinnerService,
                 private router: Router,
@@ -64,7 +64,7 @@ export class SetorComponent implements OnInit {
     async pesquisar(){
         this.spinner.show();
         this.loading = false;
-        this.dataList = await this.setorService.pesquisar('','',this.bo_status);
+        this.dataList = await this.clienteService.pesquisar('','',this.bo_status);
 
         if( this.dataList.status == 0 ) {
             this.dataList = [];
@@ -80,13 +80,13 @@ export class SetorComponent implements OnInit {
         this.loading = true;
     }
 
-    novoSetor(){
-        this.router.navigate(['cadastro-setor']);
+    novoCliente(){
+        this.router.navigate(['cadastro-cliente']);
     }
 
     executaRetorno(dados: any) {
         if( dados.callback == 'novo' ){
-            this.novoSetor();
+            this.novoCliente();
         }
         if( dados.callback == 'detalhe' ){
             this.detalhamento(dados.element);
@@ -124,19 +124,19 @@ export class SetorComponent implements OnInit {
     }
 
     editar(id: any){
-        this.router.navigate(['cadastro-setor'], { queryParams: { id: id } });
+        this.router.navigate(['cadastro-cliente'], { queryParams: { id: id } });
     }
 
     async excluir(id: any){
 
         const dialogRef = this.dialog.open(ModalExcluirComponent, {
             width: '500px',
-            data: {texto: 'setor'}
+            data: {texto: 'cliente'}
         });
 
         dialogRef.afterClosed().subscribe(async result => {
             if( result == 'true' ) {
-                let retorno = await this.setorService.excluir(id);
+                let retorno = await this.clienteService.excluir(id);
 
                 if( retorno.status == 1 ){
                     await this.pesquisar();

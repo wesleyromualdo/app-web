@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SetorComponent } from './setor.component';
+import { CadastroWorkerComponent } from './cadastro-worker.component';
 
-describe('SetorComponent', () => {
-  let component: SetorComponent;
-  let fixture: ComponentFixture<SetorComponent>;
+describe('CadastroWorkerComponent', () => {
+  let component: CadastroWorkerComponent;
+  let fixture: ComponentFixture<CadastroWorkerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SetorComponent ]
+      declarations: [ CadastroWorkerComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SetorComponent);
+    fixture = TestBed.createComponent(CadastroWorkerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

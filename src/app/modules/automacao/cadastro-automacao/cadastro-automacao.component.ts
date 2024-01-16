@@ -21,15 +21,15 @@ export class CadastroAutomacaoComponent implements OnInit, AfterViewInit {
     isChecked: boolean = true;
     tx_ativo: string = 'Ativo';
     codigo: any = '';
-    menuTexto = 'Novo executor';
-    usuarioSetorId: any;
+    menuTexto = 'Novo worker';
+    usuarioClienteId: any;
     userData: any;
     validaJson:any = true;
     aceEditor: any;
 
     public formulario: any = new FormGroup({
         id: new FormControl('', []),
-        setor_id: new FormControl('', []),
+        cliente_id: new FormControl('', []),
         tx_descricao: new FormControl('', []),
         tx_nome: new FormControl({value:'', disabled: true}, [Validators.required]),
         tx_json: new FormControl('', []),
@@ -56,19 +56,19 @@ export class CadastroAutomacaoComponent implements OnInit, AfterViewInit {
         });
 
         this.userData = this.loginService.getUserData();
-        this.usuarioSetorId = this.userData.setor_id;
+        this.usuarioClienteId = this.userData.cliente_id;
 
         //const dados_pc = await this.utilService.getHostName();
 
         if( this.codigo ){
-            this.menuTexto = 'Editar executor';
+            this.menuTexto = 'Editar worker';
             this.getAutomacaoById();
         } /*else {
             const arDados = {tx_os: dados_pc.os,
                 tx_desktop: dados_pc.hostname,
                 bo_status: this.isChecked,
                 dt_inclusao: '',
-                setor_id: '',
+                cliente_id: '',
                 tx_descricao: '',
                 tx_json: '',
                 tx_nome: ''
@@ -130,7 +130,7 @@ export class CadastroAutomacaoComponent implements OnInit, AfterViewInit {
 
     async onSubmit(){
         this.formulario.value.tx_json = this.aceEditor.getValue();
-        this.formulario.value.setor_id = this.usuarioSetorId;
+        this.formulario.value.cliente_id = this.usuarioClienteId;
         this.formulario.value.nu_cpf = this.userData.nu_cpf;
         this.formulario.value.id = this.codigo;
 
@@ -149,11 +149,11 @@ export class CadastroAutomacaoComponent implements OnInit, AfterViewInit {
             this.spinner.show();
             if( this.formulario.status == 'VALID' ){
                 let retorno = [];
-                let msg = 'Executor cadastrado com sucesso!';
+                let msg = 'worker cadastrado com sucesso!';
                 if( this.codigo ){
                     this.formulario.value.id = this.codigo;
                     retorno = await this.automacaoService.editar(this.formulario.value);
-                    msg = 'Executor atualizado com sucesso!';
+                    msg = 'Worker atualizado com sucesso!';
                 } else {
                     retorno = await this.automacaoService.gravar(this.formulario.value);
                 }

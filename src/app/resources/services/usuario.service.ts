@@ -11,9 +11,9 @@ export class UsuarioService {
 
     constructor(private http: RequestService) { }
 
-    async pesquisar(nu_cpf:any='',tx_nome:any='',setor_id:any='', bo_status:any='', pagina: number = 0, tamanho_pagina: number = 0){
+    async pesquisar(nu_cpf:any='',tx_nome:any='',cliente_id:any='', bo_status:any='', pagina: number = 0, tamanho_pagina: number = 0){
 
-        let url = `${URL}/usuario?nu_cpf=${nu_cpf}&tx_nome=${tx_nome}&setor_id=${setor_id}&bo_status=${bo_status}&pagina=${pagina}&tamanho_pagina=${tamanho_pagina}`;
+        let url = `${URL}/usuario?nu_cpf=${nu_cpf}&tx_nome=${tx_nome}&cliente_id=${cliente_id}&bo_status=${bo_status}&pagina=${pagina}&tamanho_pagina=${tamanho_pagina}`;
 
         return this.http.get(url, false).then(result => {
             return result;
@@ -102,8 +102,8 @@ export class UsuarioService {
         });
     }
 
-    async getSetorByCPF(nu_cpf: string){
-        let url = `${URL}/setor/usuario/${nu_cpf}`;
+    async getClienteByCPF(nu_cpf: string){
+        let url = `${URL}/cliente/usuario/${nu_cpf}`;
 
         return this.http.get(url).then(result => {
             return result;
@@ -112,8 +112,8 @@ export class UsuarioService {
         });
     }
 
-    async getAutomacaoByCPF(nu_cpf: string, setor_id: number){
-        let url = `${URL}/automacao/usuario/${nu_cpf}/${setor_id}`;
+    async getAutomacaoByCPF(nu_cpf: string, cliente_id: number){
+        let url = `${URL}/automacao/usuario/${nu_cpf}/${cliente_id}`;
 
         return this.http.get(url, false).then(result => {
             return result;
@@ -122,8 +122,8 @@ export class UsuarioService {
         });
     }
 
-    async getAutomacaoByCPFDashBoard(nu_cpf: string, setor_id: number, periodo: number){
-        let url = `${URL}/automacao/combodashboard/${nu_cpf}/${setor_id}/${periodo}`;
+    async getAutomacaoByCPFDashBoard(nu_cpf: string, cliente_id: number, periodo: number){
+        let url = `${URL}/automacao/combodashboard/${nu_cpf}/${cliente_id}/${periodo}`;
 
         return this.http.get(url, false).then(result => {
             return result;

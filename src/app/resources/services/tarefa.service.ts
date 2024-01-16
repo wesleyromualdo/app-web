@@ -10,9 +10,9 @@ export class TarefaService {
 
     constructor(private http: RequestService) { }
 
-    async pesquisar(bo_execucao: boolean = false, nu_cpf:string, tx_nome: string = '', bo_status:any='', automacao_id: any='', setor_id: any = '', bo_agendada: any = '',pagina: number = 0, tamanho_pagina: number = 0){
+    async pesquisar(bo_execucao: boolean = false, nu_cpf:string, tx_nome: string = '', bo_status:any='', automacao_id: any='', cliente_id: any = '', bo_agendada: any = '',pagina: number = 0, tamanho_pagina: number = 0){
 
-        let url = `${URL}/tarefa?bo_execucao=${bo_execucao}&nu_cpf=${nu_cpf}&tx_nome=${tx_nome}&bo_status=${bo_status}&automacao_id=${automacao_id}&setor_id=${setor_id}&bo_agendada=${bo_agendada}&pagina=${pagina}&tamanho_pagina=${tamanho_pagina}`;
+        let url = `${URL}/tarefa?bo_execucao=${bo_execucao}&nu_cpf=${nu_cpf}&tx_nome=${tx_nome}&bo_status=${bo_status}&automacao_id=${automacao_id}&cliente_id=${cliente_id}&bo_agendada=${bo_agendada}&pagina=${pagina}&tamanho_pagina=${tamanho_pagina}`;
 
         return this.http.get(url, false).then(result => {
             return result;
@@ -146,8 +146,8 @@ export class TarefaService {
         });
     }
 
-    async getDadosTarefaDashboard(setor_id: number, automacao_id:number, periodo: number = 10, nu_cpf: string, exibeErro: boolean = false){
-        let url = `${URL}/tarefa/dashboard?setor_id=${setor_id}&automacao_id=${automacao_id}&periodo=${periodo}&nu_cpf=${nu_cpf}`;
+    async getDadosTarefaDashboard(cliente_id: number, automacao_id:number, periodo: number = 10, nu_cpf: string, exibeErro: boolean = false){
+        let url = `${URL}/tarefa/dashboard?cliente_id=${cliente_id}&automacao_id=${automacao_id}&periodo=${periodo}&nu_cpf=${nu_cpf}`;
 
         return this.http.get(url, exibeErro).then(result => {
             return result;
@@ -156,8 +156,8 @@ export class TarefaService {
         });
     }
 
-    async getDadosAutomacaoDashboard(setor_id: number, automacao_id:any='', periodo: any = 10, exibeErro: boolean = false){
-        let url = `${URL}/tarefa/dashboard/dados-automacao?setor_id=${setor_id}&automacao_id=${automacao_id}&periodo=${periodo}`;
+    async getDadosAutomacaoDashboard(cliente_id: number, automacao_id:any='', periodo: any = 10, exibeErro: boolean = false){
+        let url = `${URL}/tarefa/dashboard/dados-automacao?cliente_id=${cliente_id}&automacao_id=${automacao_id}&periodo=${periodo}`;
 
         return this.http.get(url, exibeErro).then(result => {
             return result;
@@ -196,8 +196,8 @@ export class TarefaService {
         });
     }
 
-    /*async getAutomacaoSetor(id: number){
-        let url = `${URL}/automacao/setor/${id}`;
+    /*async getAutomacaoCliente(id: number){
+        let url = `${URL}/automacao/cliente/${id}`;
 
         return this.http.get(url).then(result => {
             return result;

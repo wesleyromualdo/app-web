@@ -102,7 +102,7 @@
                             </mat-radio-group>
                         </div>
                         <div style="padding-top: 20px">
-                            <div class="titulo-menu" style="width: 70% !important; padding-bottom: 10px;">Lista de Executor(es)</div>
+                            <div class="titulo-menu" style="width: 70% !important; padding-bottom: 10px;">Lista de Worker(es)</div>
                             <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="model.automacao_id" (change)="radioChangeAutomacao($event)" formControlName="automacao_id" class="lista-vinculos">
                                 <div *ngFor="let automacao of automacoes" class="grid-container-lista">
                                     <mat-radio-button class="example-radio-button" [value]="automacao.id" [disabled]="automacao.nu_qtd_tarefa <= automacao.qtd_tarefas">
@@ -114,7 +114,7 @@
                                 <p>{{nenhumRegistro}}</p>
                             </div>
                             <div *ngIf="automacao_id && formDir.submitted" class="validation-error" style="margin-top: 8px">
-                                <p *ngIf="automacao_id.hasError('required')">Selecione um <strong>executor</strong></p>
+                                <p *ngIf="automacao_id.hasError('required')">Selecione um <strong>worker</strong></p>
                             </div>
                         </div>
                         <div class="btn-cadastro-footer">

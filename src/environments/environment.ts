@@ -5,7 +5,7 @@
 //'http://127.0.0.1:8000'
 export const environment = {
     production: false,
-    url: "https://consoleapi-dsv.api.zello.services"
+    url: "https://plataforma-api.automaxia.com.br"
 };
 
 /*

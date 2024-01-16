@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Setor} from "../../../resources/models/SetorModel";
-import {SetorService} from "../../../resources/services/setor.service";
+import {Cliente} from "../../../resources/models/ClienteModel";
+import {ClienteService} from "../../../resources/services/cliente.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
-    selector: 'app-novo-setor',
-    templateUrl: './cadastro-setor.component.html',
-    styleUrls: ['./cadastro-setor.component.scss']
+    selector: 'app-novo-cliente',
+    templateUrl: './cadastro-cliente.component.html',
+    styleUrls: ['./cadastro-cliente.component.scss']
 })
-export class CadastroSetorComponent implements OnInit {
+export class CadastroClienteComponent implements OnInit {
 
     isChecked: boolean = true;
     tx_ativo: string = 'Ativo';
@@ -20,11 +20,11 @@ export class CadastroSetorComponent implements OnInit {
 
     public formulario: any;
 
-    public setor: Setor = new Setor();
+    public cliente: Cliente = new Cliente();
 
     constructor(private router: Router,
                 private formBuilder: FormBuilder,
-                private setorService: SetorService,
+                private clienteService: ClienteService,
                 private snackBar: MatSnackBar,
                 private spinner: NgxSpinnerService,
                 private route: ActivatedRoute) { }
@@ -36,14 +36,14 @@ export class CadastroSetorComponent implements OnInit {
 
         if( this.codigo ){
             this.menuTexto = 'Editar Cliente';
-            this.getSetorById();
+            this.getClienteById();
         }
 
         this.formulario = new FormGroup({
             id: new FormControl('', []),
             tx_sigla: new FormControl('', [Validators.required]),
             tx_nome: new FormControl('', [Validators.required]),
-            nu_executor: new FormControl('1', []),
+            nu_worker: new FormControl('1', []),
             bo_status: new FormControl(this.isChecked, [])
         });
     }
@@ -56,8 +56,8 @@ export class CadastroSetorComponent implements OnInit {
         return this.formulario.get('tx_sigla')!;
     }
 
-    get nu_executor(){
-        return this.formulario.get('nu_executor')!;
+    get nu_worker(){
+        return this.formulario.get('nu_worker')!;
     }
 
     numberOnly(event: any): boolean {
@@ -69,19 +69,19 @@ export class CadastroSetorComponent implements OnInit {
 
     }
 
-    async getSetorById(){
-        let retorno = await this.setorService.getById(this.codigo);
-        this.setor = retorno;
-        if( !this.setor.bo_status ){
+    async getClienteById(){
+        let retorno = await this.clienteService.getById(this.codigo);
+        this.cliente = retorno;
+        if( !this.cliente.bo_status ){
             this.isChecked = false;
             this.tx_ativo = 'Inativo';
         }
-        this.setor.nu_executor = (this.setor.nu_executor? this.setor.nu_executor : '1');
-        this.formulario.value = this.setor;
+        this.cliente.nu_worker = (this.cliente.nu_worker? this.cliente.nu_worker : '1');
+        this.formulario.value = this.cliente;
     }
 
     voltar(){
-        this.router.navigate(['setor'])
+        this.router.navigate(['cliente'])
     }
 
     async onSubmit(){
@@ -93,10 +93,10 @@ export class CadastroSetorComponent implements OnInit {
             if( this.codigo ){
                 this.formulario.value.id = this.codigo;
                 //console.log(this.formulario.value);
-                retorno = await this.setorService.editar(this.formulario.value);
+                retorno = await this.clienteService.editar(this.formulario.value);
                 msg = 'Cliente atualizado com sucesso!';
             } else {
-                retorno = await this.setorService.gravar(this.formulario.value);
+                retorno = await this.clienteService.gravar(this.formulario.value);
             }
             //console.log('retorno ', retorno);
             if( retorno.id ){

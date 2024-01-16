@@ -15,7 +15,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatPaginatorIntl, MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
-import {SetorComponent} from "../../modules/setor/lista/setor.component";
+import {ClienteComponent} from "../../modules/cliente/lista/cliente.component";
 import {LoginComponent} from "../../modules/auth/login/login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
@@ -33,7 +33,7 @@ import {AutomacaoComponent} from "../../modules/automacao/lista/automacao.compon
 import {UsuarioComponent} from "../../modules/usuario/lista/usuario.component";
 import {ModuloComponent} from "../../modules/modulo/lista/modulo.component";
 import {MatStepperModule} from "@angular/material/stepper";
-import {CadastroSetorComponent} from "../../modules/setor/cadastro-setor/cadastro-setor.component";
+import {CadastroClienteComponent} from "../../modules/cliente/cadastro-cliente/cadastro-cliente.component";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {getPtbrPaginatorIntl} from "./ptb-paginator-init";
 import {MatDialogModule} from "@angular/material/dialog";
@@ -62,7 +62,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {AgendamentoComponent} from "../../modules/tarefa/agendamento/agendamento.component";
 import {DadosJsonComponent} from "../../modules/tarefa/dados-json/dados-json.component";
 import {RedefinirSenhaComponent} from "../../modules/auth/redefinir-senha/redefinir-senha.component";
-import {CadastroExecutorComponent} from "../../modules/automacao/cadastro-executor/cadastro-executor.component";
+import {CadastroWorkerComponent} from "../../modules/automacao/cadastro-worker/cadastro-worker.component";
 import {CofreSenhaComponent} from "../../modules/auth/cofre-senha/cofre-senha.component";
 
 
@@ -73,13 +73,13 @@ import {CofreSenhaComponent} from "../../modules/auth/cofre-senha/cofre-senha.co
         DashboardComponent,
         LoginComponent,
         RedefinirSenhaComponent,
-        SetorComponent,
+        ClienteComponent,
         TarefaComponent,
         PerfilComponent,
         AutomacaoComponent,
         UsuarioComponent,
         ModuloComponent,
-        CadastroSetorComponent,
+        CadastroClienteComponent,
         CadastroPerfilComponent,
         CadastroModuloComponent,
         CadastroUsuarioComponent,
@@ -99,7 +99,7 @@ import {CofreSenhaComponent} from "../../modules/auth/cofre-senha/cofre-senha.co
         ConfigEmailTarefaComponent,
         AgendamentoComponent,
         DadosJsonComponent,
-        CadastroExecutorComponent,
+        CadastroWorkerComponent,
         CofreSenhaComponent
     ],
     imports: [

@@ -5,7 +5,7 @@ import {NgxSpinnerService} from "ngx-spinner";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UsuarioService} from "../../../../resources/services/usuario.service";
 import {Usuario} from "../../../../resources/models/UsuarioModel";
-import {SetorService} from "../../../../resources/services/setor.service";
+import {ClienteService} from "../../../../resources/services/cliente.service";
 import {SelectionModel} from "@angular/cdk/collections";
 import {LoginService} from "../../../../resources/services/login.service";
 
@@ -20,7 +20,7 @@ export class CadastroUsuarioComponent implements OnInit {
     tx_ativo: string = 'Ativo';
     nu_cpf_edicao: any = '';
     menuTexto = 'Novo Usuário';
-    setors: any;
+    clientes: any;
     superUser: boolean = false;
     dataUser: any;
     selection = new SelectionModel<any>(true, []);
@@ -39,7 +39,7 @@ export class CadastroUsuarioComponent implements OnInit {
                 private snackBar: MatSnackBar,
                 private spinner: NgxSpinnerService,
                 private route: ActivatedRoute,
-                private setorPerfil: SetorService,
+                private clientePerfil: ClienteService,
                 private loginService: LoginService) { }
 
     async ngOnInit() {
@@ -50,8 +50,8 @@ export class CadastroUsuarioComponent implements OnInit {
         this.dataUser = this.loginService.getUserData();
         this.superUser = this.dataUser.superuser;
 
-        this.setors = await this.setorPerfil.pesquisar();
-        //console.log(this.setors);
+        this.clientes = await this.clientePerfil.pesquisar();
+        //console.log(this.clientes);
         if( this.nu_cpf_edicao ){
             this.menuTexto = 'Editar Usuário'
             this.getUsuarioByCpf();
@@ -68,15 +68,15 @@ export class CadastroUsuarioComponent implements OnInit {
             this.tx_ativo = 'Inativo';
         }
 
-        if( retorno.setor && retorno.setor.length > 0 ) {
-            this.setors.forEach((item: any) => {
+        if( retorno.cliente && retorno.cliente.length > 0 ) {
+            this.clientes.forEach((item: any) => {
                 item.checked = false;
 
-                let setor = retorno.setor.find(function (setor: any) {
-                    return setor.id === item.id;
+                let cliente = retorno.cliente.find(function (cliente: any) {
+                    return cliente.id === item.id;
                 });
 
-                if (setor) {
+                if (cliente) {
                     item.checked = true;
                     this.selection.toggle(item);
                 }
@@ -106,10 +106,10 @@ export class CadastroUsuarioComponent implements OnInit {
 
     async onSubmit(){
         if( this.superUser ) {
-            this.formulario.value['setor'] = this.selection.selected;
+            this.formulario.value['cliente'] = this.selection.selected;
         } else {
             this.selection.selected.length = 1;
-            this.formulario.value['setor'] = [{id: this.dataUser.setor_id}]
+            this.formulario.value['cliente'] = [{id: this.dataUser.cliente_id}]
         }
         //console.log(this.formulario.value, this.formulario.status, this.selection.selected.length);
         this.spinner.show();

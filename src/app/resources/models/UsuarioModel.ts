@@ -7,13 +7,13 @@ export class Usuario {
     tx_foto: any;
     bo_status: any;
     dt_inclusao: any;
-    setor?: any;
-    setor_id?: any;
+    cliente?: any;
+    cliente_id?: any;
     perfil?: any;
     perfil_id?: any;
     superuser?: any;
     constante_virtual?: any;
-    nu_executor?: any;
+    nu_worker?: any;
 
     // @ts-ignore
     constructor(data?): any{
@@ -26,14 +26,14 @@ export class Usuario {
             this.tx_email = data.tx_email;
             this.dt_inclusao = data.dt_inclusao;
             this.bo_status = data.bo_status;
-            this.setor = data.setor;
-            this.setor_id = data.setor_id;
+            this.cliente = data.cliente;
+            this.cliente_id = data.cliente_id;
             this.perfil = data.perfil;
             this.tx_foto = data.tx_foto;
             this.perfil_id = data.perfil_id;
             this.superuser = data.superuser;
             this.constante_virtual = data.constante_virtual;
-            this.nu_executor = data.nu_executor;
+            this.nu_worker = data.nu_worker;
         }
     }
 }
@@ -42,7 +42,7 @@ export class DadosAcesso {
     perfil: any;
     automacao: any;
     nu_cpf: any;
-    setor_id: any;
+    cliente_id: any;
 }
 
 export class SenhaAcesso {
@@ -52,7 +52,7 @@ export class SenhaAcesso {
 }
 
 export class CofreSenha {
-    setor_id: any;
+    cliente_id: any;
     tx_nome: any;
     tx_usuario: any;
     tx_senha: any;

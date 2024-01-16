@@ -12,18 +12,18 @@ import {Util} from "../../../resources/util/utils";
 import { URL } from 'src/app/resources/util/constants';
 
 @Component({
-  selector: 'app-cadastro-executor',
-  templateUrl: './cadastro-executor.component.html',
-  styleUrls: ['./cadastro-executor.component.scss']
+  selector: 'app-cadastro-worker',
+  templateUrl: './cadastro-worker.component.html',
+  styleUrls: ['./cadastro-worker.component.scss']
 })
-export class CadastroExecutorComponent implements OnInit {
+export class CadastroWorkerComponent implements OnInit {
     @ViewChild("editor") private editor: ElementRef<HTMLElement> | undefined;
 
     isChecked: boolean = true;
     tx_ativo: string = 'Ativo';
     codigo: any = '';
-    menuTexto = 'Novo executor';
-    usuarioSetorId: any;
+    menuTexto = 'Novo worker';
+    usuarioClienteId: any;
     userData: any;
 
     jsonDados = {
@@ -32,7 +32,7 @@ export class CadastroExecutorComponent implements OnInit {
     };
 
     public formulario: any = new FormGroup({
-        setor_id: new FormControl('', []),
+        cliente_id: new FormControl('', []),
         tx_nome: new FormControl('', [Validators.required, Validators.pattern(/^\S*$/)]),
         tx_descricao: new FormControl('', []),
         tx_json: new FormControl('', []),
@@ -54,7 +54,7 @@ export class CadastroExecutorComponent implements OnInit {
 
     async ngOnInit() {
         this.userData = this.loginService.getUserData();
-        this.usuarioSetorId = this.userData.setor_id;
+        this.usuarioClienteId = this.userData.cliente_id;
         this.jsonDados.tx_email = this.userData.tx_email;
     }
 
@@ -71,7 +71,7 @@ export class CadastroExecutorComponent implements OnInit {
 
     async onSubmit(){
         this.formulario.value.tx_json = JSON.stringify(this.jsonDados);
-        this.formulario.value.setor_id = this.usuarioSetorId;
+        this.formulario.value.cliente_id = this.usuarioClienteId;
         this.formulario.value.nu_cpf = this.userData.nu_cpf;
         this.formulario.value.nu_qtd_tarefa = 1
         this.formulario.value.nu_qtd_download = 1
@@ -84,8 +84,8 @@ export class CadastroExecutorComponent implements OnInit {
         this.spinner.show();
         if( this.formulario.status == 'VALID' ){
             let retorno = [];
-            let msg = 'Executor cadastrado com sucesso!';
-            retorno = await this.automacaoService.gravarExecutor(this.formulario.value);
+            let msg = 'Worker cadastrado com sucesso!';
+            retorno = await this.automacaoService.gravarWorker(this.formulario.value);
             //console.log('retorno ', retorno);
             if( retorno.id ){
                 this.snackBar.open(msg, '', {

@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit {
 
     async pegaDadosAutomacao(dados:any=''){
         //console.log('dados', dados);
-        this.dashExecucao = await this.tarefaServices.getDadosAutomacaoDashboard(this.userData.setor_id, dados.automacao_id, dados.periodo, false);
+        this.dashExecucao = await this.tarefaServices.getDadosAutomacaoDashboard(this.userData.cliente_id, dados.automacao_id, dados.periodo, false);
         //console.log('dashExecucao', this.dashExecucao);
         this.dadosAutomacao = this.dashExecucao[0];
         this.tempoTotal = this.dashExecucao[1];

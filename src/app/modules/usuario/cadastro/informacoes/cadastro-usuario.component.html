@@ -86,9 +86,9 @@
                                 <div class="titulo-menu">Clientes</div>
                             </div>
                             <div class="grid-container">
-                                <mat-checkbox class="modulo-checkbox" *ngFor="let setor of setors" (change)="selection.toggle(setor)"
-                                              [checked]="selection.isSelected(setor)"
-                                              id="{{setor.id}}">{{setor.tx_sigla}}</mat-checkbox>
+                                <mat-checkbox class="modulo-checkbox" *ngFor="let cliente of clientes" (change)="selection.toggle(cliente)"
+                                              [checked]="selection.isSelected(cliente)"
+                                              id="{{cliente.id}}">{{cliente.tx_sigla}}</mat-checkbox>
                             </div>
                             <div *ngIf="formDir.submitted" class="validation-error" style="margin-top: 8px">
                                 <p *ngIf="this.selection.selected.length == 0">Selecione um <strong>Módulo</strong></p>

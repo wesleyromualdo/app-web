@@ -82,9 +82,9 @@ export class CadastroTarefaComponent implements OnInit {
             nu_prioridade: new FormControl('1', [])
         });
 
-        this.automacoes = await this.usuarioService.getAutomacaoByCPF(this.userData.nu_cpf, this.userData.setor_id);
+        this.automacoes = await this.usuarioService.getAutomacaoByCPF(this.userData.nu_cpf, this.userData.cliente_id);
         if( this.automacoes.status == 0 ){
-            this.nenhumRegistro = 'Não foi encontrado nenhum executor vinculado ao usuário!';
+            this.nenhumRegistro = 'Não foi encontrado nenhum worker vinculado ao usuário!';
         }
         this.spinner.hide();
         this.model.bo_agendada = false;
@@ -156,7 +156,7 @@ export class CadastroTarefaComponent implements OnInit {
     async onSubmit(){
 
         this.formulario.value.id = this.id;
-        this.formulario.value.setor_id = parseInt(this.userData.setor_id);
+        this.formulario.value.cliente_id = parseInt(this.userData.cliente_id);
         this.formulario.value.tx_nome_script = this.nome_script;
 
         //this.formulario.value.json_agendamento = '';
