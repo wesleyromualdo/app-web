@@ -27,7 +27,7 @@ export class CadastroWorkerComponent implements OnInit {
     userData: any;
 
     jsonDados = {
-        url_console: URL,
+        url: URL,
         tx_email: ''
     };
 
