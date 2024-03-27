@@ -3,11 +3,14 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {LoginService} from "../../../resources/services/login.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {NgxSpinnerService} from "ngx-spinner";
-import {TarefaService} from "../../../resources/services/tarefa.service";
 import {Tarefa} from "../../../resources/models/TarefaModel";
 import * as ace from "ace-builds";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Util} from "../../../resources/util/utils";
+import {msgSemRegistro} from "../../../resources/util/constants";
+import { ConfiguracaoService } from 'src/app/resources/services/configuracao.service';
+import { ModalExcluirComponent } from 'src/app/shared/components/modal-excluir/modal-excluir.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-dados-json',
@@ -17,21 +20,46 @@ import {Util} from "../../../resources/util/utils";
 export class DadosJsonComponent implements OnInit, AfterViewInit {
     @ViewChild("editor") private editor: ElementRef<HTMLElement> | undefined;
 
+    msgSemRegistro = msgSemRegistro;
+
+    displayedColumns: string[] = ['acao', 'tx_chave', 'tx_valor'];
+    dataList: any;
+    configTable = {
+        table:{
+            id:'table-configuracao',
+            class:''
+        },
+        btnnovo: '',
+        placeholder: 'Busque pelo chave ou valor da configuração',
+        columns:[
+            {label:'Ação', field:'acao', class:'',botao:[
+                    {label:'Editar', icon:'edit', callback:'editar'},
+                    {label:'Excluir', icon:'delete', callback:'excluir'}
+                ]
+            },
+            {label:'Chave', field:'tx_chave', class:'', link:true, callback:'detalhe'},
+            {label:'Valor', field:'tx_valor', class:''}
+        ]
+    };
+
     id: any = '';
     cpfLogado: any;
     userData: any;
     validaJson:any = true;
     aceEditor: any;
     formulario: any;
+    loading: boolean = false;
+    bo_status: boolean = true;
 
     public model: Tarefa = new Tarefa();
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
                 private loginService: LoginService,
+                private http_config: ConfiguracaoService,
                 private snackBar: MatSnackBar,
                 private spinner: NgxSpinnerService,
-                private tarefaService: TarefaService) { }
+                private dialog: MatDialog) { }
 
     async ngOnInit() {
         this.route.queryParams.subscribe(params => {
@@ -42,79 +70,126 @@ export class DadosJsonComponent implements OnInit, AfterViewInit {
         this.cpfLogado = this.userData.nu_cpf;
 
         this.formulario = new FormGroup({
-            id: new FormControl(this.id, []),
-            tx_json: new FormControl('', [Validators.required])
+            tarefa_id: new FormControl(this.id, []),
+            tx_valor: new FormControl('', [Validators.required]),
+            tx_chave: new FormControl('', [Validators.required])
         });
 
         if( this.id ){
-            await this.getTarefaById();
+            await this.pesquisar();
         }
     }
 
-    ngAfterViewInit(): void {
-        ace.config.set("fontSize", "14px");
-        ace.config.set("basePath", "https://unpkg.com/ace-builds@1.4.12/src-noconflict");
-        ace.config.set("basePath", "https://url.to.a/folder/that/contains-ace-modes");
-        // @ts-ignore
-        this.aceEditor = ace.edit(this.editor.nativeElement);
+    async pesquisar(){
+        this.loading = false;
+        //await this.getTarefaById();
+        this.dataList = await this.http_config.pesquisar('','',this.id,true,0,0);
+        if( this.dataList.status == 0 ) {
+            this.dataList = [];
+        } else {
+            let registro = [];
+            this.dataList.forEach((item: any) => {
+                if (item.bo_status) item.bo_status = 'Ativo';
+                else item.bo_status = 'Inativo';
 
-        this.aceEditor.setTheme("ace/theme/twilight");
-        this.aceEditor.session.setMode("ace/mode/json");
-        this.aceEditor.session.setTabSize(4);
+                if (item.bo_superuser) item.bo_superuser = 'Sim';
+                else item.bo_superuser = 'Não';
+
+                registro.push(item);
+            });
+        }
+        this.loading = true;
     }
 
-    async getTarefaById(){
-        this.spinner.show();
-        let retorno = await this.tarefaService.getById(this.id);
+    executaRetorno(dados: any) {
+        if( dados.callback == 'editar' || dados.callback == 'detalhe' ){
+            this.editar(dados.element.id);
+        }
+        if( dados.callback == 'excluir' ){
+            this.excluir(dados.element.id);
+        }
+    }
 
-        this.model = new Tarefa(retorno);
-        this.aceEditor.session.setValue(retorno.tx_json);
+    async editar(id: any){
+        this.spinner.show();
+        let retorno = await this.http_config.getById(id);
+        this.formulario = new FormGroup({
+            id: new FormControl(retorno.id, []),
+            tarefa_id: new FormControl(this.id, []),
+            tx_valor: new FormControl(retorno.tx_valor, [Validators.required]),
+            tx_chave: new FormControl(retorno.tx_chave, [Validators.required])
+        });
         this.spinner.hide();
     }
 
-    async onSubmit(){
-        this.spinner.show();
-        this.formulario.value.tx_json = this.aceEditor.getValue();
+    async excluir(id: any){
 
-        console.log(this.formulario.value);
-        console.log(this.model);
+        const dialogRef = this.dialog.open(ModalExcluirComponent, {
+            width: '500px',
+            data: {texto: 'configuração'}
+        });
 
-        if( this.formulario.value.tx_json == '' ){
-            this.validaJson = false;
-        } else {
-            const valida = Util.ValidatorJson(this.formulario.value.tx_json);
-            if ( valida.status == 0 ) {
-                this.validaJson = false;
-                this.snackBar.open('O formatado do JSON é inválido', '', {
-                    horizontalPosition: 'center',
-                    verticalPosition: 'bottom',
-                    duration: 5000
-                });
-            } else {
-                this.validaJson = true;
+        dialogRef.afterClosed().subscribe(async result => {
+            if( result == 'true' ) {
+                this.spinner.show();
+                let retorno = await this.http_config.excluir(id);
 
-                this.model.tx_json = this.formulario.value.tx_json;
-
-                // @ts-ignore
-                let retornoTarefa = await this.tarefaService.grava_json_tarefa(this.model);
-
-                if( retornoTarefa && retornoTarefa.id) {
-                    this.snackBar.open('JSON de configuração vinculado com sucesso', '', {
+                if( retorno.status == 1 ){
+                    await this.pesquisar();
+                    this.snackBar.open(retorno.message, '', {
                         horizontalPosition: 'center',
                         verticalPosition: 'bottom',
                         duration: 5000
                     });
                 }
+                this.spinner.hide();
             }
-        }
-        this.spinner.hide();
+        });
+
     }
 
-    prettyPrint() {
-        let obj = JSON.parse(this.formulario.value.tx_json);
-        let pretty = JSON.stringify(obj, undefined, 4);
-        this.formulario.value.tx_json = pretty;
-        this.model.tx_json = pretty;
+    get tx_valor(){
+        return this.formulario.get('tx_valor')!;
+    }
+    get tx_chave(){
+        return this.formulario.get('tx_chave')!;
+    }
+
+    ngAfterViewInit(): void {
+    }
+
+    async onSubmit(){
+        this.spinner.show();
+
+        //console.log(this.formulario.value);
+        //console.log(this.formulario.status);
+        this.formulario.value.tarefa_id = this.id;
+
+        if( this.formulario.status == 'VALID' ){
+            let retorno = null;
+            if (this.formulario.value.id) {
+                retorno = await this.http_config.editar(this.formulario.value);
+            } else {
+                retorno = await this.http_config.gravar(this.formulario.value);
+            }
+            if( retorno && retorno.id) {
+                this.snackBar.open('Configuração vinculado com sucesso', '', {
+                    horizontalPosition: 'center',
+                    verticalPosition: 'bottom',
+                    duration: 5000
+                });
+                await this.pesquisar();
+            }
+            this.formulario.disable();
+            this.formulario.reset({
+                tarefa_id: this.id,
+                tx_json: '',
+                tx_valor: '',
+                tx_chave: ''
+            });
+            this.formulario.enable();
+        }
+        this.spinner.hide();
     }
 
     linkCadastro(url: any){

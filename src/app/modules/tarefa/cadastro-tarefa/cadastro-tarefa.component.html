@@ -22,7 +22,7 @@
                                 <span aria-hidden="true">2</span>
                             </div>
                         </div>
-                        <div class="div-informacoes-default" *ngIf="id" (click)="linkCadastro('cadastro-json-tarefa')">Cadastro de JSON</div>
+                        <div class="div-informacoes-default" *ngIf="id" (click)="linkCadastro('cadastro-json-tarefa')">Configuração</div>
                     </div>
                     <div class="div-mat-stepper-vertical-line" *ngIf="boAgendado">
                         <div style="border-left: 3px solid #B4BABD;"></div>
@@ -61,12 +61,19 @@
                         <div style="padding-top: 20px">
                             <p><mat-label>Nome:</mat-label></p>
                             <mat-form-field class="input-full-width" appearance="fill">
-                                <mat-label>Escreva o nome do menu</mat-label>
+                                <mat-label>Informe o nome do menu</mat-label>
                                 <input matInput [(ngModel)]="model.tx_nome" class="form-control" value="" required formControlName="tx_nome" name="tx_nome">
                             </mat-form-field>
                             <div *ngIf="tx_nome.invalid && formDir.submitted" class="validation-error">
                                 <p *ngIf="tx_nome.hasError('required')">O nome é <strong>obrigatório</strong></p>
                             </div>
+                        </div>
+                        <div>
+                            <p><mat-label>Constante virtual:</mat-label></p>
+                            <mat-form-field class="input-full-width" appearance="fill">
+                                <mat-label>Informe a constante vistual</mat-label>
+                                <input matInput [(ngModel)]="model.tx_constante_virtual" class="form-control" value="" formControlName="tx_constante_virtual" name="tx_constante_virtual">
+                            </mat-form-field>
                         </div>
                         <div>
                             <p><mat-label>Script: </mat-label></p>

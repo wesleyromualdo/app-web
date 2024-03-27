@@ -79,7 +79,7 @@ export class CadastroWorkerComponent implements OnInit {
         if( this.formulario.value.tx_nome.substring(0,1) != '@' ){
             this.formulario.value.tx_nome = '@'+this.formulario.value.tx_nome;
         }
-        console.log(this.formulario.value);
+        //console.log(this.formulario.value);
 
         this.spinner.show();
         if( this.formulario.status == 'VALID' ){

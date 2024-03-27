@@ -148,15 +148,12 @@ export class HistoricoExecucaoComponent implements OnInit {
         this.loading = false;
         this.spinner.show();
         console.log(pagina, tamanho_pagina);
-        this.dataList = await this.http.pesquisar(this.historico_id, '', '', pagina, tamanho_pagina);
+        this.dataList = await this.http.pesquisar(this.historico_id, '', pagina, tamanho_pagina);
 
         if( this.dataList.status == 0 ) {
             this.dataList = [];
         } else {
             this.dataList.forEach(async (item: any) => {
-                if( item.tx_acao_auxiliar ) {
-                    item.tx_descricao = item.tx_descricao + ' - ' + item.tx_acao_auxiliar
-                }
                 item.data_formatada = moment(item.dt_inclusao).format('DD/MM/YYYY [às] HH:mm:ss');
                 if( item.tx_status == 'success' || item.tx_status == 'info'){
                     item.statusdesc = '<span class="td-status-ativo">'+item.tx_status+'</span>';

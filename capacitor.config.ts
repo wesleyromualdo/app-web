@@ -2,8 +2,8 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.example.app',
-  appName: 'ConsoleWeb',
-  webDir: 'dist/console-web',
+  appName: 'PlataformaWeb',
+  webDir: 'dist/plataforma-web',
   bundledWebRuntime: false
 };
 

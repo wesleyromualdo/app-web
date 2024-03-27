@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { URL } from 'src/app/resources/util/constants';
 import {RequestService} from "./request.service";
-import {Log} from "../models/LogModel";
+import {Configuracao} from "../models/ConfiguracaoModel";
 
 @Injectable({
     providedIn: 'root'
 })
-export class LogService {
+export class ConfiguracaoService {
 
     constructor(private http: RequestService) { }
 
-    async pesquisar(historico_tarefa_id: any = '', tx_descricao: any='', pagina: number = 0, tamanho_pagina: number = 0){
+    async pesquisar(tx_chave:any='', tx_valor:any='', id_tarefa:any='',bo_status:any='', pagina: number = 0, tamanho_pagina: number = 0){
 
-        let url = `${URL}/logs?historico_id=${historico_tarefa_id}&tx_descricao=${tx_descricao}&pagina=${pagina}&tamanho_pagina=${tamanho_pagina}`;
+        let url = `${URL}/configuracao?tx_chave=${tx_chave}&tx_valor=${tx_valor}&id_tarefa=${id_tarefa}&bo_status=${bo_status}&pagina=${pagina}&tamanho_pagina=${tamanho_pagina}`;
 
         return this.http.get(url, false).then(result => {
             return result;
@@ -21,8 +21,8 @@ export class LogService {
         });
     }
 
-    async gravar(model: Log){
-        let url = `${URL}/logs/`;
+    async gravar(model: Configuracao){
+        let url = `${URL}/configuracao/`;
 
         return this.http.post(url, model).then(result => {
             return result;
@@ -31,8 +31,8 @@ export class LogService {
         });
     }
 
-    async editar(model: Log){
-        let url = `${URL}/logs/`;
+    async editar(model: Configuracao){
+        let url = `${URL}/configuracao/`;
 
         return this.http.put(url, model).then(result => {
             return result;
@@ -42,7 +42,7 @@ export class LogService {
     }
 
     async getById(id: number){
-        let url = `${URL}/logs/${id}`;
+        let url = `${URL}/configuracao/${id}`;
 
         return this.http.get(url).then(result => {
             return result;
@@ -52,7 +52,7 @@ export class LogService {
     }
 
     async excluir(id: number){
-        let url = `${URL}/logs/${id}`;
+        let url = `${URL}/configuracao/${id}`;
 
         return this.http.delete(url).then(result => {
             return result;

@@ -69,6 +69,7 @@ export class CadastroTarefaComponent implements OnInit {
             automacao_id: new FormControl('', [Validators.required]),
             nu_cpf: new FormControl(this.cpfLogado, []),
             tx_nome: new FormControl('', [Validators.required]),
+            tx_constante_virtual: new FormControl('', []),
             bo_execucao: new FormControl(false, []),
             bo_agendada: new FormControl(false, []),
             json_agendamento: new FormControl('', []),
@@ -131,6 +132,10 @@ export class CadastroTarefaComponent implements OnInit {
 
     get tx_nome(){
         return this.formulario.get('tx_nome')!;
+    }
+
+    get tx_constante_virtual(){
+        return this.formulario.get('tx_constante_virtual')!;
     }
 
     get tx_nome_script(){

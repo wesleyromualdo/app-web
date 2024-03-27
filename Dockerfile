@@ -1,6 +1,7 @@
-FROM node:16-slim AS build
+FROM node:16.15.1 AS build
 
-RUN apt-get update && apt-get install curl unzip -y
+# Atualize e instale dependências, depois limpe o cache
+RUN apt-get update && apt-get install curl unzip -y && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 

@@ -19,6 +19,7 @@ export class Tarefa {
     anexo_script_id:any;
     tx_json:any;
     nu_prioridade:any;
+    tx_constante_virtual:any;
 
     // @ts-ignore
     constructor(data?): any{
@@ -42,6 +43,7 @@ export class Tarefa {
             this.anexo_script_id = data.anexo_script_id;
             this.tx_json = data.tx_json;
             this.nu_prioridade = data.nu_prioridade;
+            this.tx_constante_virtual = data.tx_constante_virtual;
         }
     }
 }
