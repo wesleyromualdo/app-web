@@ -1,35 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import {TarefaService} from "../../resources/services/tarefa.service";
-import {LoginService} from "../../resources/services/login.service";
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatTabChangeEvent } from '@angular/material/tabs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit  {
+    @ViewChild('tabGroup') tabGroup: any;
+    abaIndex:any = 1;
 
-    userData: any;
-    dashExecucao: any;
-    tempoTotal: any;
-    dadosAutomacao: any;
-    mostraChart: Boolean = false;
+    constructor(private route: ActivatedRoute) {}
 
-    constructor(private tarefaServices: TarefaService,
-                private loginService: LoginService) { }
-
-    async ngOnInit(){
-        this.userData = this.loginService.getUserData();
-        this.mostraChart = false;
-        await this.pegaDadosAutomacao();
-        this.mostraChart = true;
+    ngOnInit(){
+        this.route.queryParams.subscribe(params => {
+            if( params['aba'] ) {
+                this.abaIndex = parseInt(params['aba']);
+            }
+        });
     }
 
-    async pegaDadosAutomacao(dados:any=''){
-        //console.log('dados', dados);
-        this.dashExecucao = await this.tarefaServices.getDadosAutomacaoDashboard(this.userData.cliente_id, dados.automacao_id, dados.periodo, false);
-        //console.log('dashExecucao', this.dashExecucao);
-        this.dadosAutomacao = this.dashExecucao[0];
-        this.tempoTotal = this.dashExecucao[1];
+    ngAfterViewInit() {
+        //console.log('After ', this.abaIndex);
+    }
+
+    tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
+        this.abaIndex = tabChangeEvent.index;
+        //console.log('abaTarefa: ', this.abaIndex);
     }
 }

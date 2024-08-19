@@ -34,6 +34,7 @@ export class DadoNegocialComponent implements OnInit {
             id:'table-dado-negocial',
             class:''
         },
+        height: '52vh',
         btnnovo: '',
         placeholder: 'Busque pelo ID ou descrição ',
         columns:[

@@ -1,6 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import '../node_modules/@fontsource/work-sans';
 
+//@import "~@ng-select/ng-select/themes/material.theme.css";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
 html,
 body {
     height: 100%;
@@ -11,7 +14,7 @@ body {
 
 .div-content{
     font-family: 'Work Sans', 'Roboto', "Helvetica Neue", 'sans-serif' !important;
-    height: 100%;
+    min-height: 99.5vh;
 
     .btn-stop {
         border: 1px solid #ff0000;
@@ -117,6 +120,7 @@ body {
     font-size: 16px;
     color: #394E58;
     font-family: 'Work Sans', 'Roboto', "Helvetica Neue", 'sans-serif' !important;
+    min-height: 92vh;
 }
 
 .cabecalho-titulo{
@@ -221,11 +225,12 @@ body {
 }
 
 .div-cabecalho-cadastro{
-    height: 100%;
     display: flex;
     flex-direction: column;
     padding-left: 30px;
     padding-right: 30px;
+    overflow: auto;
+    min-height: 95vh;
 }
 
 .campo-check-status{
@@ -541,3 +546,6 @@ textarea.mat-input-element {
     border-radius: 8px;
     margin-bottom: 10px;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

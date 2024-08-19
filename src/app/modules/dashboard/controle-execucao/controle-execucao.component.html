@@ -1,0 +1,153 @@
+<div class="div-content" *ngIf="mostraChart">
+    <div class="cards">
+        <div class="card finalizadas">
+            <div class="image"></div>
+            <div class="total">{{total_finalizadas.length}}</div>
+            <div class="description">Finalizadas</div>
+        </div>
+        <div class="card pendencias">
+            <div class="image"></div>
+            <div class="total">{{total_pendencias.length}}</div>
+            <div class="description">Com Pendências</div>
+        </div>
+        <div class="card erro">
+            <div class="image"></div>
+            <div class="total">{{historicoLogs?.qtd_execucao_error}}</div>
+            <div class="description">Com Exceções</div>
+        </div>
+        <div class="card processadas">
+            <div class="image"></div>
+            <div class="total">{{total_registros}}</div>
+            <div class="description">Fatura Analisadas</div>
+        </div>
+    </div>
+    <div class="cards" style="padding-top: 20px;">
+        <div class="card percentual-sucesso">
+            <div class="image">Minutos: {{historicoLogs?.minutos_sucesso}}</div>
+            <div class="total" style="font-size: 35px;">{{historicoLogs?.percentual_sucesso}}</div>
+            <div class="description">% com Sucesso</div>
+        </div>
+        <div class="card percentual-erro">
+            <div class="image">Minutos: {{historicoLogs?.minutos_erro}}</div>
+            <div class="total" style="font-size: 35px;">{{historicoLogs?.percentual_erro}}</div>
+            <div class="description">% com Exceções</div>
+        </div>
+        <div class="card minutos-executados">
+            <div class="image" style="display: flex; justify-content: center;">
+                <div style="padding-right: 10px;">Máximo: {{historicoLogs?.maior_tempo}}</div> |&nbsp;
+                <div style="padding-right: 10px;">Mínimo: {{historicoLogs?.menor_tempo}}</div> |&nbsp;
+                <div>Médio: {{historicoLogs?.tempo_medio_execucao}}</div>
+            </div>
+            <div class="total" style="font-size: 35px;">{{historicoLogs?.minutos}}</div>
+            <div class="description">Minutos executados</div>
+        </div>
+        <div class="card total-registros">
+            <div class="image">Qtd Execuções: {{historicoLogs?.qtd_execucoes}}</div>
+            <div class="total" style="font-size: 35px;">{{historicoLogs?.preco_total}}</div>
+            <div class="description">Valor investimento</div>
+        </div>
+    </div>
+    <div class="table-lista">
+        <div style="display: flex; flex-direction: row; width: 100%">
+            <div style="width: 40%" class="div-table-filtro">
+                <mat-form-field appearance="standard">
+                    <mat-label>Filtros</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" #input>
+                    <span matSuffix><mat-icon>search</mat-icon></span> 
+                </mat-form-field>
+            </div>
+            <div style="width: 15%" class="div-table-filtro">
+                <mat-form-field appearance="fill">
+                    <mat-label>Tarefas</mat-label>
+                    <mat-select [(value)]="tarefaAtual" (selectionChange)="onChangeFiltroTarefa($event)">
+                        <mat-option *ngFor="let source of comboTarefas" [value]="source.codigo">
+                            {{source.descricao}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div style="width: 15%" class="div-table-filtro">
+                <mat-form-field appearance="fill">
+                    <mat-label>Situação</mat-label>
+                    <mat-select [(value)]="situacaoAtual" (selectionChange)="onChangeFiltroSituacao($event)">
+                        <mat-option *ngFor="let source of comboSituacoes" [value]="source.codigo">
+                            {{source.descricao}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div style="width: 30%" class="range-data">
+                <mat-form-field>
+                    <mat-label>Informe a data</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate [(ngModel)]="startDate" placeholder="Data Inicio" name="start">
+                        <input matEndDate [(ngModel)]="endDate" (dateChange)="onDateChange('filtros')" placeholder="Data Fim" name="end">
+                      </mat-date-range-input>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                  </mat-form-field>
+                  <mat-dialog-actions style="padding-bottom: 20px; padding-left: 20px;">
+                    <button mat-raised-button color="primary" (click)="onDateChange('atualizar')">Atualizar</button>
+                </mat-dialog-actions>
+            </div>
+        </div>
+        <div class="table-container">
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
+
+                <ng-container matColumnDef="acao">
+                    <th mat-header-cell *matHeaderCellDef style="min-width: 100px; width: 100px;">Ações</th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-button (click)="visualizarHistorico(element)">
+                            <mat-icon>history</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="tx_nome">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sticky style="width: 20%;"> Tarefa </th>
+                    <td mat-cell *matCellDef="let row"> {{row.tx_nome}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="tx_chave">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sticky style="width: 05%;"> Código </th>
+                    <td mat-cell *matCellDef="let row"> {{row.tx_chave}} </td>
+                </ng-container>
+
+                <!-- Progress Column -->
+                <ng-container matColumnDef="tx_situacao">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sticky style="width: 10%;"> Situação </th>
+                    <td mat-cell *matCellDef="let row" class="td-link" (click)="abreSituacao(row)"> <a [innerHTML]="row.tx_situacao"></a> </td>
+                </ng-container>
+
+                <ng-container matColumnDef="dt_cadastro_formata">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sticky style="width: 10%;"> Data Execução </th>
+                    <td mat-cell *matCellDef="let row"> {{row.dt_cadastro_formata}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="tempo_formatado">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sticky style="width: 10%;"> Tempo </th>
+                    <td mat-cell *matCellDef="let row"> {{row.tempo_formatado}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="tx_resumo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sticky style="width: 50%;"> Historico </th>
+                    <td mat-cell *matCellDef="let row"> {{row.tx_resumo}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="10" style="color: #ff0000; font-weight: bold; font-size: 12px !important; padding-left: 16px">{{msgSemRegistro}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <mat-paginator [length]="paginador.length"
+            [pageSize]="paginador.pageSize"
+            [pageSizeOptions]="paginador.pageSizeOptions"
+            showFirstLastButtons
+            aria-label="Selecionar página">
+        </mat-paginator>
+    </div>
+</div>

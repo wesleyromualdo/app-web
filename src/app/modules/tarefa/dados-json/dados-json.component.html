@@ -1,4 +1,4 @@
-<div class="div-content">
+<div class="div-content">    
     <app-header menuSelected="Configuração"></app-header>
     <div  class="card-principal">
         <div style="display: flex; flex-direction: row; width: 100%; height: 100%;">
@@ -49,53 +49,77 @@
             <div class="form-content">
                 <div class="div-cabecalho-cadastro">
                     <form [formGroup]="formulario" #formDir="ngForm">
-                        <div class="cabecalho-titulo">
-                            <div class="titulo-menu" style="width: 70% !important;">Configuração</div>
-                        </div>
-                        <!--<div style="padding-top: 20px">
-                            <p><mat-label>Json</mat-label></p>
-                            <div class="app-ace-editor" #editor style="width: 100%;height: 500px; overflow: auto;"></div>
-                            <div *ngIf="!validaJson" class="validation-error" style="margin-top: unset !important;">
-                                <p>O formatado do JSON é inválido.</p>
-                            </div>
-                        </div>-->
+                        <mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)" [selectedIndex]="abaIndex">
+                            <mat-tab label="Configuração">
+                                <div *ngIf="abaIndex == 0">
+                                    <div style="padding-top: 20px">
+                                        <p><mat-label>Chave</mat-label></p>
+                                        <mat-form-field class="input-full-width" appearance="fill">
+                                            <input matInput placeholder="Informe a chave" class="form-control" #input required formControlName="tx_chave" name="tx_chave">
+                                        </mat-form-field>
+                                        <div *ngIf="tx_chave.invalid && formDir.submitted" class="validation-error">
+                                            <p *ngIf="tx_chave.hasError('required')">A chave é <strong>obrigatório</strong></p>
+                                            <p *ngIf="tx_chave.hasError('pattern')">Este campo não pode conter espaço em branco</p>
+                                        </div>
+            
+                                        <p><mat-label>Valor</mat-label></p>
+                                        <mat-form-field class="input-full-width" appearance="fill">
+                                            <input matInput placeholder="Informe o valor" class="form-control" #input required formControlName="tx_valor" name="tx_valor">
+                                        </mat-form-field>
+                                        <div *ngIf="tx_valor.invalid && formDir.submitted" class="validation-error">
+                                            <p *ngIf="tx_valor.hasError('required')">O valor é <strong>obrigatório</strong></p>
+                                            <p *ngIf="tx_valor.hasError('pattern')">Este campo não pode conter espaço em branco</p>
+                                        </div>
+            
+                                        <p><mat-label>Ordem</mat-label></p>
+                                        <mat-form-field class="input-full-width" appearance="fill">
+                                            <input matInput placeholder="Informe a ordem" class="form-control" #input formControlName="num_ordem" name="num_ordem">
+                                        </mat-form-field>
 
-                        <div style="padding-top: 20px">
-                            <p><mat-label>Chave</mat-label></p>
-                            <mat-form-field class="input-full-width" appearance="fill">
-                                <input matInput placeholder="Escreva a chave" class="form-control" #input required formControlName="tx_chave" name="tx_chave">
-                            </mat-form-field>
-                            <div *ngIf="tx_chave.invalid && formDir.submitted" class="validation-error">
-                                <p *ngIf="tx_chave.hasError('required')">A chave é <strong>obrigatório</strong></p>
-                                <p *ngIf="tx_chave.hasError('pattern')">Este campo não pode conter espaço em branco</p>
-                            </div>
-
-                            <p><mat-label>Valor</mat-label></p>
-                            <mat-form-field class="input-full-width" appearance="fill">
-                                <input matInput placeholder="Escreva o valor" class="form-control" #input required formControlName="tx_valor" name="tx_valor">
-                            </mat-form-field>
-                            <div *ngIf="tx_valor.invalid && formDir.submitted" class="validation-error">
-                                <p *ngIf="tx_valor.hasError('required')">O valor é <strong>obrigatório</strong></p>
-                                <p *ngIf="tx_valor.hasError('pattern')">Este campo não pode conter espaço em branco</p>
-                            </div>
-
-                        </div>
-
-                        <div class="btn-cadastro-footer">
-                            <button mat-stroked-button color="primary" class="btn-cadastro-fill" style="margin-right: 10px" (click)="voltar()">
-                                Cancelar<mat-icon>arrow_back</mat-icon>
-                            </button>
-
-                            <button mat-button class="btn-cadastro-full" (click)="onSubmit()">
-                                Salvar <mat-icon>save</mat-icon>
-                            </button>
-
-                            <button mat-stroked-button color="primary" *ngIf="model.bo_agendada || model.bo_email" class="btn-cadastro-fill" style="margin-left: 10px" (click)="proximo()">
-                                Próximo<mat-icon>arrow_forward</mat-icon>
-                            </button>
-                        </div>
+                                        <div class="btn-cadastro-footer">
+                                            <button mat-stroked-button color="primary" class="btn-cadastro-fill" style="margin-right: 10px" (click)="voltar()">
+                                                Cancelar<mat-icon>arrow_back</mat-icon>
+                                            </button>
+                
+                                            <button mat-button class="btn-cadastro-full" (click)="onSubmit()">
+                                                Salvar <mat-icon>save</mat-icon>
+                                            </button>
+                
+                                            <button mat-stroked-button color="primary" *ngIf="model.bo_agendada || model.bo_email" class="btn-cadastro-fill" style="margin-left: 10px" (click)="proximo()">
+                                                Próximo<mat-icon>arrow_forward</mat-icon>
+                                            </button>
+                                        </div>
+            
+                                    </div>
+                                </div>
+                            </mat-tab>
+                            <mat-tab label="JSON">
+                                <div *ngIf="abaIndex == 1">
+                                    <div style="padding-top: 20px">
+                                        <p><mat-label>Json</mat-label></p>
+                                        <div class="app-ace-editor" #editor style="width: 100%;height: 500px; overflow: auto;"></div>
+                                        <div *ngIf="!validaJson" class="validation-error" style="margin-top: unset !important;">
+                                            <p>O formatado do JSON é inválido.</p>
+                                        </div>
+                                    </div>
+                                    <div class="btn-cadastro-footer">
+                                        <button mat-stroked-button color="primary" class="btn-cadastro-fill" style="margin-right: 10px" (click)="voltar()">
+                                            Cancelar<mat-icon>arrow_back</mat-icon>
+                                        </button>
+            
+                                        <button mat-button class="btn-cadastro-full" (click)="onSubmit()">
+                                            Salvar <mat-icon>save</mat-icon>
+                                        </button>
+            
+                                        <button mat-stroked-button color="primary" *ngIf="model.bo_agendada || model.bo_email" class="btn-cadastro-fill" style="margin-left: 10px" (click)="proximo()">
+                                            Próximo<mat-icon>arrow_forward</mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                            </mat-tab>
+                        </mat-tab-group>
                     </form>
-                    <div class="div-content">
+                    <div *ngIf="abaIndex == 0" style="max-height: 10vh;">
                         <app-datatable *ngIf="loading" [configTable]="configTable" [dados]="dataList" [bo_status]="bo_status" (outputDados)="executaRetorno($event)"></app-datatable>
                     </div>
                 </div>

@@ -75,6 +75,7 @@ export class SidebarComponent implements OnInit {
     }
 
     async onSelectCliente(value: any){
+        this.spinner.show();
         this.dadosLocal.cliente_id = value;
         const cliente = await this.clienteServices.getById(value);
         this.dadosLocal.nu_worker = cliente.nu_worker;
@@ -82,7 +83,9 @@ export class SidebarComponent implements OnInit {
         this.loginService.removeUserData();
         this.loginService.setUserData(this.dadosLocal);
         await this.clienteServices.editarUltimoAcesso({cliente_id:value, nu_cpf: this.nu_cpf_logado});
+        this.router.navigate(['/tarefa']);
         window.location.reload();
+        this.spinner.show()
     }
 
 }

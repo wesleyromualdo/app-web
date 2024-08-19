@@ -1,0 +1,223 @@
+.div-content {
+    display: flex; /* Garante que o conteúdo seja exibido em linha */
+    flex-direction: column; /* Alinha o conteúdo verticalmente */
+    justify-content: flex-start; /* Centraliza o conteúdo horizontalmente */
+    align-items: flex-start; /* Alinha o conteúdo ao topo */
+    width: 100%; /* Ocupa toda a largura disponível */
+    height: 84vh;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.cards {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .card {
+        flex: 1 1 250px;
+        flex-grow: 1;
+        min-width: 250px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between; // Distribui o espaço igualmente entre os itens
+        text-align: center;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        color: #FFFFFF;
+        font-weight: 500;
+        height: 100px;
+
+        .image {
+            align-self: flex-start; // Alinha ao topo
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .total {
+            align-self: center; 
+            margin-bottom: 10px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 60px;
+        }
+
+        .description {
+            // Estilização para a descrição
+            //font-size: 0.8rem;
+            //align-self: flex-end; 
+            font-size: 18px;
+        }
+        &.finalizadas{
+            background-color: #00D27E;
+        }
+        &.pendencias{
+            background-color: #57576b;
+        }
+        &.erro{
+            background-color: #FF3E6C;
+        }
+        &.processadas{
+            background-color: #FEB900;
+        }
+        &.percentual-sucesso {
+            background-color: #175a3f !important;
+        }
+        &.percentual-erro {
+            background-color: #aa2141 !important;
+        }
+        &.minutos-executados {
+            background-color: #9b8282 !important;
+        }
+        &.total-registros{
+            background-color: #2c5299 !important;
+        }
+    }
+}
+
+.table-lista{
+    /*padding: 20px;
+    overflow: hidden;*/
+    width: 100%;
+    max-height: 55vh;
+    display: flex;
+    flex-direction: column;
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: #FFFFFF !important;
+}
+
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    font-family: 'Work Sans', 'Roboto', "Helvetica Neue", 'sans-serif' !important;
+
+    th,
+    td {
+        overflow: hidden;
+        //text-overflow: ellipsis;
+        //white-space: nowrap;
+    }
+}
+
+.table-container {
+    display: block;
+    /*max-height: 70vh;*/
+    max-height: 390px;
+    overflow-y: auto;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+th.mat-sort-header-sorted {
+    color: black;
+}
+
+[mat-header-row] {
+    background-color: #e2e5e6 !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+}
+
+th.mat-header-cell .mat-sort-header-container.mat-sort-header-sorted .mat-sort-header-arrow {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.mat-form-field {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    width: 50%;
+}
+
+/* Estilo para linhas ímpares */
+.mat-row:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+/* Estilo para linhas pares */
+.mat-row:nth-child(even) {
+    background-color: #ffffff;
+}
+
+.mat-datepicker-toggle {
+    color: rgba(0, 0, 0, .54);
+    position: absolute;
+    top: -10px;
+    right: -10px;
+}
+
+.range-data{
+    width: 50%;
+    display: flex;
+    align-items: flex-end;
+    max-height: 84px;
+}
+
+.div-table-filtro .mat-form-field {
+    width: 100%;
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: 0.4px;
+    color: #394E58;
+}
+
+.div-table .td-tempo {
+    color: #1FA8E4;
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: 0.5px;
+}
+
+
+table th {
+    //padding-left: 5px;
+    padding-right: 5px;
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 150%;
+    color: #394E58;
+}
+
+table td {
+    padding-left: 5px;
+    padding-right: 5px;
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    color: #394E58;
+}
+
+.td-link-modal{
+
+    a{
+        cursor: pointer;
+        color: #056691;
+        position: relative;
+        text-decoration: none;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .card {
+        flex-basis: 100%;
+    }
+}

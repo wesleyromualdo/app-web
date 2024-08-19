@@ -116,8 +116,18 @@ export class TarefaService {
         });
     }
 
-    async getHistoricoTarefaById(id: number, exibeErro: boolean = true){
-        let url = `${URL}/tarefa/historico/${id}`;
+    async getTarefaCliente(cliente_id: number){
+        let url = `${URL}/tarefa/cliente/${cliente_id}`;
+
+        return this.http.get(url).then(result => {
+            return result;
+        }).catch((error) => {
+            return error;
+        });
+    }
+
+    async getHistoricoTarefaById(id: number, historico_id:string, dt_inicio:string, pagina?:any, tamanho_pagina?:any, exibeErro: boolean = true){
+        let url = `${URL}/tarefa-historico?tarefa_id=${id}&historico_id=${historico_id}&dt_inicio=${dt_inicio}&pagina=${pagina}&tamanho_pagina=${tamanho_pagina}`;
 
         return this.http.get(url, exibeErro).then(result => {
             return result;

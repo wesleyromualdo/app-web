@@ -10,6 +10,8 @@ import * as moment from 'moment';
 import {msgSemRegistro} from "../../../resources/util/constants";
 import {LogService} from "../../../resources/services/log.service";
 import {TarefaService} from "../../../resources/services/tarefa.service";
+import { ModalDetalhamentoComponent } from 'src/app/shared/components/modal-detalhamento/modal-detalhamento.component';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-historico-execucao',
@@ -38,19 +40,20 @@ export class HistoricoExecucaoComponent implements OnInit {
             id:'table-hist-logs',
             class:''
         },
+        height: '50vh',
         btnnovo: '',
-        placeholder: 'Busque pelo ID ou log de execução ',
+        placeholder: 'Busque pelo log de execução',
         page:{
-            length: 0,
-            pageIndex: this.pageIndex,
-            pageSize:0,
+            length: 100,
+            pageIndex: 0,
+            pageSize:10,
             previousPageIndex:0
         },
         columns:[
             {label:'ID', field:'id', class:''},
             {label:'Data', field:'data_formatada', class:''},
             {label:'Log', field:'tx_descricao', class:''},
-            {label:'Status', field:'statusdesc', class:''}
+            {label:'Status', field:'statusdesc', class:'', link:true, callback:'detalhe'}
         ]
     };
 
@@ -58,10 +61,10 @@ export class HistoricoExecucaoComponent implements OnInit {
                 private snackBar: MatSnackBar,
                 private http: LogService,
                 private spinner: NgxSpinnerService,
-                private usuarioService: UsuarioService,
                 private loginService: LoginService,
                 private tarefaService: TarefaService,
                 private dialog: MatDialog,
+                private sanitizer: DomSanitizer,
                 private route: ActivatedRoute) { }
 
     async ngOnInit(){
@@ -144,11 +147,13 @@ export class HistoricoExecucaoComponent implements OnInit {
         }
     }
 
-    async pesquisar(pagina:any=0, tamanho_pagina:any=100){
+    async pesquisar(pagina=0, tamanho_pagina:any=20, filter=''){
         this.loading = false;
-        this.spinner.show();
-        console.log(pagina, tamanho_pagina);
-        this.dataList = await this.http.pesquisar(this.historico_id, '', pagina, tamanho_pagina);
+        //this.spinner.show();
+        //console.log(pagina, tamanho_pagina);
+        const retorno = await this.http.pesquisar(this.historico_id, filter, pagina, tamanho_pagina);
+        this.dataList = retorno.dados;
+        this.configTable.page.length = retorno.total;
 
         if( this.dataList.status == 0 ) {
             this.dataList = [];
@@ -163,7 +168,7 @@ export class HistoricoExecucaoComponent implements OnInit {
             });
         }
         await this.calculaTempoHistorico();
-        this.spinner.hide();
+        //this.spinner.hide();
         this.loading = true;
     }
 
@@ -176,18 +181,61 @@ export class HistoricoExecucaoComponent implements OnInit {
     }
 
     executaRetorno(dados: any) {
+        console.log(dados);
         if( dados.callback == 'paginator' ){
-            this.pageIndex = (this.pageIndex + dados.element.pageIndex);
-            const pageSize = (dados.element.length+dados.element.pageSize)
-            this.configTable.page = {
-                length: pageSize,
-                pageIndex: this.pageIndex,
-                pageSize: dados.element.pageSize,
-                previousPageIndex: dados.element.previousPageIndex
-            }
-            //console.log((dados.element.pageIndex * dados.element.pageSize), dados.element.length);
-            this.pesquisar(this.pageIndex, pageSize)
+            this.pageIndex = dados.element.pageIndex;
+
+            this.configTable.page.length = dados.element.length;
+            this.configTable.page.pageSize = dados.element.pageSize;
+            this.configTable.page.pageIndex = dados.element.pageIndex;
+            this.configTable.page.previousPageIndex = dados.element.previousPageIndex;
+
+            this.pesquisar(this.pageIndex)
         }
+        if( dados.callback == 'detalhe' ){
+            this.detalhamento(dados.element);
+        }
+
+        if( dados.callback == 'pesquisa' ){
+            this.pesquisar(0, 20, dados.element);
+        }
+    }
+
+    async detalhamento(element: any){
+        //console.log(element);
+        const classStatus = ( (element.tx_status=='success' || element.tx_status=='info')  ? 'td-status-ativo' : 'td-status-erro');
+
+        const validaJson = Util.ValidatorJson(element.tx_json);
+        const tx_json = ( validaJson.status == 0 ? '': JSON.parse(element.tx_json));
+        const tipos = ( validaJson.status == 0 ? '': 'json');
+
+        let imageUrl_path: any = '';
+        if (element.tx_imagem != ''){
+            await this.http.downloadImage(element.id).then(imageUrl => {
+                const safeUrl = this.sanitizer.bypassSecurityTrustUrl(imageUrl as string);
+                imageUrl_path = safeUrl; // Aqui você tem o URL da imagem
+            }).catch(error => {
+                console.error(error); // Trata o erro, se houver
+            });
+        }
+
+        const configuracao = {
+            informacao: {label: 'Dados da tarefa', value:this.tarefa.tx_nome},
+            conteudo:[
+                {label:'ID', value: element.id},
+                {label:'Data', value: element.data_formatada},
+                {label:'Status', value: element.tx_status.toUpperCase(), class: classStatus},
+                {label:'Resumo', value: element.tx_descricao, width:'100%'},
+                {label:'Imagem', value: imageUrl_path, type: 'image', width:'100%'},
+                {label:'Parâmetros (json)', value: tx_json, type: tipos, width:'100%', class:'json-dados'},
+            ],
+            datatable: [],
+            columnsTable:[]
+        };
+        this.dialog.open(ModalDetalhamentoComponent, {
+            width: '60%',
+            data: configuracao
+        });
     }
 
 }

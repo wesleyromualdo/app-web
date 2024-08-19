@@ -138,12 +138,13 @@ export class TarefasExecucaoComponent implements OnInit, OnDestroy {
                         return element;
                     }
                 });*/
-                let historico = await this.http.getHistoricoTarefaById(item.id, false);
-                item.historico = historico[0];
+                let historico = await this.http.getHistoricoTarefaById(item.id, item.historico_id, '', '','',false);
+                item.historico = historico['dados'][0];
+                //console.log(item.historico, historico);
                 //console.log('historico', historico[0]);
 
                 item.iniciada_formatada = '';
-                if( historico[0] ) {
+                if( historico['dados'][0] ) {
                     //const logs = await this.logServices.pesquisar(item.historico.id, '', '', 0, 0);
                     /*if( logs.status == 0 ){
                         const tempoSemLogs = Util.diferencaEntreDatas(historico[0].dt_inicio, moment());
@@ -211,15 +212,15 @@ export class TarefasExecucaoComponent implements OnInit, OnDestroy {
         this.router.navigate(['historico-execucao'], { queryParams: { historico_id: element.historico.id, tarefa_id: element.id, visualizacao: true } });
     }
 
-    async stopTarefa( tarefa: any, tx_resumo:any='Execução finalizada pelo usuário' ){
-        //console.log('tarefa', tarefa);
+    async stopTarefa( tarefa: any, tx_resumo:any='Execução finalizada pelo usuário manualmente' ){
+        console.log('tarefa', tarefa);
         this.spinner.show();
 
         tarefa.tarefa_id = tarefa.id;
         tarefa.historico.dt_fim = moment();
         tarefa.nu_cpf = this.cpfLogado;
         tarefa.historico.tx_resumo = tx_resumo;
-        tarefa.historico.bo_status_code = 400;
+        tarefa.historico.bo_status_code = 200;
         const dados = new StopTarefa(tarefa.historico);
         //console.log('stopTarefa',dados);
         const retorno = await this.http.stopTarefa(dados);

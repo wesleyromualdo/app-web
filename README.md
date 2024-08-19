@@ -3,6 +3,12 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.3.
 Node 16.15.1
 
+npm install -g @angular/cli@14.0.3
+npm install @angular-devkit/core@14.0.3 @angular-devkit/schematics@14.0.3
+ng add @angular/material@14.0.3
+npm install highcharts-angular@2.10.0 --save
+npm i highcharts --save
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.

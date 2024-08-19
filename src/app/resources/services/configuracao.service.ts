@@ -10,9 +10,9 @@ export class ConfiguracaoService {
 
     constructor(private http: RequestService) { }
 
-    async pesquisar(tx_chave:any='', tx_valor:any='', id_tarefa:any='',bo_status:any='', pagina: number = 0, tamanho_pagina: number = 0){
+    async pesquisar(tx_nome:any='', tarefa_id:any='',bo_status:any='', pagina: number = 0, tamanho_pagina: number = 0){
 
-        let url = `${URL}/configuracao?tx_chave=${tx_chave}&tx_valor=${tx_valor}&id_tarefa=${id_tarefa}&bo_status=${bo_status}&pagina=${pagina}&tamanho_pagina=${tamanho_pagina}`;
+        let url = `${URL}/configuracao?tx_nome=${tx_nome}&tarefa_id=${tarefa_id}&bo_status=${bo_status}&pagina=${pagina}&tamanho_pagina=${tamanho_pagina}`;
 
         return this.http.get(url, false).then(result => {
             return result;

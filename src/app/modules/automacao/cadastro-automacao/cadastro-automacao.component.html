@@ -26,8 +26,7 @@
                                 <mat-slide-toggle color="primary" (change)="onChangeToggle($event)" *ngIf="!isChecked">{{tx_ativo}}</mat-slide-toggle>
                             </div>
                         </div>
-                        <div>
-
+                        <div style="max-height: 75vh; overflow: auto;">
                             <p><mat-label>Nome do worker</mat-label></p>
                             <mat-form-field class="input-full-width" appearance="fill">
                                 <input matInput placeholder="Escreva o nome do worker" [(ngModel)]="model.tx_nome" class="form-control" value="" required formControlName="tx_nome" name="tx_nome">

@@ -11,6 +11,8 @@ import {msgSemRegistro} from "../../../resources/util/constants";
 import { ConfiguracaoService } from 'src/app/resources/services/configuracao.service';
 import { ModalExcluirComponent } from 'src/app/shared/components/modal-excluir/modal-excluir.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTabChangeEvent } from '@angular/material/tabs';
+import { TarefaService } from 'src/app/resources/services/tarefa.service';
 
 @Component({
     selector: 'app-dados-json',
@@ -18,11 +20,13 @@ import { MatDialog } from '@angular/material/dialog';
     styleUrls: ['./dados-json.component.scss']
 })
 export class DadosJsonComponent implements OnInit, AfterViewInit {
-    @ViewChild("editor") private editor: ElementRef<HTMLElement> | undefined;
+    //@ViewChild("editor") private editorElementRef: ElementRef<HTMLElement> | undefined;
+    @ViewChild("editor") private editorElementRef!: ElementRef<HTMLElement>;
+    @ViewChild('tabGroup') tabGroup: any;
 
     msgSemRegistro = msgSemRegistro;
 
-    displayedColumns: string[] = ['acao', 'tx_chave', 'tx_valor'];
+    displayedColumns: string[] = ['acao', 'tx_chave', 'tx_valor', 'num_ordem'];
     dataList: any;
     configTable = {
         table:{
@@ -30,6 +34,7 @@ export class DadosJsonComponent implements OnInit, AfterViewInit {
             class:''
         },
         btnnovo: '',
+        height: '30vh',
         placeholder: 'Busque pelo chave ou valor da configuração',
         columns:[
             {label:'Ação', field:'acao', class:'',botao:[
@@ -38,15 +43,19 @@ export class DadosJsonComponent implements OnInit, AfterViewInit {
                 ]
             },
             {label:'Chave', field:'tx_chave', class:'', link:true, callback:'detalhe'},
-            {label:'Valor', field:'tx_valor', class:''}
+            {label:'Valor', field:'tx_valor', class:''},
+            {label:'Ordem', field:'num_ordem', class:''}
         ]
     };
 
     id: any = '';
     cpfLogado: any;
     userData: any;
+    
     validaJson:any = true;
     aceEditor: any;
+    abaIndex:any = 1;
+
     formulario: any;
     loading: boolean = false;
     bo_status: boolean = true;
@@ -59,6 +68,7 @@ export class DadosJsonComponent implements OnInit, AfterViewInit {
                 private http_config: ConfiguracaoService,
                 private snackBar: MatSnackBar,
                 private spinner: NgxSpinnerService,
+                private tarefaService: TarefaService,
                 private dialog: MatDialog) { }
 
     async ngOnInit() {
@@ -72,7 +82,9 @@ export class DadosJsonComponent implements OnInit, AfterViewInit {
         this.formulario = new FormGroup({
             tarefa_id: new FormControl(this.id, []),
             tx_valor: new FormControl('', [Validators.required]),
-            tx_chave: new FormControl('', [Validators.required])
+            tx_chave: new FormControl('', [Validators.required]),
+            num_ordem: new FormControl('', []),
+            tx_json: new FormControl('', [])
         });
 
         if( this.id ){
@@ -80,10 +92,35 @@ export class DadosJsonComponent implements OnInit, AfterViewInit {
         }
     }
 
+    ngAfterViewInit(): void {
+        
+        console.log(this.editorElementRef);
+        ace.config.set("fontSize", "14px");
+        ace.config.set("basePath", "https://unpkg.com/ace-builds@1.4.12/src-noconflict");
+        ace.config.set("basePath", "https://url.to.a/folder/that/contains-ace-modes");
+        
+        this.aceEditor = ace.edit(this.editorElementRef.nativeElement);
+        this.aceEditor.session.setMode("ace/mode/json");
+        this.aceEditor.setTheme("ace/theme/monokai");
+        this.aceEditor.setOptions({
+            enableBasicAutocompletion: true,
+            enableSnippets: true,
+            enableLiveAutocompletion: true
+        });
+        //this.aceEditor.setTheme("ace/theme/twilight");
+        //this.aceEditor.session.setMode("ace/mode/json");
+        this.aceEditor.session.setTabSize(4);
+
+        this.getTarefaById();
+
+        // Exemplo de como definir um valor inicial formatado
+        //const initialValue = JSON.stringify({ example: "data" }, null, 2);
+        //this.aceEditor.setValue(initialValue, 1);
+    }
+
     async pesquisar(){
         this.loading = false;
-        //await this.getTarefaById();
-        this.dataList = await this.http_config.pesquisar('','',this.id,true,0,0);
+        this.dataList = await this.http_config.pesquisar('', this.id, true, 0, 0);
         if( this.dataList.status == 0 ) {
             this.dataList = [];
         } else {
@@ -117,7 +154,8 @@ export class DadosJsonComponent implements OnInit, AfterViewInit {
             id: new FormControl(retorno.id, []),
             tarefa_id: new FormControl(this.id, []),
             tx_valor: new FormControl(retorno.tx_valor, [Validators.required]),
-            tx_chave: new FormControl(retorno.tx_chave, [Validators.required])
+            tx_chave: new FormControl(retorno.tx_chave, [Validators.required]),
+            num_ordem: new FormControl(retorno.num_ordem, [])
         });
         this.spinner.hide();
     }
@@ -155,39 +193,68 @@ export class DadosJsonComponent implements OnInit, AfterViewInit {
         return this.formulario.get('tx_chave')!;
     }
 
-    ngAfterViewInit(): void {
-    }
-
     async onSubmit(){
         this.spinner.show();
 
-        //console.log(this.formulario.value);
-        //console.log(this.formulario.status);
-        this.formulario.value.tarefa_id = this.id;
+        if( this.abaIndex == 0 ){
+            //console.log(this.formulario.value);
+            //console.log(this.formulario.status);
+            this.formulario.value.tarefa_id = this.id;
 
-        if( this.formulario.status == 'VALID' ){
-            let retorno = null;
-            if (this.formulario.value.id) {
-                retorno = await this.http_config.editar(this.formulario.value);
-            } else {
-                retorno = await this.http_config.gravar(this.formulario.value);
-            }
-            if( retorno && retorno.id) {
-                this.snackBar.open('Configuração vinculado com sucesso', '', {
-                    horizontalPosition: 'center',
-                    verticalPosition: 'bottom',
-                    duration: 5000
+            if( this.formulario.status == 'VALID' ){
+                let retorno = null;
+                if (this.formulario.value.id) {
+                    retorno = await this.http_config.editar(this.formulario.value);
+                } else {
+                    retorno = await this.http_config.gravar(this.formulario.value);
+                }
+                if( retorno && retorno.id) {
+                    this.snackBar.open('Configuração vinculado com sucesso', '', {
+                        horizontalPosition: 'center',
+                        verticalPosition: 'bottom',
+                        duration: 5000
+                    });
+                    await this.pesquisar();
+                }
+                this.formulario.disable();
+                this.formulario.reset({
+                    tarefa_id: this.id,
+                    tx_json: '',
+                    tx_valor: '',
+                    tx_chave: ''
                 });
-                await this.pesquisar();
+                this.formulario.enable();
             }
-            this.formulario.disable();
-            this.formulario.reset({
-                tarefa_id: this.id,
-                tx_json: '',
-                tx_valor: '',
-                tx_chave: ''
-            });
-            this.formulario.enable();
+        } else {
+            this.formulario.value.tx_json = this.aceEditor.getValue();
+            if( this.formulario.value.tx_json == '' ){
+                this.validaJson = false;
+            } else {
+                const valida = Util.ValidatorJson(this.formulario.value.tx_json);
+                if ( valida.status == 0 ) {
+                    this.validaJson = false;
+                    this.snackBar.open('O formatado do JSON é inválido', '', {
+                        horizontalPosition: 'center',
+                        verticalPosition: 'bottom',
+                        duration: 5000
+                    });
+                } else {
+                    this.validaJson = true;
+    
+                    this.model.tx_json = this.formulario.value.tx_json;
+    
+                    // @ts-ignore
+                    let retornoTarefa = await this.tarefaService.grava_json_tarefa(this.model);
+    
+                    if( retornoTarefa && retornoTarefa.id) {
+                        this.snackBar.open('JSON de configuração vinculado com sucesso', '', {
+                            horizontalPosition: 'center',
+                            verticalPosition: 'bottom',
+                            duration: 5000
+                        });
+                    }
+                }
+            }
         }
         this.spinner.hide();
     }
@@ -207,6 +274,27 @@ export class DadosJsonComponent implements OnInit, AfterViewInit {
             this.router.navigate(['config-email-tarefa'], { queryParams: { id: this.id } });
         }
 
+    }
+
+    tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
+        this.abaIndex = tabChangeEvent.index;
+        //console.log('abaTarefa: ', this.abaIndex);
+        if( this.abaIndex == 1 ){
+            this.getTarefaById();
+        }
+    }
+
+    async getTarefaById(){
+        if( !this.model.tx_json ){
+            this.spinner.show();
+            let retorno = await this.tarefaService.getById(this.id);
+
+            this.model = new Tarefa(retorno);
+            if (this.aceEditor) {
+                this.aceEditor.session.setValue(retorno.tx_json);
+            }
+            this.spinner.hide();
+        }
     }
 
 }

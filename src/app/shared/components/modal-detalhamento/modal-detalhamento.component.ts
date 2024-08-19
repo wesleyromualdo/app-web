@@ -19,7 +19,7 @@ export class ModalDetalhamentoComponent implements OnInit {
 
     ngOnInit(){
         this.loading = false;
-        //console.log('this.data', this.data);
+        console.log('this.data', this.data);
         this.dataList = this.data.datatable;
 
         this.configTable = {

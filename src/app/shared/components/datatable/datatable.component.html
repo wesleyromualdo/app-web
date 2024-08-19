@@ -3,9 +3,23 @@
         <div style="width: 50%" class="div-table-filtro" *ngIf="configTable.placeholder">
             <mat-form-field appearance="standard">
                 <mat-label>{{configTable.placeholder}}</mat-label>
-                <input matInput (keyup)="applyFilter($event)" #input>
-                <span matSuffix><mat-icon>search</mat-icon></span>
+                <input matInput (keyup.enter)="applyFilter($event)" #input>
+                <span matSuffix><mat-icon>search</mat-icon></span> 
             </mat-form-field>
+        </div>
+        <div style="width: 50%" class="range-data" *ngIf="configTable.filtrosData == true">
+            <mat-form-field>
+                <mat-label>Informe a data</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate [(ngModel)]="startDate" placeholder="Data Inicio" name="start">
+                    <input matEndDate [(ngModel)]="endDate" (dateChange)="onDateChange('filtros')" placeholder="Data Fim" name="end">
+                  </mat-date-range-input>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              </mat-form-field>
+              <mat-dialog-actions style="padding-bottom: 20px; padding-left: 20px;">
+                <button mat-raised-button color="primary" (click)="onDateChange('atualizar')">Atualizar</button>
+            </mat-dialog-actions>
         </div>
         <div class="button-row" *ngIf="configTable.btnnovo && userData.constante_virtual != 'OPERADOR'">
             <div style="display: flex; flex-direction: column; align-items: flex-end;">
@@ -23,7 +37,7 @@
 
         </div>
     </div>
-    <div style="width: 100%; overflow-x: auto;">
+    <div style="width: 100%; overflow-x: auto;" [style.height]="configTable.height">
         <table style="overflow: hidden;" mat-table [dataSource]="dataSource" [class]="confTable.class" [id]="confTable.id">
 
             <ng-container *ngFor="let column of confColumns; let i = index" matColumnDef="{{column.field}}">
@@ -60,6 +74,7 @@
                 <td class="mat-cell" colspan="20" style="color: #ff0000; font-weight: bold; font-size: 12px !important; padding-left: 16px" [innerHTML]="msgSemRegistro"></td>
             </tr>
         </table>
+
         <mat-paginator [length]="(configTable.page.length > 0 ? configTable.page.length : paginador.length)"
                        (page)="handlePageEvent($event)"
                        [pageSize]="(configTable.page.pageSize > 0 ? configTable.page.pageSize : paginador.pageSize)"

@@ -1,6 +1,11 @@
 @import '../../../../styles';
 
 :host {
+    .div-table {
+        width: 100%;
+        min-height: 86vh !important;
+    }
+
     .div-table .mat-table {
         width: 100%;
     }

@@ -21,7 +21,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatTabsModule} from "@angular/material/tabs";
-import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatPaginatorIntl, MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { ModalExcluirComponent } from './components/modal-excluir/modal-excluir.component';
@@ -31,6 +31,8 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {ModalDetalhamentoComponent} from "./components/modal-detalhamento/modal-detalhamento.component";
 import {ModalParametroJsonComponent} from "./components/modal-parametro-json/modal-parametro-json.component";
 import {NgxJsonViewerModule} from "ngx-json-viewer";
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { getPtbrPaginatorIntl } from '../layout/default/ptb-paginator-init';
 
 @NgModule({
     declarations: [
@@ -68,7 +70,8 @@ import {NgxJsonViewerModule} from "ngx-json-viewer";
         MatCheckboxModule,
         MatDialogModule,
         MatSlideToggleModule,
-        NgxJsonViewerModule
+        NgxJsonViewerModule,
+        MatDatepickerModule,
     ],
     exports: [
         HeaderComponent,
@@ -81,6 +84,6 @@ import {NgxJsonViewerModule} from "ngx-json-viewer";
         ModalDetalhamentoComponent,
         ModalParametroJsonComponent
     ],
-    providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }]
+    providers: [{ provide: MatPaginatorIntl, useValue: getPtbrPaginatorIntl() }, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }],
 })
 export class SharedModule { }

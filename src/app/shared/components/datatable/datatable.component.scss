@@ -16,6 +16,27 @@ th.mat-header-cell .mat-sort-header-container.mat-sort-header-sorted .mat-sort-h
     font-family: 'Work Sans', 'Roboto', "Helvetica Neue", 'sans-serif' !important;
 }
 
+::ng-deep .mat-form-field {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    width: 50%;
+}
+
+::ng-deep .mat-datepicker-toggle {
+    color: rgba(0, 0, 0, .54);
+    position: absolute;
+    top: -10px;
+    right: -10px;
+}
+
+.range-data{
+    width: 50%;
+    display: flex;
+    align-items: flex-end;
+    max-height: 84px;
+}
+
 .div-table-filtro .mat-form-field {
     width: 100%;
     font-family: 'Work Sans';

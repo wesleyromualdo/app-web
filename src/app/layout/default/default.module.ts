@@ -64,6 +64,9 @@ import {DadosJsonComponent} from "../../modules/tarefa/dados-json/dados-json.com
 import {RedefinirSenhaComponent} from "../../modules/auth/redefinir-senha/redefinir-senha.component";
 import {CadastroWorkerComponent} from "../../modules/automacao/cadastro-worker/cadastro-worker.component";
 import {CofreSenhaComponent} from "../../modules/auth/cofre-senha/cofre-senha.component";
+import { ControleExecucaoComponent } from 'src/app/modules/dashboard/controle-execucao/controle-execucao.component';
+import { DefaultDashComponent } from 'src/app/modules/dashboard/default-dash/default-dash.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 
@@ -100,7 +103,9 @@ import {CofreSenhaComponent} from "../../modules/auth/cofre-senha/cofre-senha.co
         AgendamentoComponent,
         DadosJsonComponent,
         CadastroWorkerComponent,
-        CofreSenhaComponent
+        CofreSenhaComponent,
+        ControleExecucaoComponent,
+        DefaultDashComponent
     ],
     imports: [
         CommonModule,
@@ -134,7 +139,8 @@ import {CofreSenhaComponent} from "../../modules/auth/cofre-senha/cofre-senha.co
         NgxMaskModule.forRoot(),
         ImageCropperModule,
         NgxEditorModule,
-        MatDatepickerModule
+        MatDatepickerModule,
+        NgSelectModule
     ],
     exports: [],
     providers: [{ provide: MatPaginatorIntl, useValue: getPtbrPaginatorIntl() }],

@@ -1,5 +1,9 @@
 @import '../../../../styles.scss';
 
+.div-content{
+    min-height: 80vh !important;
+}
+
 .div-principal-sidebar {
     .mat-icon {
         vertical-align: middle;

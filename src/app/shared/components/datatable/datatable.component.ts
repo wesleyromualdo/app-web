@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild, Output, EventEmitter} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort, MatSortable, Sort} from '@angular/material/sort';
@@ -6,11 +6,18 @@ import {LiveAnnouncer} from "@angular/cdk/a11y";
 
 import {msgSemRegistro, PAGINADOR} from "../../../resources/util/constants";
 import {LoginService} from "../../../resources/services/login.service";
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
     selector: 'app-datatable',
     templateUrl: './datatable.component.html',
-    styleUrls: ['./datatable.component.scss']
+    styleUrls: ['./datatable.component.scss'],
+    providers: [  
+        MatDatepickerModule,
+        MatNativeDateModule  
+      ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DatatableComponent implements OnInit {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -31,6 +38,10 @@ export class DatatableComponent implements OnInit {
     currentPage: any;
     paginador = PAGINADOR
     userData: any;
+    length: any;
+
+    startDate: Date = new Date();
+    endDate: Date = new Date();
 
     constructor(private _liveAnnouncer: LiveAnnouncer,
                 private loginService: LoginService) { }
@@ -44,6 +55,8 @@ export class DatatableComponent implements OnInit {
                 previousPageIndex: 0
             }
         }
+        this.length = this.configTable.page.length > 0 ? this.configTable.page.length : this.paginador.length;
+        
         this.currentPage = this.configTable.page.pageIndex;
         this.confColumns = this.configTable.columns;
         this.confTable = this.configTable.table;
@@ -66,20 +79,34 @@ export class DatatableComponent implements OnInit {
             this.columns.push(item.field);
         });
         this.dataSource = new MatTableDataSource(this.dados);
+
     }
 
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.matSort;
+        if( this.configTable.page.length > 0 ){
+            this.paginador.length = this.configTable.page.length;
+        }
+
+        setTimeout(() => {
+            console.log('setTimeout', this.configTable.page);
+            this.dataSource.paginator.length = this.length;
+            this.dataSource.paginator.pageIndex = this.configTable.page.pageIndex;
+            this.dataSource.paginator.pageSize = this.configTable.page.pageSize;
+            this.dataSource.paginator.previousPageIndex = this.configTable.page.previousPageIndex;
+            console.log('setTimeout', this.dataSource.paginator);
+        }, 500);
     }
 
     applyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
         this.dataSource.filter = filterValue.trim().toLowerCase();
-
+        
         if (this.dataSource.paginator) {
             this.dataSource.paginator.firstPage();
         }
+        this.addOutput('pesquisa', filterValue);
     }
 
     //sortData(sortState: Sort) {
@@ -104,9 +131,25 @@ export class DatatableComponent implements OnInit {
 
     handlePageEvent(e: PageEvent) {
         this.addOutput('paginator', e);
-        /*this.pageEvent = e;
+        //this.pageEvent = e;
         this.length = e.length;
-        this.pageSize = e.pageSize;
-        this.pageIndex = e.pageIndex;*/
+        //this.pageSize = e.pageSize;
+        //this.pageIndex = e.pageIndex;
+    }
+
+    onDateChange(callback:any) {
+        const pad = (num:any) => num < 10 ? '0' + num : num;
+
+        const startDateFormatted = this.startDate ? 
+            `${this.startDate.getFullYear()}-${pad(this.startDate.getMonth() + 1)}-${pad(this.startDate.getDate())}` 
+            : null;
+
+        const endDateFormatted = this.endDate ? 
+            `${this.endDate.getFullYear()}-${pad(this.endDate.getMonth() + 1)}-${pad(this.endDate.getDate())}` 
+            : null;
+        
+        if (startDateFormatted && endDateFormatted) {
+            this.outputDados.emit({callback: callback, element: '', startDate: startDateFormatted, endDate: endDateFormatted});
+        }
     }
 }

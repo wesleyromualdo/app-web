@@ -6,7 +6,6 @@ import {NgxSpinnerService} from "ngx-spinner";
 import {TarefaService} from "../../../resources/services/tarefa.service";
 import { Util } from "../../../resources/util/utils";
 import {ActivatedRoute, Router} from "@angular/router";
-import { PAGINADOR } from 'src/app/resources/util/constants';
 import {ModalDetalhamentoComponent} from "../../../shared/components/modal-detalhamento/modal-detalhamento.component";
 import {MatDialog} from "@angular/material/dialog";
 
@@ -33,8 +32,9 @@ export class HistoricoTarefaComponent implements OnInit {
             id:'table-hist-tarefa',
             class:''
         },
+        height: '53vh',
         btnnovo: '',
-        placeholder: '',
+        placeholder: 'Busque pelo data de execução iniciada',
         columns:[
             {label:'Ação', field:'acao', class:'',botao:[
                     {label:'Detalhamento', icon:'remove_red_eye', callback:'detalhe'},
@@ -49,7 +49,13 @@ export class HistoricoTarefaComponent implements OnInit {
             {label:'IP MAC', field:'tx_ip_execucao', class:''},
             {label:'Tempo de execução', field:'tempo', class:''},
             {label:'Status', field:'statusdesc', class:'', link:true, callback:'detalhe'}
-        ]
+        ],
+        page:{
+            length: 100,
+            pageIndex: 0,
+            pageSize:10,
+            previousPageIndex:0
+        }
     };
 
     constructor(
@@ -78,10 +84,14 @@ export class HistoricoTarefaComponent implements OnInit {
         await this.getHistoricoTarefa();
     }
 
-    async getHistoricoTarefa(){
+    async getHistoricoTarefa(pagina=0, tamanho_pagina=10, filter=''){
+        this.loading = false;
         this.spinner.show();
-        this.dataList = await this.tarefaService.getHistoricoTarefaById(this.tarefa_id, false);
-        //console.log('this.dataList', this.dataList);
+        const retorno = await this.tarefaService.getHistoricoTarefaById(this.tarefa_id, '',filter, pagina, tamanho_pagina, false);
+        this.dataList = retorno.dados;
+        this.configTable.page.length = retorno.total;
+        
+        //console.log('this.dataList', this.dataList, this.loading);
         let duracaoTotal = moment.duration(0);
         if( this.dataList.status == 0 ) {
             this.dataList = [];
@@ -120,6 +130,7 @@ export class HistoricoTarefaComponent implements OnInit {
     }
 
     executaRetorno(dados: any) {
+        //console.log(dados);
         if( dados.callback == 'logs' ){
             this.abreLogs(dados.element);
         }
@@ -128,6 +139,19 @@ export class HistoricoTarefaComponent implements OnInit {
         }
         if( dados.callback == 'dadosNegociais' ){
             this.abreDadosNegociais(dados.element);
+        }
+        if( dados.callback == 'paginator' ){
+            //this.abreDadosNegociais(dados.element);
+            //console.log('executaRetorno', dados.element);
+            this.configTable.page.length = dados.element.length;
+            this.configTable.page.pageSize = dados.element.pageSize;
+            this.configTable.page.pageIndex = dados.element.pageIndex;
+            this.configTable.page.previousPageIndex = dados.element.previousPageIndex;
+            this.getHistoricoTarefa(dados.element.pageIndex);
+        }
+
+        if( dados.callback == 'pesquisa' ){
+            this.getHistoricoTarefa(0, 20, dados.element);
         }
     }
 

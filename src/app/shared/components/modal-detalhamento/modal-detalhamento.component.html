@@ -13,7 +13,9 @@
                     <p style="font-weight: bold">{{conteudo.label}}</p>
                     <div class="{{conteudo.class}}">
                         <ngx-json-viewer *ngIf="conteudo.type == 'json'" [json]="conteudo.value" [depth]="3"></ngx-json-viewer>
-                        <p *ngIf="conteudo.type != 'json'">{{conteudo.value}}</p>
+                        <p *ngIf="conteudo.type != 'json' && conteudo.type != 'image'">{{conteudo.value}}</p>
+                        <div *ngIf="conteudo.type == 'image' && conteudo.value != ''" style="overflow: scroll; height: 400px;">
+                            <img [src]="conteudo.value" alt="Imagem"></div>
                     </div>
                 </div>
             </div>
