@@ -190,7 +190,7 @@ export class HistoricoExecucaoComponent implements OnInit {
             this.configTable.page.pageIndex = dados.element.pageIndex;
             this.configTable.page.previousPageIndex = dados.element.previousPageIndex;
 
-            this.pesquisar(this.pageIndex)
+            this.pesquisar(this.pageIndex, dados.element.pageSize)
         }
         if( dados.callback == 'detalhe' ){
             this.detalhamento(dados.element);

@@ -3,8 +3,8 @@
 import {environment} from "../../../environments/environment";
 //'http://127.0.0.1:8000'
 //export const URL = (environment.url ? environment.url : 'http://127.0.0.1:8000') ;
-export const URL = 'http://127.0.0.1:8000';
-//export const URL = 'http://plataforma-api.automaxia.com.br';
+//export const URL = 'http://127.0.0.1:8080';
+export const URL = 'https://plataforma-api.automaxia.com.br';
 
 export const USER_DATA = '_user_data_botautomaxia';
 export const TOKEN_AUTH = '_tokenAuthorization_botautomaxia';
@@ -18,5 +18,5 @@ export const msgSemRegistro: string = 'Não foi encontrado nenhum registro para 
 export const PAGINADOR: any = {
     length:500,
     pageSize: 20,
-    pageSizeOptions: [5, 10, 20, 50, 100]
+    pageSizeOptions: [5, 10, 20, 50, 100, 200, 300]
 }
